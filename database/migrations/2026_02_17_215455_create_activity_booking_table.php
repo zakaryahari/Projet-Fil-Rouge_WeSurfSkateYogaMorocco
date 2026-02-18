@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade');
             $table->foreignId('booking_id')->constrained()->onDelete('cascade');
+            $table->integer('participants')->default(1);
+            $table->decimal('price', 8, 2);
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
