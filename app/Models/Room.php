@@ -14,7 +14,7 @@ class Room extends Model
         'number',
         'type',
         'price',
-        'status',
+        'total_stock',
     ];
     
     public function bookings()

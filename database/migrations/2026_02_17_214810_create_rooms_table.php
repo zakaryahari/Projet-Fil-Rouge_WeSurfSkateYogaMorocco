@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('number')->unique();
             $table->string('type');
             $table->decimal('price', 8, 2);
-            $table->enum('status', ['available', 'occupied', 'maintenance'])->default('available');
+            $table->integer('total_stock')->default(1);
             $table->timestamps();
         });
     }
