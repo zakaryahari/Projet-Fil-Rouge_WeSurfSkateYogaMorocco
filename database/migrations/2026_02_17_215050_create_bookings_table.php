@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('room_id')->constrained()->cascadeOnDelete();
             $table->foreignId('payment_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('package_id')->constrained()->cascadeOnDelete();
-            $table->date('bookingDate');
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->foreignId('package_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->enum('status', ['pending', 'confirmed', 'finished', 'cancelled'])->default('pending');
             $table->decimal('totalPrice', 8, 2);
             $table->timestamps();
         });

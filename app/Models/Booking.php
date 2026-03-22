@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\BookingActivity;
-use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,9 +16,15 @@ class Booking extends Model
         'package_id',
         'room_id',
         'payment_id',
-        'bookingDate',
+        'start_date',
+        'end_date',
         'status',
         'totalPrice',
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date'   => 'date',
     ];
 
     public function user()
