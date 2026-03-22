@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,6 +14,8 @@ Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', fn() => view('home'))->name('home');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/payment/simulate/{booking}', fn($booking) => "Payment simulation for booking #$booking")->name('payment.simulate');
 });
 
 
