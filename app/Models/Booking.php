@@ -54,4 +54,9 @@ class Booking extends Model
                     ->withPivot('participants', 'price', 'status')
                     ->withTimestamps();
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }
