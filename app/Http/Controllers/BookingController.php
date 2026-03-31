@@ -62,4 +62,22 @@ class BookingController extends Controller
 
         return redirect()->route('payment.simulate', $booking->id);
     }
+
+    public function cancel($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $user    = Auth::user();
+
+        if ($user->role !== 'admin' && $booking->user_id !== $user->id) {
+            abort(403);
+        }
+
+        if (!in_array($booking->status, ['pending', 'confirmed'])) {
+            return back()->withErrors(['cancel' => 'Cette réservation ne peut pas être annulée.']);
+        }
+
+        $booking->update(['status' => 'cancelled']);
+
+        return back()->with('success', 'Réservation annulée avec succès.');
+    }
 }
