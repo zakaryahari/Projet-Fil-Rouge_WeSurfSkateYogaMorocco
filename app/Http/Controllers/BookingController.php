@@ -12,6 +12,22 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            $bookings = Booking::with(['user', 'room', 'package'])->paginate(10);
+            return view('admin.bookings.index', compact('bookings'));
+        }
+
+        $bookings = Booking::with(['room', 'package'])
+            ->where('user_id', $user->id)
+            ->paginate(10);
+
+        return view('customer.bookings.index', compact('bookings'));
+    }
+
     public function store(Request $request, AvailabilityService $availability)
     {
         $request->validate([
