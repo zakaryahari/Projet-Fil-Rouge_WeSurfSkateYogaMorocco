@@ -24,6 +24,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
     protected function casts(): array
     {
         return [
