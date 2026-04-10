@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\BookingActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -51,9 +50,8 @@ class Booking extends Model
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class, 'activity_booking')
-                    ->using(BookingActivity::class)
-                    ->withPivot('participants', 'price', 'status')
+        return $this->belongsToMany(Activity::class, 'booking_items')
+                    ->withPivot('quantity')
                     ->withTimestamps();
     }
 
