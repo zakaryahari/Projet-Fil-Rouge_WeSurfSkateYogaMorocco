@@ -1,5 +1,5 @@
-// app/Models/Coach.php  (nouveau fichier)
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
