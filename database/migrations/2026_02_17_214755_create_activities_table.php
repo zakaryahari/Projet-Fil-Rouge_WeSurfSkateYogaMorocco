@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('coach_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('location');
-            $table->date('date');
             $table->decimal('price', 8, 2);
+            $table->boolean('is_extra')->default(false);
             $table->timestamps();
         });
     }
