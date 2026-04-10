@@ -10,12 +10,8 @@ class Room extends Model
     /** @use HasFactory<\Database\Factories\RoomFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'number',
-        'type',
-        'price',
-        'total_stock',
-    ];
+    protected $fillable = ['type', 'price_per_night', 'total_stock'];
+
     
     public function bookings()
     {
