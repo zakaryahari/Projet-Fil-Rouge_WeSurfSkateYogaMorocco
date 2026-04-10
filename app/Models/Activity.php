@@ -12,12 +12,13 @@ class Activity extends Model
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
     
-    protected $fillable = [
-        'name',
-        'location',
-        'date',
-        'price'
-    ];
+    protected $fillable = ['coach_id', 'name', 'price', 'is_extra'];
+
+    public function coach()
+    {
+        return $this->belongsTo(Coach::class);
+    }
+
 
     public function bookings()
     {
