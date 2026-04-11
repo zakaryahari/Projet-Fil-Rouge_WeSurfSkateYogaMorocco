@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -12,12 +13,12 @@ Route::post('/login',    [AuthController::class, 'login'])->name('auth.login');
 Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', fn() => view('home'))->name('home');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/payment/simulate/{booking}', fn($booking) => "Payment simulation for booking #$booking")->name('payment.simulate');
 });
-
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
