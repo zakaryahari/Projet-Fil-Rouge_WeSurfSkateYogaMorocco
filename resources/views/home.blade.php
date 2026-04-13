@@ -98,9 +98,15 @@
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             @forelse($packages as $package)
                 <!-- Package Card -->
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale group">
+                <a href="{{ route('packages.show', $package->id) }}" class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale group block text-decoration-none transition-all hover:shadow-2xl">
                     <div class="relative h-72 overflow-hidden">
-                        <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC8TVr0HiLR1N4R3a8XnyA2PJEGrdnTfQ0CVLW19WtIhNW2BaFLUVEtKnj6t7plFteqHhrrl04dlLhIgyjRAnj_IAe252iW3XaKmIZE9oFAxpzTKKbS4WPXQY3A8SBYt3PYbo8azuqNsmJ46z2VyuSIByLsXTzc9oy1rRdpwbMA73ZNOze7thmBRMkivbfwPTENHbi6T-RYQowisF_2cnhY7a787immYG-zG8ecDZuLy3XyvOtAx7dbhIcWleWknzehHwZpVSgcNY"/>
+                        @if($package->image_path)
+                            <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('storage/' . $package->image_path) }}">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-8xl opacity-30">image</span>
+                            </div>
+                        @endif
                         <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">New</span>
                     </div>
                     <div class="p-10">
@@ -116,12 +122,12 @@
                                 <span class="text-gray-400 text-[10px] uppercase font-bold block mb-1">Price starts at</span>
                                 <span class="text-3xl font-extrabold text-darkCharcoal">€{{ number_format($package->base_price, 0) }}</span>
                             </div>
-                            <button class="bg-primary text-white p-4 rounded-full hover:bg-darkCharcoal transition-colors" onclick="document.getElementById('footer').scrollIntoView({behavior: 'smooth'})">
+                            <div class="bg-primary text-white p-4 rounded-full group-hover:bg-darkCharcoal transition-colors">
                                 <svg class="lucide lucide-arrow-right" fill="none" height="20" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                            </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             @empty
                 <div class="col-span-full text-center py-12 text-gray-500">No packages available</div>
             @endforelse
