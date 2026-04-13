@@ -44,11 +44,27 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
+        #main-header {
+            color: #1A1A1A;
+        }
+        #main-header a {
+            color: #1A1A1A;
+        }
+        #main-header .lucide {
+            stroke: #1A1A1A;
+        }
         .nav-scrolled {
-            background-color: rgba(26, 26, 26, 0.98);
+            background-color: rgba(26, 26, 26, 0.98) !important;
+            color: white !important;
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .nav-scrolled a {
+            color: white;
+        }
+        .nav-scrolled .lucide {
+            stroke: white;
         }
         .transition-all-300 {
             transition: all 0.3s ease-in-out;
