@@ -150,12 +150,41 @@
                         <span class="material-symbols-outlined" data-icon="settings">settings</span>
                     </button>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 relative" x-data="{ open: false }" @click.outside="open = false">
                     <div class="text-right">
                         <p class="text-sm font-bold text-slate-900">{{ Auth::user()->name }}</p>
                         <p class="text-[0.65rem] text-slate-500 tracking-widest uppercase">{{ ucfirst(Auth::user()->role) }}</p>
                     </div>
-                    <img alt="Admin User Profile" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxfL2AaawHK3AK_iF71lRjGtF9FSiDjJslvpk9XwEbtHY6G4_YNSKcVZtjAejsf6Mm7ycWt_2tZ4vq85CNbTwGuDVaq5AMuEbtWfR6aagR1DEvvNon2mCMbJmMwcfFu0_ltS51EYLkgTZffFB8rMBacaLfLlJOMOy2SPBM7udcMmOwa4T5gQ0o5oYzubMZ1_2S0YCfiZjh5NvuoHRQh4F96YdMgH3rbOR0wlwlRQvo_OzmadAUfkEEJo2h6SP4WpaA9GuB1Hk6WFQ">
+                    <button @click="open = !open" class="w-10 h-10 rounded-full object-cover overflow-hidden hover:ring-2 hover:ring-sky-500 hover:ring-offset-2 transition-all duration-200" title="{{ Auth::user()->name }}">
+                        <img alt="{{ Auth::user()->name }} Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxfL2AaawHK3AK_iF71lRjGtF9FSiDjJslvpk9XwEbtHY6G4_YNSKcVZtjAejsf6Mm7ycWt_2tZ4vq85CNbTwGuDVaq5AMuEbtWfR6aagR1DEvvNon2mCMbJmMwcfFu0_ltS51EYLkgTZffFB8rMBacaLfLlJOMOy2SPBM7udcMmOwa4T5gQ0o5oYzubMZ1_2S0YCfiZjh5NvuoHRQh4F96YdMgH3rbOR0wlwlRQvo_OzmadAUfkEEJo2h6SP4WpaA9GuB1Hk6WFQ">
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="open" x-transition class="absolute right-0 top-16 w-48 bg-white rounded-lg shadow-2xl border border-outline-variant/20 overflow-hidden z-50">
+                        <!-- User Info Header -->
+                        <div class="px-4 py-3 border-b border-outline-variant/20 bg-surface-container-low">
+                            <p class="text-sm font-bold text-slate-900">{{ Auth::user()->name }}</p>
+                            <p class="text-xs text-slate-500">{{ Auth::user()->email }}</p>
+                        </div>
+
+                        <!-- Dropdown Links -->
+                        <div class="py-2">
+                            <!-- Profile Link -->
+                            <a href="{{ route('profile.edit') }}" @click="open = false" class="block px-4 py-2 text-slate-700 text-sm hover:bg-sky-50 hover:text-sky-600 transition-colors flex items-center gap-2">
+                                <span class="material-symbols-outlined text-base" data-icon="account_circle">account_circle</span>
+                                <span>Profil</span>
+                            </a>
+
+                            <!-- Logout Form -->
+                            <form method="POST" action="{{ route('logout') }}" class="block" @click="open = false">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-slate-700 text-sm hover:bg-red-50 hover:text-red-600 transition-colors flex items-center gap-2 border-t border-outline-variant/20">
+                                    <span class="material-symbols-outlined text-base" data-icon="logout">logout</span>
+                                    <span>Déconnexion</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
