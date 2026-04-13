@@ -13,7 +13,7 @@ class Package extends Model
     /** @use HasFactory<\Database\Factories\PackageFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'base_price'];
+    protected $fillable = ['name', 'description', 'base_price', 'image_path'];
 
 
     public function bookings()
