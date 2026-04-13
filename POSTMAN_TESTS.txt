@@ -1,0 +1,214 @@
+====================================================
+  POSTMAN TESTS - ADMIN CRUD (Rooms, Packages, Activities)
+  Base URL: http://127.0.0.1:8000
+====================================================
+
+IMPORTANT AVANT DE COMMENCER:
+- Tu dois être connecté en tant qu'admin.
+- Dans Postman, active "Manage Cookies" pour garder la session.
+- Ajoute dans chaque requête POST/PUT/DELETE le header:
+    Accept: application/json
+- Pour les requêtes POST/PUT, utilise Body > form-data.
+
+====================================================
+  STEP 0 — LOGIN (obligatoire avant tout)
+====================================================
+
+POST http://127.0.0.1:8000/login
+Body (form-data):
+  email    = admin@example.com
+  password = password
+
+=> Résultat attendu: redirection 302 vers /admin/dashboard
+
+
+====================================================
+  1. ROOMS
+====================================================
+
+--- INDEX ---
+GET http://127.0.0.1:8000/admin/rooms
+=> Résultat attendu: 200 OK — liste des chambres
+
+--- CREATE FORM ---
+GET http://127.0.0.1:8000/admin/rooms/create
+=> Résultat attendu: 200 OK — formulaire de création
+
+--- STORE (créer une chambre) ---
+POST http://127.0.0.1:8000/admin/rooms
+Body (form-data):
+  _token          = {{csrf_token}}
+  type            = Suite Deluxe
+  price_per_night = 150.00
+  total_stock     = 5
+
+=> Résultat attendu: 302 redirect vers /admin/rooms avec message "Chambre créée avec succès."
+
+--- EDIT FORM ---
+GET http://127.0.0.1:8000/admin/rooms/1/edit
+=> Résultat attendu: 200 OK — formulaire pré-rempli
+
+--- UPDATE (modifier une chambre) ---
+POST http://127.0.0.1:8000/admin/rooms/1
+Body (form-data):
+  _token          = {{csrf_token}}
+  _method         = PUT
+  type            = Suite Premium
+  price_per_night = 200.00
+  total_stock     = 3
+
+=> Résultat attendu: 302 redirect vers /admin/rooms avec message "Chambre mise à jour avec succès."
+
+--- DESTROY (supprimer une chambre) ---
+POST http://127.0.0.1:8000/admin/rooms/1
+Body (form-data):
+  _token  = {{csrf_token}}
+  _method = DELETE
+
+=> Résultat attendu: 302 redirect vers /admin/rooms avec message "Chambre supprimée avec succès."
+
+--- VALIDATION ERRORS (test champs vides) ---
+POST http://127.0.0.1:8000/admin/rooms
+Body (form-data):
+  _token = {{csrf_token}}
+  (tous les champs vides)
+
+=> Résultat attendu: 422 ou 302 avec erreurs de validation
+
+
+====================================================
+  2. PACKAGES
+====================================================
+
+--- INDEX ---
+GET http://127.0.0.1:8000/admin/packages
+=> Résultat attendu: 200 OK — liste des packages
+
+--- CREATE FORM ---
+GET http://127.0.0.1:8000/admin/packages/create
+=> Résultat attendu: 200 OK — formulaire de création
+
+--- STORE (créer un package) ---
+POST http://127.0.0.1:8000/admin/packages
+Body (form-data):
+  _token      = {{csrf_token}}
+  name        = Pack Surf Débutant
+  description = 7 jours de surf avec coach certifié inclus.
+  base_price  = 850.00
+
+=> Résultat attendu: 302 redirect vers /admin/packages avec message "Package créé avec succès."
+
+--- EDIT FORM ---
+GET http://127.0.0.1:8000/admin/packages/1/edit
+=> Résultat attendu: 200 OK — formulaire pré-rempli
+
+--- UPDATE (modifier un package) ---
+POST http://127.0.0.1:8000/admin/packages/1
+Body (form-data):
+  _token      = {{csrf_token}}
+  _method     = PUT
+  name        = Pack Surf Avancé
+  description = 10 jours de surf intensif.
+  base_price  = 1200.00
+
+=> Résultat attendu: 302 redirect vers /admin/packages avec message "Package mis à jour avec succès."
+
+--- DESTROY (supprimer un package) ---
+POST http://127.0.0.1:8000/admin/packages/1
+Body (form-data):
+  _token  = {{csrf_token}}
+  _method = DELETE
+
+=> Résultat attendu: 302 redirect vers /admin/packages avec message "Package supprimé avec succès."
+
+--- VALIDATION ERRORS ---
+POST http://127.0.0.1:8000/admin/packages
+Body (form-data):
+  _token = {{csrf_token}}
+  (tous les champs vides)
+
+=> Résultat attendu: 422 ou 302 avec erreurs de validation
+
+
+====================================================
+  3. ACTIVITIES
+====================================================
+
+--- INDEX ---
+GET http://127.0.0.1:8000/admin/activities
+=> Résultat attendu: 200 OK — liste des activités
+
+--- CREATE FORM ---
+GET http://127.0.0.1:8000/admin/activities/create
+=> Résultat attendu: 200 OK — formulaire avec dropdown coaches
+
+--- STORE (créer une activité) ---
+POST http://127.0.0.1:8000/admin/activities
+Body (form-data):
+  _token   = {{csrf_token}}
+  name     = Cours de Yoga Sunset
+  price    = 30.00
+  is_extra = 1
+  coach_id = 1
+
+=> Résultat attendu: 302 redirect vers /admin/activities avec message "Activité créée avec succès."
+
+--- STORE sans coach (coach_id nullable) ---
+POST http://127.0.0.1:8000/admin/activities
+Body (form-data):
+  _token   = {{csrf_token}}
+  name     = Randonnée libre
+  price    = 0.00
+  is_extra = 0
+
+=> Résultat attendu: 302 redirect vers /admin/activities avec message "Activité créée avec succès."
+
+--- EDIT FORM ---
+GET http://127.0.0.1:8000/admin/activities/1/edit
+=> Résultat attendu: 200 OK — formulaire pré-rempli avec dropdown coaches
+
+--- UPDATE (modifier une activité) ---
+POST http://127.0.0.1:8000/admin/activities/1
+Body (form-data):
+  _token   = {{csrf_token}}
+  _method  = PUT
+  name     = Cours de Yoga Matin
+  price    = 25.00
+  is_extra = 1
+  coach_id = 2
+
+=> Résultat attendu: 302 redirect vers /admin/activities avec message "Activité mise à jour avec succès."
+
+--- DESTROY (supprimer une activité) ---
+POST http://127.0.0.1:8000/admin/activities/1
+Body (form-data):
+  _token  = {{csrf_token}}
+  _method = DELETE
+
+=> Résultat attendu: 302 redirect vers /admin/activities avec message "Activité supprimée avec succès."
+
+--- VALIDATION ERRORS ---
+POST http://127.0.0.1:8000/admin/activities
+Body (form-data):
+  _token   = {{csrf_token}}
+  coach_id = 9999
+
+=> Résultat attendu: 422 ou 302 — erreurs sur name, price + coach_id inexistant
+
+
+====================================================
+  COMMENT RÉCUPÉRER LE CSRF TOKEN DANS POSTMAN
+====================================================
+
+Option 1 (recommandée):
+  - Fais d'abord GET http://127.0.0.1:8000/admin/rooms/create
+  - Dans l'onglet "Cookies", copie la valeur de "XSRF-TOKEN"
+  - Postman l'envoie automatiquement si tu actives:
+    Settings > "Automatically follow redirects" = ON
+    Settings > "Send cookies" = ON
+
+Option 2:
+  - Ajoute ce header sur toutes tes requêtes:
+    X-XSRF-TOKEN: {{XSRF-TOKEN}} (depuis le cookie)
+
+====================================================

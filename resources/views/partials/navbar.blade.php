@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 w-full z-50 transition-all-300 py-6 px-4 md:px-10 flex items-center justify-between backdrop-blur-sm" id="main-header" style="background: rgba(255, 255, 255, 0.95); color: #1A1A1A;">
+<header class="fixed top-0 left-0 w-full z-50 transition-all-300 py-6 px-4 md:px-10 flex items-center justify-between text-white bg-darkCharcoal" id="main-header">
     <div class="flex items-center space-x-2">
         <div class="text-2xl font-extrabold tracking-tighter">SKATE SURF<span class="text-primary">.</span></div>
     </div>
@@ -69,9 +69,13 @@
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         if (window.scrollY > 50) {
-            header.classList.add('nav-scrolled');
+            header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.4)';
+            header.style.paddingTop = '0.75rem';
+            header.style.paddingBottom = '0.75rem';
         } else {
-            header.classList.remove('nav-scrolled');
+            header.style.boxShadow = 'none';
+            header.style.paddingTop = '1.5rem';
+            header.style.paddingBottom = '1.5rem';
         }
     });
 </script>
