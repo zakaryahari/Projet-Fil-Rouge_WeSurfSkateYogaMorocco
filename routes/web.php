@@ -11,9 +11,8 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Public Package Details Route
+Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,6 +36,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
             'quickInsight' => 'Revenue from the Pro-Skate package has reached its monthly goal 10 days early.',
         ]);
     })->name('dashboard');
+
+    Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
+    Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class);
+    Route::resource('activities', \App\Http\Controllers\Admin\ActivityController::class);
 });
+
+
 
 require __DIR__.'/auth.php';
