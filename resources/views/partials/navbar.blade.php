@@ -9,8 +9,9 @@
         <a class="hover:text-primary transition-colors" href="#">Surf</a>
         <a class="hover:text-primary transition-colors" href="#">Skate</a>
         <a class="hover:text-primary transition-colors" href="#">Accommodation</a>
-        <a class="hover:text-primary transition-colors" href="#">About</a>
-        <a class="hover:text-primary transition-colors" href="#">Contact</a>
+        <a class="hover:text-primary transition-colors" href="{{ route('events') }}">Événements</a>
+        <a class="hover:text-primary transition-colors" href="{{ route('about') }}">À Propos</a>
+        <a class="hover:text-primary transition-colors" href="{{ route('contact') }}">Contact</a>
     </nav>
     <!-- Right Side: Auth Block -->
     <div class="flex items-center space-x-4 lg:space-x-6">
