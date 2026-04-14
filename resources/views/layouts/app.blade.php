@@ -77,7 +77,7 @@
     <!-- END: Navbar -->
 
     <!-- BEGIN: Main Content -->
-    <main>
+    <main class="pt-24">
         @yield('content')
     </main>
     <!-- END: Main Content -->
