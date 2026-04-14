@@ -7,8 +7,8 @@
         <!-- Left Side: Editorial Intro (30%) -->
         <div class="lg:col-span-3 space-y-8 sticky top-32">
             <div class="space-y-4">
-                <p class="font-script text-primary-container text-2xl">Talk with our team</p>
-                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tighter text-on-surface leading-tight">
+                <p class="italic text-primary text-2xl font-semibold">Talk with our team</p>
+                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tighter text-darkCharcoal leading-tight">
                     Any Question? <br/>Feel Free to Contact
                 </h1>
             </div>
@@ -18,16 +18,16 @@
                     WhatsApp Chat
                 </a>
                 <div class="flex items-center gap-4">
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="facebook">social_leaderboard</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="post_add">post_add</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="push_pin">push_pin</span>
                     </a>
                 </div>
@@ -39,16 +39,16 @@
         </div>
 
         <!-- Right Side: Contact Form (70%) -->
-        <div class="lg:col-span-7 bg-surface-container-lowest p-8 lg:p-12 rounded-[2rem] shadow-[0_20px_40px_rgba(24,28,30,0.06)]">
+        <div class="lg:col-span-7 bg-white p-8 lg:p-12 rounded-2xl shadow-lg border border-slate-200">
             <form action="#" class="space-y-8" method="POST">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-2">
-                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">First Name</label>
-                        <input class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3.5 transition-all text-on-surface" placeholder="John" type="text"/>
+                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-slate-600">First Name</label>
+                        <input class="w-full bg-slate-50 border border-slate-300 focus:border-primary focus:ring-0 rounded-lg px-4 py-3.5 transition-all text-darkCharcoal" placeholder="John" type="text"/>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">Last Name</label>
-                        <input class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3.5 transition-all text-on-surface" placeholder="Doe" type="text"/>
+                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-slate-600">Last Name</label>
+                        <input class="w-full bg-slate-50 border border-slate-300 focus:border-primary focus:ring-0 rounded-lg px-4 py-3.5 transition-all text-darkCharcoal" placeholder="Doe" type="text"/>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

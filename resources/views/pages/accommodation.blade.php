@@ -6,9 +6,9 @@
     <section class="max-w-7xl mx-auto px-8 py-20">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div class="space-y-6">
-                <span class="font-script text-primary-container text-2xl">Camp Life</span>
-                <h1 class="text-4xl md:text-5xl font-black tracking-tight leading-tight">Camp, Atmosphere, Food & Drink</h1>
-                <p class="text-on-surface-variant leading-relaxed text-lg">
+                <span class="italic text-primary text-2xl font-semibold">Camp Life</span>
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight leading-tight text-darkCharcoal">Camp, Atmosphere, Food & Drink</h1>
+                <p class="text-slate-600 leading-relaxed text-lg">
                     Our Moroccan sanctuary is more than just a place to sleep. It's a vibrant community hub where the scent of fresh ocean air meets the aroma of traditional spices. Experience authentic hospitality in a space designed for surfers, skaters, and soul-seekers alike.
                 </p>
                 <div class="rounded-2xl overflow-hidden aspect-video bg-surface-container-high relative">
@@ -18,9 +18,9 @@
                     </div>
                 </div>
             </div>
-            <div class="space-y-6 bg-surface-container-low p-8 rounded-2xl">
-                <span class="font-script text-primary-container text-2xl">Moroccan Soul</span>
-                <h2 class="text-3xl font-bold tracking-tight">Location & Conditions</h2>
+            <div class="space-y-6 bg-white p-8 rounded-2xl shadow-lg">
+                <span class="italic text-primary text-2xl font-semibold">Moroccan Soul</span>
+                <h2 class="text-3xl font-bold tracking-tight text-darkCharcoal">Location & Conditions</h2>
                 <div class="rounded-xl overflow-hidden aspect-[4/3] mb-6">
                     <img class="w-full h-full object-cover" data-alt="close-up of traditional Moroccan tagines with steaming hot food arranged on a colorful tiled table in warm afternoon sun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHOfr_DztgKYqwaNYsx9ox2uQGpZX6eLtNrEj29fhTZE6xpvGoivUN2d4YphsliNc6Caq9F9Is1i6tQPjE69QYwHPKBDNmBm03vv8v-nxxhi7kNaggdgnGLnCBqb_C5clE69glOL5DALPvIT-luILj1qIQ3mSuHumhF24C1tdyke8Se9kUMdxtKSRHcECIiUTuXMkyErEyfiEl8taZrLXuoGFQJVHPxElkq8-xuTzKkJPJcXL3zcDuYufvcx4JCGFtlLCnd9xvt7Q"/>
                 </div>
@@ -32,10 +32,9 @@
     </section>
 
     <!-- Our Rooms Divider -->
-    <section class="bg-[#f0e8dc] py-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 topo-texture"></div>
+    <section class="bg-slate-100 py-16 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-8 text-center relative z-10">
-            <h2 class="text-5xl md:text-6xl font-black tracking-tighter uppercase text-on-surface">Our Rooms</h2>
+            <h2 class="text-5xl md:text-6xl font-black tracking-tighter uppercase text-darkCharcoal">Our Rooms</h2>
         </div>
     </section>
 
