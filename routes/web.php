@@ -30,6 +30,19 @@ Route::get('/bookings/{package_id}/create', function ($package_id) {
     ]);
 })->name('bookings.create');
 
+Route::post('/bookings', function (\Illuminate\Http\Request $request) {
+    // Temporary - just validates the form exists
+    $request->validate([
+        'package_id' => 'required|exists:packages,id',
+        'start_date' => 'required|date|after_or_equal:today',
+        'end_date' => 'required|date|after:start_date',
+        'room_id' => 'required|exists:rooms,id',
+        'activities' => 'array|nullable',
+    ]);
+
+    return redirect()->route('bookings.create', ['package_id' => $request->package_id])->with('success', 'Booking submitted! (To be implemented)');
+})->name('bookings.store');
+
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');
 Route::view('/about', 'pages.about')->name('about');
