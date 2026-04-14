@@ -15,6 +15,10 @@ Route::get('/', function () {
 Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
 // Public Booking Routes
+Route::get('/bookings/decide', function () {
+    return view('bookings.decide');
+})->name('bookings.decide');
+
 Route::get('/bookings/choose-package', function () {
     return view('bookings.choose_package', [
         'packages' => \App\Models\Package::all(),
