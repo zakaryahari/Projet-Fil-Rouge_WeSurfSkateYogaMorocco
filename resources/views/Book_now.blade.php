@@ -27,14 +27,14 @@
         }
     </script>
 </head>
-<body class="bg-background-light font-display text-slate-900 transition-colors duration-200">
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-200">
 <!-- Persistent Sticky Navbar -->
-<nav class="sticky top-0 z-50 w-full bg-background-light/80 backdrop-blur-md border-b border-slate-200">
+<nav class="sticky top-0 z-50 w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between h-16 items-center">
 <div class="flex items-center gap-2 text-primary">
 <span class="material-symbols-outlined text-3xl">surfing</span>
-<span class="font-bold text-xl tracking-tight text-slate-900">Skate Surf Camp</span>
+<span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">Skate Surf Camp</span>
 </div>
 <div class="hidden md:flex items-center gap-8">
 <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
@@ -56,12 +56,12 @@
 </div>
 <div class="flex-1 h-1 bg-primary mx-4 rounded-full"></div>
 <div class="flex flex-col items-center gap-2">
-<div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold">2</div>
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">2</div>
 <span class="text-xs font-semibold text-slate-400">Personal Details</span>
 </div>
-<div class="flex-1 h-1 bg-slate-200 mx-4 rounded-full"></div>
+<div class="flex-1 h-1 bg-slate-200 dark:bg-slate-700 mx-4 rounded-full"></div>
 <div class="flex flex-col items-center gap-2">
-<div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold">3</div>
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">3</div>
 <span class="text-xs font-semibold text-slate-400">Confirmation</span>
 </div>
 </div>
@@ -77,11 +77,11 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <!-- Card 1 -->
-<div class="relative group cursor-pointer border-2 border-primary rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all">
+<div class="relative group cursor-pointer border-2 border-primary rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-all">
 <div class="h-32 bg-cover bg-center" data-alt="Surfer catching a wave in Morocco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMmL_F0XZaaHgaH2jLGIo2ozGl_rVczAq0JaOBDl9nn7J513o1_BCYZH264iziMyFIjuwGQkCp_EPQ8bOOtzPoG7g5HIy-ekaPBNqrL1PvUl_xGht-HLN7s8WNqSUHCNcY1TjqZO_OlKdbjDTiayS2L53I42YGJLTYaa2jv3UAFu0tWr7u7y7jxDoX9xEHUxO1rfCfc5udXeVIDVsMRcwvrFG2EzEraQ0e8uegguBtWFuWBGRTvBsRdhCSrxJGRu1W0vmytS8SS9c')"></div>
 <div class="p-4">
 <h3 class="font-bold text-lg">Surf Coaching</h3>
-<p class="text-sm text-slate-500">All levels welcome</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">All levels welcome</p>
 <p class="text-primary font-bold mt-2">$599/week</p>
 </div>
 <div class="absolute top-2 right-2 bg-primary text-white rounded-full p-1">
@@ -89,20 +89,20 @@
 </div>
 </div>
 <!-- Card 2 -->
-<div class="relative group cursor-pointer border-2 border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm hover:border-primary/50 transition-all">
+<div class="relative group cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:border-primary/50 transition-all">
 <div class="h-32 bg-cover bg-center" data-alt="Skateboarder on a mini ramp by the ocean" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMmDxPD5uw5EWtoxowOtU_7M63QZ7ZVkmoswxWpfURyqnlEQnVyPf2D27q3VZnIlQ4Ncv-2VyXBjWhbtLEpNT325VKT5_ENwBeG2GUPVNrJNL3TQbbuyEXya2MHdsF7kyXci43jHHbWqU7tVwUuU9ghF40bsVwvsnu2nGtooDEB2l42MN2y32IRho4aeVHBXHDcp5KPHN3kxG8jmfEQiy86NjZOcbEPE47xgmVs7-cz-pkGO9AuRpceYPckPLwER87fsVOs6lweUI')"></div>
 <div class="p-4">
 <h3 class="font-bold text-lg">Surf &amp; Skate</h3>
-<p class="text-sm text-slate-500">Waves and ramps</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Waves and ramps</p>
 <p class="text-primary font-bold mt-2">$699/week</p>
 </div>
 </div>
 <!-- Card 3 -->
-<div class="relative group cursor-pointer border-2 border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm hover:border-primary/50 transition-all">
+<div class="relative group cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:border-primary/50 transition-all">
 <div class="h-32 bg-cover bg-center" data-alt="Professional surfing equipment on a beach" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnH-QYODp2z1M52yekXKGPA7_GT1WxdvgMYAvlyJkbGvAn7zECku2SzXcu1ayr_XI9iaJXbmbq-IUtTy9-0PdBgMgBR-b9YE2DrDP2EGwgSrZhgRG0nKqHAB90agNQagK_LCDkwymbbCn6XxW9ltRQIyAAZRiFMdXckkt8chZI0uaGfoN-9v-yz9-a4s2ARkCVzNrhWEiJgwm2jqWExSdR-ixXcgnNLzY6YDJ1Z2RTZrjL8vvvh6a1zO49seBW-o5Q-t2jsT6UKLY')"></div>
 <div class="p-4">
 <h3 class="font-bold text-lg">Elite Surf Camp</h3>
-<p class="text-sm text-slate-500">Advanced coaching</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Advanced coaching</p>
 <p class="text-primary font-bold mt-2">$899/week</p>
 </div>
 </div>
@@ -114,14 +114,14 @@
 <span class="material-symbols-outlined text-primary">calendar_month</span>
 <h2 class="text-2xl font-bold">Step 2: Stay Details</h2>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
 <div class="flex flex-col gap-2">
-<label class="text-sm font-semibold text-slate-600">Arrival Date</label>
-<input class="bg-slate-50 border-slate-200 rounded-lg p-3 focus:ring-primary focus:border-primary" type="date"/>
+<label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Arrival Date</label>
+<input class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3 focus:ring-primary focus:border-primary" type="date"/>
 </div>
 <div class="flex flex-col gap-2">
-<label class="text-sm font-semibold text-slate-600">Duration</label>
-<select class="bg-slate-50 border-slate-200 rounded-lg p-3 focus:ring-primary focus:border-primary">
+<label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Duration</label>
+<select class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3 focus:ring-primary focus:border-primary">
 <option>1 Week</option>
 <option>2 Weeks</option>
 <option>10 Days</option>
@@ -136,24 +136,24 @@
 <h2 class="text-2xl font-bold">Step 3: Accommodation</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="border-2 border-slate-200 p-5 rounded-xl bg-white hover:border-primary transition-colors cursor-pointer">
+<div class="border-2 border-slate-200 dark:border-slate-700 p-5 rounded-xl bg-white dark:bg-slate-800 hover:border-primary transition-colors cursor-pointer">
 <span class="material-symbols-outlined text-3xl text-primary mb-2">person</span>
 <h3 class="font-bold">Single Room</h3>
 <p class="text-sm text-slate-500 mb-4">Private privacy</p>
-<p class="font-bold text-slate-900">+$200</p>
+<p class="font-bold text-slate-900 dark:text-white">+$200</p>
 </div>
-<div class="border-2 border-primary p-5 rounded-xl bg-primary/5 transition-colors cursor-pointer relative">
+<div class="border-2 border-primary p-5 rounded-xl bg-primary/5 dark:bg-primary/10 transition-colors cursor-pointer relative">
 <span class="material-symbols-outlined text-3xl text-primary mb-2">group</span>
 <h3 class="font-bold">Double Room</h3>
 <p class="text-sm text-slate-500 mb-4">Shared with one</p>
-<p class="font-bold text-slate-900">+$100</p>
+<p class="font-bold text-slate-900 dark:text-white">+$100</p>
 <span class="absolute top-4 right-4 text-xs font-bold bg-primary text-white px-2 py-0.5 rounded-full">Popular</span>
 </div>
-<div class="border-2 border-slate-200 p-5 rounded-xl bg-white hover:border-primary transition-colors cursor-pointer">
+<div class="border-2 border-slate-200 dark:border-slate-700 p-5 rounded-xl bg-white dark:bg-slate-800 hover:border-primary transition-colors cursor-pointer">
 <span class="material-symbols-outlined text-3xl text-primary mb-2">groups</span>
 <h3 class="font-bold">Triple Room</h3>
 <p class="text-sm text-slate-500 mb-4">Dorm style vibe</p>
-<p class="font-bold text-slate-900">Included</p>
+<p class="font-bold text-slate-900 dark:text-white">Included</p>
 </div>
 </div>
 </section>
@@ -163,25 +163,25 @@
 <span class="material-symbols-outlined text-primary">contact_page</span>
 <h2 class="text-2xl font-bold">Step 4: Personal Info</h2>
 </div>
-<div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200 space-y-6">
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="flex flex-col gap-2">
 <label class="text-sm font-semibold">Full Name</label>
-<input class="bg-slate-50 border-slate-200 rounded-lg p-3" placeholder="John Doe" type="text"/>
+<input class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3" placeholder="John Doe" type="text"/>
 </div>
 <div class="flex flex-col gap-2">
 <label class="text-sm font-semibold">Email Address</label>
-<input class="bg-slate-50 border-slate-200 rounded-lg p-3" placeholder="john@example.com" type="email"/>
+<input class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3" placeholder="john@example.com" type="email"/>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="flex flex-col gap-2">
 <label class="text-sm font-semibold">Phone Number</label>
-<input class="bg-slate-50 border-slate-200 rounded-lg p-3" placeholder="+212 6..." type="tel"/>
+<input class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3" placeholder="+212 6..." type="tel"/>
 </div>
 <div class="flex flex-col gap-2">
 <label class="text-sm font-semibold">Skill Level</label>
-<select class="bg-slate-50 border-slate-200 rounded-lg p-3">
+<select class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3">
 <option>Beginner</option>
 <option>Intermediate</option>
 <option>Advanced</option>
@@ -190,35 +190,35 @@
 </div>
 <div class="flex flex-col gap-2">
 <label class="text-sm font-semibold">Special Requirements / Allergies</label>
-<textarea class="bg-slate-50 border-slate-200 rounded-lg p-3" placeholder="Let us know anything else..." rows="3"></textarea>
+<textarea class="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg p-3" placeholder="Let us know anything else..." rows="3"></textarea>
 </div>
 </div>
 </section>
 </div>
 <!-- Right Column: Order Summary -->
 <div class="lg:w-1/3">
-<div class="sticky top-24 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-<div class="p-6 border-b border-slate-100">
+<div class="sticky top-24 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-700">
 <h3 class="text-xl font-bold">Order Summary</h3>
 </div>
 <div class="p-6 space-y-4">
 <div class="flex justify-between text-sm">
-<span class="text-slate-500">Package:</span>
+<span class="text-slate-500 dark:text-slate-400">Package:</span>
 <span class="font-semibold">Surf Coaching</span>
 </div>
 <div class="flex justify-between text-sm">
-<span class="text-slate-500">Accommodation:</span>
+<span class="text-slate-500 dark:text-slate-400">Accommodation:</span>
 <span class="font-semibold">Double Room</span>
 </div>
 <div class="flex justify-between text-sm">
-<span class="text-slate-500">Duration:</span>
+<span class="text-slate-500 dark:text-slate-400">Duration:</span>
 <span class="font-semibold">1 Week (7 Nights)</span>
 </div>
 <div class="flex justify-between text-sm">
-<span class="text-slate-500">Dates:</span>
+<span class="text-slate-500 dark:text-slate-400">Dates:</span>
 <span class="font-semibold">Oct 12 - Oct 19</span>
 </div>
-<div class="pt-4 border-t border-slate-100">
+<div class="pt-4 border-t border-slate-100 dark:border-slate-700">
 <div class="flex justify-between items-end">
 <span class="text-lg font-bold">Total Price</span>
 <div class="text-right">
@@ -227,7 +227,7 @@
 </div>
 </div>
 </div>
-<div class="bg-green-50 p-3 rounded-lg flex items-center gap-3 text-green-700">
+<div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg flex items-center gap-3 text-green-700 dark:text-green-400">
 <span class="material-symbols-outlined text-xl">verified_user</span>
 <span class="text-xs font-semibold uppercase tracking-wider">Safe &amp; Secure Checkout</span>
 </div>
