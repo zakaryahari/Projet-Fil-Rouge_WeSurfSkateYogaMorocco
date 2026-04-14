@@ -50,6 +50,7 @@ Route::post('/bookings', function (\Illuminate\Http\Request $request) {
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');
 Route::view('/about', 'pages.about')->name('about');
+Route::view('/accommodation', 'pages.accommodation')->name('accommodation');
 Route::view('/contact', 'pages.contact')->name('contact');
 
 Route::middleware('auth')->group(function () {
