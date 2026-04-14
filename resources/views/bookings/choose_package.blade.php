@@ -1,49 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="flex-grow flex items-center justify-center pt-24 pb-32 px-4">
-    <div class="max-w-5xl w-full">
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <p class="text-primary-container font-medium tracking-wide uppercase text-xs mb-3">Start your journey</p>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-tight">
-                How would you like to book?
-            </h1>
-        </div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header Section -->
+    <div class="text-center mb-16">
+        <p class="text-primary font-medium tracking-wide uppercase text-xs mb-3">Choose your experience</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-darkCharcoal tracking-tight leading-tight">
+            Select Your Package
+        </h1>
+    </div>
 
-        <!-- The Dynamic Package Cards Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            @forelse($packages as $package)
-                <!-- Package Card -->
-                <a href="{{ route('bookings.create', ['package_id' => $package->id]) }}" class="group relative bg-surface-container-lowest rounded-2xl p-8 shadow-[0_20px_40px_rgba(24,28,30,0.06)] transition-all duration-300 hover:scale-105 border-4 border-transparent hover:border-primary-container/20 cursor-pointer block text-decoration-none">
-                    <div class="flex flex-col h-full">
-                        <div class="mb-8 flex">
-                            <div class="w-14 h-14 rounded-xl bg-primary-fixed flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-3xl">explore</span>
-                            </div>
+    <!-- Packages Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        @forelse($packages as $package)
+            <a href="{{ route('bookings.create', $package->id) }}" class="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale block text-decoration-none transition-all hover:shadow-2xl">
+                <!-- Package Image -->
+                <div class="relative h-72 overflow-hidden">
+                    @if($package->image_path)
+                        <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('storage/' . $package->image_path) }}">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-8xl opacity-30">image</span>
                         </div>
-                        <div class="mb-10">
-                            <h2 class="text-2xl font-bold text-on-surface mb-3">{{ $package->name }}</h2>
-                            <p class="text-on-surface-variant leading-relaxed opacity-80">
-                                {{ $package->description }}
-                            </p>
+                    @endif
+                    <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">Featured</span>
+                </div>
+
+                <!-- Package Info -->
+                <div class="p-10">
+                    <h3 class="text-2xl font-extrabold mb-4 uppercase leading-tight text-darkCharcoal">{{ $package->name }}</h3>
+                    <p class="text-gray-600 text-sm mb-6 line-clamp-2">{{ $package->description }}</p>
+
+                    <div class="flex items-center text-primary font-bold text-sm mb-6">
+                        <span>8 Days</span>
+                        <span class="mx-3 opacity-30">|</span>
+                        <span>Expert Level</span>
+                    </div>
+
+                    <!-- Price & CTA -->
+                    <div class="flex items-center justify-between pt-6 border-t border-gray-100">
+                        <div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold block mb-1">Price starts at</span>
+                            <span class="text-3xl font-extrabold text-darkCharcoal">€{{ number_format($package->base_price, 0) }}</span>
                         </div>
-                        <div class="mt-auto">
-                            <div class="w-full bg-primary-container hover:bg-primary text-white font-bold py-4 px-6 rounded-full transition-all duration-200 transform active:scale-95 shadow-lg shadow-primary-container/20 uppercase tracking-widest text-xs text-center">
-                                Select Package
-                            </div>
+                        <div class="bg-primary text-white p-4 rounded-full group-hover:bg-darkCharcoal transition-colors">
+                            <svg class="lucide lucide-arrow-right" fill="none" height="20" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                         </div>
                     </div>
-                </a>
-            @empty
-                <div class="col-span-full text-center py-12 text-gray-500">No packages available</div>
-            @endforelse
-        </div>
+                </div>
+            </a>
+        @empty
+            <div class="col-span-full text-center py-16 text-gray-500">
+                <span class="material-symbols-outlined text-6xl opacity-30 mb-4">inbox</span>
+                <p class="text-lg">No packages available</p>
+            </div>
+        @endforelse
+    </div>
 
-        <!-- Aesthetic Layering Image Decor -->
-        <div class="mt-12 flex justify-center opacity-30">
-            <img alt="Coastal landscape" class="w-full max-w-2xl h-48 object-cover rounded-2xl" data-alt="blurred aerial view of a turquoise Mediterranean bay with soft white sand and gentle waves at morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLNb3u7d6hcJQUoN5WhYmzTtMzDZ4wPWlOzHp4LygWed3_FLcDskpH6N8szItlMknwKkg7fp9ZjFo2-Hsto7SXtdJ_2MwWmloYq7kALX-KQWsSTMfliQp3HUxZyUhKRbGUtkrAHilyHfXMf17B41X23fWq3w_YUOBmn_qAlgX4J8TU80gw56UKjx2wDqslGO9U9h23GKojMq59hArW9TJmAoymH5KY2r9HLOQDqmGBOEtRXQgO1TszWlbv0gbyovYp9doyKhwkDhk"/>
-        </div>
+    <!-- Back Button -->
+    <div class="mt-16 flex justify-center">
+        <a href="{{ route('bookings.decide') }}" class="border-2 border-primary text-primary px-8 py-3 rounded-full font-bold hover:bg-primary hover:text-white transition-all">
+            ← Back to Options
+        </a>
     </div>
 </main>
 @endsection
