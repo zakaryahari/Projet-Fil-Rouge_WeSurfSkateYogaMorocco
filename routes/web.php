@@ -14,6 +14,22 @@ Route::get('/', function () {
 // Public Package Details Route
 Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
+// Public Booking Routes
+Route::get('/bookings/choose-package', function () {
+    return view('bookings.choose_package', [
+        'packages' => \App\Models\Package::all(),
+    ]);
+})->name('bookings.choose');
+
+Route::get('/bookings/{package_id}/create', function ($package_id) {
+    $package = \App\Models\Package::findOrFail($package_id);
+    return view('bookings.create', [
+        'package' => $package,
+        'rooms' => \App\Models\Room::all(),
+        'activities' => \App\Models\Activity::where('is_extra', true)->get(),
+    ]);
+})->name('bookings.create');
+
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');
 Route::view('/about', 'pages.about')->name('about');
