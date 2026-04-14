@@ -8,7 +8,7 @@
         <a class="hover:text-primary transition-colors" href="#">Yoga</a>
         <a class="hover:text-primary transition-colors" href="#">Surf</a>
         <a class="hover:text-primary transition-colors" href="#">Skate</a>
-        <a class="hover:text-primary transition-colors" href="#">Accommodation</a>
+        <a class="hover:text-primary transition-colors" href="{{ route('accommodation') }}">Accommodation</a>
         <a class="hover:text-primary transition-colors" href="{{ route('events') }}">Événements</a>
         <a class="hover:text-primary transition-colors" href="{{ route('about') }}">À Propos</a>
         <a class="hover:text-primary transition-colors" href="{{ route('contact') }}">Contact</a>
