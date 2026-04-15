@@ -13,21 +13,21 @@
                 </h1>
             </div>
             <div class="space-y-6">
-                <a class="inline-flex items-center gap-3 bg-green-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-green-600 transition-all active:scale-95" href="https://wa.me/212671638705" target="_blank">
+                <a class="inline-flex items-center gap-3 bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-darkCharcoal transition-all active:scale-95" href="https://wa.me/212671638705" target="_blank">
                     <span class="material-symbols-outlined" data-icon="chat">chat</span>
                     WhatsApp Chat
                 </a>
                 <div class="flex items-center gap-4">
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:bg-darkCharcoal transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="facebook">social_leaderboard</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:bg-darkCharcoal transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="post_add">post_add</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:bg-darkCharcoal transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
                     </a>
-                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 text-darkCharcoal hover:bg-primary hover:text-white transition-all" href="#">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:bg-darkCharcoal transition-all" href="#">
                         <span class="material-symbols-outlined text-lg" data-icon="push_pin">push_pin</span>
                     </a>
                 </div>
@@ -53,12 +53,12 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-2">
-                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">Email Address <span class="text-primary">*</span></label>
-                        <input class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3.5 transition-all text-on-surface" placeholder="john@example.com" required="" type="email"/>
+                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-slate-600">Email Address <span class="text-primary">*</span></label>
+                        <input class="w-full bg-slate-50 border border-slate-300 focus:border-primary focus:ring-0 rounded-lg px-4 py-3.5 transition-all text-slate-900" placeholder="john@example.com" required="" type="email"/>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">Subject</label>
-                        <select class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3.5 transition-all text-on-surface appearance-none">
+                        <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-slate-600">Subject</label>
+                        <select class="w-full bg-slate-50 border border-slate-300 focus:border-primary focus:ring-0 rounded-lg px-4 py-3.5 transition-all text-slate-900 appearance-none">
                             <option>General Inquiry</option>
                             <option>Package Booking</option>
                             <option>Accommodation</option>
@@ -67,10 +67,10 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">Message</label>
-                    <textarea class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3.5 transition-all text-on-surface resize-none" placeholder="Tell us about your next adventure..." rows="6"></textarea>
+                    <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-slate-600">Message</label>
+                    <textarea class="w-full bg-slate-50 border border-slate-300 focus:border-primary focus:ring-0 rounded-lg px-4 py-3.5 transition-all text-slate-900 resize-none" placeholder="Tell us about your next adventure..." rows="6"></textarea>
                 </div>
-                <button class="w-full bg-primary-container text-white py-4 rounded-full font-bold text-lg hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_8px_20px_rgba(0,174,239,0.3)]" type="submit">
+                <button class="w-full bg-primary text-white py-4 rounded-full font-bold text-lg hover:bg-darkCharcoal active:scale-[0.98] transition-all shadow-lg" type="submit">
                     Submit Message
                 </button>
             </form>
@@ -81,30 +81,30 @@
     <section class="max-w-7xl mx-auto px-8 mt-24">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Address Card -->
-            <div class="bg-surface-container-lowest p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
-                <div class="w-12 h-12 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mb-6">
+            <div class="bg-white p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
+                <div class="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
                     <span class="material-symbols-outlined" data-icon="location_on">location_on</span>
                 </div>
                 <h3 class="text-lg font-bold mb-2">Our Base</h3>
-                <p class="text-on-surface-variant leading-relaxed">Hay Aitsoual Tamraght, <br/>Agadir 80030, Morocco</p>
+                <p class="text-slate-600 leading-relaxed">Hay Aitsoual Tamraght, <br/>Agadir 80030, Morocco</p>
             </div>
 
             <!-- Phone Card -->
-            <div class="bg-surface-container-lowest p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
-                <div class="w-12 h-12 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mb-6">
+            <div class="bg-white p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
+                <div class="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
                     <span class="material-symbols-outlined" data-icon="call">call</span>
                 </div>
                 <h3 class="text-lg font-bold mb-2">Call Us</h3>
-                <p class="text-on-surface-variant leading-relaxed">+212 671 638 705 <br/>Available 9AM - 8PM (GMT)</p>
+                <p class="text-slate-600 leading-relaxed">+212 671 638 705 <br/>Available 9AM - 8PM (GMT)</p>
             </div>
 
             <!-- Email Card -->
-            <div class="bg-surface-container-lowest p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
-                <div class="w-12 h-12 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mb-6">
+            <div class="bg-white p-8 rounded-2xl transition-transform hover:-translate-y-2 duration-300">
+                <div class="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
                     <span class="material-symbols-outlined" data-icon="mail">mail</span>
                 </div>
                 <h3 class="text-lg font-bold mb-2">Email Us</h3>
-                <p class="text-on-surface-variant leading-relaxed">contact@skatesurfmorocco.com <br/>Replies within 24 hours</p>
+                <p class="text-slate-600 leading-relaxed">contact@skatesurfmorocco.com <br/>Replies within 24 hours</p>
             </div>
         </div>
     </section>
@@ -116,7 +116,7 @@
             <img alt="Map of Tamraght" class="w-full h-full object-cover grayscale-map opacity-80 group-hover:opacity-100 transition-opacity duration-700" data-alt="Grayscale stylized map centered on Tamraght Morocco coastline" data-location="Tamraght, Agadir" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgFnoc3FLuUkIvIXD17k5I03_rprWrS3UMFP-KcviaqTIIa9yM1WiYD8XeL1_r9M6kM_RaY2QS8zSqAuJmGYE4ZutP-hNcXpzTnSQtkFOAGHlZ3Vvfp-3uwthrtzu5nqy5m5utnBG3B9ZZdBtCsy9ivi3LSfuy4oT8Js_ZB9IXybht05BFF5TUl2eo6qnLwLTrY5BINYY5fI6YtQNfv0oaAq2AQDSpMv4ZhG7vop40QPbSZU1kUUTZoJP1rOqUKeOPWc07sLXW3w0"/>
             <!-- Floating Map Card -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-2xl shadow-2xl flex items-center gap-4 border border-outline-variant/15">
-                <div class="w-10 h-10 bg-primary-container text-white rounded-full flex items-center justify-center">
+                <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center">
                     <span class="material-symbols-outlined" data-icon="explore">explore</span>
                 </div>
                 <div>
