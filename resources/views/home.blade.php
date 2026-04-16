@@ -89,51 +89,78 @@
     </section>
     <!-- END: Welcome Section -->
 
-    <!-- BEGIN: Packages Section -->
+    <!-- BEGIN: Packages Carousel Section -->
     <section class="py-24 bg-gray-50" id="packages">
         <div class="container mx-auto px-6 text-center mb-16">
             <span class="text-primary font-extrabold tracking-widest uppercase text-xs mb-4 block">Tailored Experiences</span>
             <h2 class="text-4xl md:text-5xl font-extrabold text-darkCharcoal uppercase tracking-tighter">Our Packages</h2>
         </div>
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            @forelse($packages as $package)
-                <!-- Package Card -->
-                <a href="{{ route('packages.show', $package->id) }}" class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale group block text-decoration-none transition-all hover:shadow-2xl">
-                    <div class="relative h-72 overflow-hidden">
-                        @if($package->image_path)
-                            <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('storage/' . $package->image_path) }}">
-                        @else
-                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-8xl opacity-30">image</span>
-                            </div>
-                        @endif
-                        <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">New</span>
-                    </div>
-                    <div class="p-10">
-                        <h3 class="text-2xl font-extrabold mb-4 uppercase leading-tight">{{ $package->name }}</h3>
-                        <p class="text-gray-600 text-sm mb-6 line-clamp-2">{{ $package->description }}</p>
-                        <div class="flex items-center text-primary font-bold text-sm mb-6">
-                            <span>8 Days</span>
-                            <span class="mx-3 opacity-30">|</span>
-                            <span>Expert Level</span>
+
+        <!-- Alpine Carousel Wrapper -->
+        <div x-data="{
+            scrollNext() {
+                this.$refs.slider.scrollBy({ left: 400, behavior: 'smooth' });
+            },
+            scrollPrev() {
+                this.$refs.slider.scrollBy({ left: -400, behavior: 'smooth' });
+            }
+        }" class="container mx-auto px-6 relative">
+
+            <!-- Previous Button -->
+            <button @click="scrollPrev()" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-primary text-white p-3 rounded-full hover:bg-darkCharcoal transition-colors shadow-lg hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Scrollable Container -->
+            <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth" style="scroll-behavior: smooth;">
+                @forelse($packages as $package)
+                    <!-- Package Card -->
+                    <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 w-80 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
+                        <div class="relative h-72 overflow-hidden">
+                            @if($package->image_path)
+                                <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('storage/' . $package->image_path) }}">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-8xl opacity-30">image</span>
+                                </div>
+                            @endif
+                            <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">New</span>
                         </div>
-                        <div class="flex items-center justify-between pt-6 border-t border-gray-100">
-                            <div>
-                                <span class="text-gray-400 text-[10px] uppercase font-bold block mb-1">Price starts at</span>
-                                <span class="text-3xl font-extrabold text-darkCharcoal">€{{ number_format($package->base_price, 0) }}</span>
+                        <div class="p-10">
+                            <h3 class="text-2xl font-extrabold mb-4 uppercase leading-tight">{{ $package->name }}</h3>
+                            <p class="text-gray-600 text-sm mb-6 line-clamp-2">{{ $package->description }}</p>
+                            <div class="flex items-center text-primary font-bold text-sm mb-6">
+                                <span>{{ $package->duration_days }} Days</span>
+                                <span class="mx-3 opacity-30">|</span>
+                                <span>Expert Level</span>
                             </div>
-                            <div class="bg-primary text-white p-4 rounded-full group-hover:bg-darkCharcoal transition-colors">
-                                <svg class="lucide lucide-arrow-right" fill="none" height="20" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            <div class="flex items-center justify-between pt-6 border-t border-gray-100">
+                                <div>
+                                    <span class="text-gray-400 text-[10px] uppercase font-bold block mb-1">Price starts at</span>
+                                    <span class="text-3xl font-extrabold text-darkCharcoal">€{{ number_format($package->base_price, 0) }}</span>
+                                </div>
+                                <div class="bg-primary text-white p-4 rounded-full group-hover:bg-darkCharcoal transition-colors">
+                                    <svg class="lucide lucide-arrow-right" fill="none" height="20" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            @empty
-                <div class="col-span-full text-center py-12 text-gray-500">No packages available</div>
-            @endforelse
+                    </a>
+                @empty
+                    <div class="w-full text-center py-12 text-gray-500">No packages available</div>
+                @endforelse
+            </div>
+
+            <!-- Next Button -->
+            <button @click="scrollNext()" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-primary text-white p-3 rounded-full hover:bg-darkCharcoal transition-colors shadow-lg hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
     </section>
-    <!-- END: Packages Section -->
+    <!-- END: Packages Carousel Section -->
 
     <!-- BEGIN: Accommodation Section -->
     <section class="py-24 bg-white" id="accommodation">
