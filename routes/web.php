@@ -37,10 +37,10 @@ Route::post('/bookings', function (\Illuminate\Http\Request $request) {
         'start_date' => 'required|date|after_or_equal:today',
         'end_date' => 'required|date|after:start_date',
         'room_id' => 'required|exists:rooms,id',
-        'activities' => 'array|nullable',
+        'events' => 'array|nullable',
     ]);
 
-    return redirect()->route('bookings.create', ['package_id' => $request->package_id])->with('success', 'Booking submitted! (To be implemented)');
+    return redirect()->route('bookings.packages')->with('success', 'Booking submitted! (To be implemented)');
 })->name('bookings.store');
 
 // Public Static Pages Routes

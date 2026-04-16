@@ -32,8 +32,8 @@
                     <h2 class="text-2xl font-bold">Step 1: Your Package</h2>
                 </div>
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <h3 class="text-xl font-bold text-on-surface mb-2">{{ $package->name }}</h3>
-                    <p class="text-on-surface-variant mb-4">{{ $package->description }}</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">{{ $package->name }}</h3>
+                    <p class="text-slate-600 mb-4">{{ $package->description }}</p>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-slate-500 dark:text-slate-400">Base Price</span>
                         <span class="text-2xl font-bold text-primary">€{{ number_format($package->base_price, 2) }}</span>
@@ -89,13 +89,13 @@
                     <h2 class="text-2xl font-bold">Step 4: Add Extras (Optional)</h2>
                 </div>
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
-                    @forelse($activities as $activity)
+                    @forelse($events as $event)
                         <label class="flex items-center p-4 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
-                            <input type="checkbox" name="activities[]" value="{{ $activity->id }}" class="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary"/>
+                            <input type="checkbox" name="events[]" value="{{ $event->id }}" class="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary"/>
                             <div class="ml-4 flex-grow">
-                                <p class="font-semibold text-on-surface">{{ $activity->name }}</p>
+                                <p class="font-semibold text-slate-900">{{ $event->title }}</p>
                             </div>
-                            <p class="font-bold text-primary">+€{{ number_format($activity->price, 2) }}</p>
+                            <p class="font-bold text-primary">+€{{ number_format($event->price, 2) }}</p>
                         </label>
                     @empty
                         <div class="text-center py-8 text-gray-500">No extras available</div>
@@ -145,7 +145,7 @@
             <input type="hidden" name="package_id" value="{{ $package->id }}"/>
 
             <div class="flex gap-4">
-                <a href="{{ route('bookings.choose') }}" class="flex-1 border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-bold text-lg hover:border-slate-400 transition-all flex items-center justify-center gap-2">
+                <a href="{{ route('bookings.packages') }}" class="flex-1 border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-bold text-lg hover:border-slate-400 transition-all flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined">arrow_back</span>
                     <span>Back</span>
                 </a>
