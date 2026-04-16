@@ -14,11 +14,11 @@ class Booking extends Model
         'user_id',
         'package_id',
         'room_id',
-        'payment_id',
         'start_date',
         'end_date',
+        'total_price',
+        'payment_status',
         'status',
-        'totalPrice',
     ];
 
     protected $casts = [
@@ -31,13 +31,6 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    
-    public function payment()
-    {
-        return $this->belongsTo(Payment::class);
-    }
-
-
     public function room()
     {
         return $this->belongsTo(Room::class);
@@ -48,9 +41,9 @@ class Booking extends Model
         return $this->belongsTo(Package::class);
     }
 
-    public function activities()
+    public function events()
     {
-        return $this->belongsToMany(Activity::class, 'booking_items')
+        return $this->belongsToMany(Event::class, 'booking_event')
                     ->withPivot('quantity')
                     ->withTimestamps();
     }

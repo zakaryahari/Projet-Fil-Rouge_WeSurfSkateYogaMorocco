@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Booking;
-use App\Models\Lesson;
-use App\Models\LessonPackage;
+use App\Models\Activity;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class Package extends Model
     /** @use HasFactory<\Database\Factories\PackageFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'base_price', 'image_path'];
+    protected $fillable = ['name', 'description', 'duration_days', 'base_price', 'image_path'];
 
 
     public function bookings()
@@ -21,11 +21,15 @@ class Package extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function lessons()
+    public function activities()
     {
-        return $this->belongsToMany(Lesson::class, 'lesson_package')
-                    ->using(LessonPackage::class)
-                    ->withPivot('numberOfSessions')
+        return $this->belongsToMany(Activity::class, 'activity_package')
+                    ->withPivot('included_sessions')
                     ->withTimestamps();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
