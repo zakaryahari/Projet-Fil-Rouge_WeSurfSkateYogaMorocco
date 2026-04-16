@@ -99,10 +99,10 @@
         <!-- Alpine Carousel Wrapper -->
         <div x-data="{
             scrollNext() {
-                this.$refs.slider.scrollBy({ left: 400, behavior: 'smooth' });
+                this.$refs.slider.scrollBy({ left: 420, behavior: 'smooth' });
             },
             scrollPrev() {
-                this.$refs.slider.scrollBy({ left: -400, behavior: 'smooth' });
+                this.$refs.slider.scrollBy({ left: -420, behavior: 'smooth' });
             }
         }" class="container mx-auto px-6 relative">
 
@@ -117,7 +117,7 @@
             <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth" style="scroll-behavior: smooth;">
                 @forelse($packages as $package)
                     <!-- Package Card -->
-                    <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 w-80 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
+                    <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 min-w-[calc(33.333%-1rem)] snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
                         <div class="relative h-72 overflow-hidden">
                             @if($package->image_path)
                                 <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('storage/' . $package->image_path) }}">
