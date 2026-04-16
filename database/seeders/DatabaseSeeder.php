@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name'     => 'Admin WeSurf',
             'email'    => 'admin@wesurfskate.com',
-            'phone'    => '+212600000000',
+            'phone_number' => '+212600000000',
             'password' => Hash::make('password'),
             'role'     => 'admin',
         ]);
@@ -31,19 +31,76 @@ class DatabaseSeeder extends Seeder
         $fatima  = Coach::create(['name' => 'Fatima Zahra',      'specialty' => 'Yoga',  'years_experience' => 7]);
 
         // ─── Rooms ────────────────────────────────────────────────────────────
-        Room::create(['type' => 'Chambre Single',  'price_per_night' => 50, 'total_stock' => 5]);
-        Room::create(['type' => 'Chambre Double',  'price_per_night' => 80, 'total_stock' => 8]);
-        Room::create(['type' => 'Dortoir Partagé', 'price_per_night' => 25, 'total_stock' => 14]);
+        Room::create([
+            'name' => 'Single Private Room',
+            'type' => 'Chambre Single',
+            'capacity' => 1,
+            'price_per_night' => 50,
+            'total_stock' => 5,
+            'is_active' => true,
+            'image_path' => 'images/rooms/single.jpg',
+        ]);
+        Room::create([
+            'name' => 'Double Comfort Room',
+            'type' => 'Chambre Double',
+            'capacity' => 2,
+            'price_per_night' => 80,
+            'total_stock' => 8,
+            'is_active' => true,
+            'image_path' => 'images/rooms/double.jpg',
+        ]);
+        Room::create([
+            'name' => 'Shared Dorm',
+            'type' => 'Dortoir Partagé',
+            'capacity' => 6,
+            'price_per_night' => 25,
+            'total_stock' => 14,
+            'is_active' => true,
+            'image_path' => 'images/rooms/dorm.jpg',
+        ]);
 
         // ─── Packages ─────────────────────────────────────────────────────────
-        Package::create(['name' => 'Surf Discovery',        'description' => 'Initiation au surf avec coach certifié, matériel inclus.',          'base_price' => 150]);
-        Package::create(['name' => 'Yoga Retreat',          'description' => "Retraite yoga au bord de l'océan, sessions matin et soir.",         'base_price' => 120]);
-        Package::create(['name' => 'Ultimate Surf & Skate', 'description' => 'Combinaison surf et skate pour les aventuriers, 6 jours intenses.', 'base_price' => 180]);
+        Package::create([
+            'name' => 'Surf Discovery',
+            'description' => 'Initiation au surf avec coach certifié, matériel inclus.',
+            'duration_days' => 3,
+            'base_price' => 150,
+            'is_active' => true,
+            'image_path' => 'images/packages/surf-discovery.jpg',
+        ]);
+        Package::create([
+            'name' => 'Yoga Retreat',
+            'description' => "Retraite yoga au bord de l'océan, sessions matin et soir.",
+            'duration_days' => 5,
+            'base_price' => 120,
+            'is_active' => true,
+            'image_path' => 'images/packages/yoga-retreat.jpg',
+        ]);
+        Package::create([
+            'name' => 'Ultimate Surf & Skate',
+            'description' => 'Combinaison surf et skate pour les aventuriers, 6 jours intenses.',
+            'duration_days' => 6,
+            'base_price' => 180,
+            'is_active' => true,
+            'image_path' => 'images/packages/ultimate.jpg',
+        ]);
 
         // ─── Activities (Extras) ──────────────────────────────────────────────
-        Activity::create(['coach_id' => $youssef->id, 'name' => 'Location Surfboard',   'price' => 20, 'is_extra' => true]);
-        Activity::create(['coach_id' => $fatima->id,  'name' => 'Massage Relaxant',     'price' => 35, 'is_extra' => true]);
-        Activity::create(['coach_id' => $omar->id,    'name' => 'Sunset Skate Session', 'price' => 25, 'is_extra' => true]);
+        Activity::create([
+            'coach_id' => $youssef->id,
+            'name' => 'Location Surfboard',
+            'duration_minutes' => 120,
+        ]);
+        Activity::create([
+            'coach_id' => $fatima->id,
+            'name' => 'Massage Relaxant',
+            'duration_minutes' => 60,
+        ]);
+        Activity::create([
+            'coach_id' => $omar->id,
+            'name' => 'Sunset Skate Session',
+            'duration_minutes' => 90,
+        ]);
 
         // ─── Customers & Bookings ─────────────────────────────────────────────
         $roomIds    = Room::pluck('id');
@@ -60,8 +117,9 @@ class DatabaseSeeder extends Seeder
                     'package_id' => $packageIds->random(),
                     'start_date' => $booking->start_date,
                     'end_date'   => $booking->end_date,
+                    'total_price' => $booking->total_price,
+                    'payment_status' => $booking->payment_status,
                     'status'     => $booking->status,
-                    'totalPrice' => $booking->totalPrice,
                 ]);
             }
         });

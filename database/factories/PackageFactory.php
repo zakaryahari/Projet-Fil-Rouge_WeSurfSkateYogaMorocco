@@ -4,16 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Package>
- */
 class PackageFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
@@ -21,6 +13,7 @@ class PackageFactory extends Factory
             'description'   => $this->faker->paragraph(3),
             'duration_days' => $this->faker->randomElement([3, 5, 7, 10, 14]),
             'base_price'    => $this->faker->randomFloat(2, 200, 2000),
+            'is_active'     => true,
             'image_path'    => 'images/packages/' . $this->faker->slug(2) . '.jpg',
         ];
     }
