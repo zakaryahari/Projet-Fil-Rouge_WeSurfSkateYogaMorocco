@@ -15,6 +15,9 @@ class BookingFactory extends Factory
         );
 
         return [
+            'user_id'         => \App\Models\User::factory(),
+            'room_id'         => \App\Models\Room::factory(),
+            'package_id'      => \App\Models\Package::factory(),
             'start_date'      => $startDate,
             'end_date'        => $endDate,
             'total_price'     => fake()->randomFloat(2, 150, 500),

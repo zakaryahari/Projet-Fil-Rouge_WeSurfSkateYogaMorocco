@@ -17,7 +17,9 @@ class CoachFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name'               => $this->faker->name(),
+            'specialty'          => $this->faker->randomElement(['Surf', 'Skate', 'Yoga']),
+            'years_experience'   => $this->faker->numberBetween(1, 15),
         ];
     }
 }

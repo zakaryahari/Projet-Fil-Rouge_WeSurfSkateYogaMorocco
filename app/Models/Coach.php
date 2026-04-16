@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Coach extends Model
 {
+    /** @use HasFactory<\Database\Factories\CoachFactory> */
+    use HasFactory;
+
     protected $fillable = ['name', 'specialty', 'years_experience'];
 
     public function activities()
