@@ -13,7 +13,6 @@ class PackageFactory extends Factory
             'description'   => $this->faker->paragraph(3),
             'duration_days' => $this->faker->randomElement([3, 5, 7, 10, 14]),
             'base_price'    => $this->faker->randomFloat(2, 200, 2000),
-            'is_active'     => true,
             'image_path'    => 'images/packages/' . $this->faker->slug(2) . '.jpg',
         ];
     }

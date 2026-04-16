@@ -20,7 +20,6 @@ class ActivityFactory extends Factory
             'coach_id'         => \App\Models\Coach::factory(),
             'name'             => $this->faker->randomElement(['Surf Lesson', 'Skateboard Basics', 'Yoga Flow', 'Advanced Surfing', 'Meditation', 'Skate Tricks']),
             'duration_minutes' => $this->faker->randomElement([30, 45, 60, 90, 120]),
-            'image_path'       => 'images/activities/' . $this->faker->slug(2) . '.jpg',
         ];
     }
 }

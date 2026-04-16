@@ -12,7 +12,7 @@ class Activity extends Model
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
     
-    protected $fillable = ['coach_id', 'name', 'duration_minutes', 'image_path'];
+    protected $fillable = ['coach_id', 'name', 'duration_minutes'];
 
     public function coach()
     {

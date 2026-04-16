@@ -1,0 +1,127 @@
+Act as a Senior Laravel Architect. We are locking in the final database architecture for my WeSurfSkate platform MVP. I need to update my existing Laravel ecosystem to perfectly match my finalized PlantUML Class Diagram (provided below).
+
+CRITICAL RULES:
+
+Read the UML carefully. Notice the exact attributes (e.g., is_active boolean, duration_days integer, capacity integer) and the relationships.
+
+Assume I am going to run php artisan migrate:fresh --seed. Therefore, give me the complete code to overwrite my existing files, not just small patches.
+
+We will do this sequentially to avoid truncated responses. For each step, provide the exact PHP code and the Git commit command (in French). Wait for me to type "Next" before moving to the following step.
+
+Step 1: The Core Migrations
+Provide the complete up() and down() methods to overwrite the migration files for users, coaches, rooms, packages, activities, and events.
+(Wait for my confirmation)
+
+Step 2: Pivot & Review Migrations
+Provide the complete code for the activity_package pivot migration (must include integer included_sessions), the booking_event pivot migration (acting as BookingItem for extras, with integer quantity), the bookings migration, and the reviews migration. Ensure all foreign keys use constrained()->cascadeOnDelete().
+(Wait for my confirmation)
+
+Step 3: Eloquent Models
+Provide the updated code for all Models (User, Coach, Room, Package, Activity, Event, Booking, Review). I need the complete $fillable arrays and the exact relationship methods (hasMany, belongsTo, belongsToMany).
+(Wait for my confirmation)
+
+Step 4: Model Factories
+Provide the updated code for the RoomFactory, PackageFactory, and EventFactory. Use Faker to generate realistic data for the new attributes (like capacity, duration_days, is_active, and a fake image_path string).
+(Wait for my confirmation)
+
+
+@startuml
+skinparam classAttributeIconSize 0
+
+class User {
+  - id : int
+  - name : string
+  - email : string
+  - phone_number : string
+  - password : string
+  - role : string <<admin, customer>>
+}
+
+class Coach {
+  - id : int
+  - name : string
+  - specialty : string
+  - years_experience : int
+}
+
+class Room {
+  - id : int
+  - name : string
+  - type : string
+  - capacity : int
+  - price_per_night : float
+  - total_stock : int
+  - is_active : boolean
+  - image_path : string
+}
+
+class Package {
+  - id : int
+  - name : string
+  - description : text
+  - duration_days : int
+  - base_price : float
+  - image_path : string
+}
+
+class Activity {
+  - id : int
+  - name : string
+  - duration_minutes : int
+}
+
+class PackageActivity <<Pivot>> {
+  - included_sessions : int
+}
+
+class Event {
+  - id : int
+  - title : string
+  - description : text
+  - event_date : datetime
+  - max_participants : int
+  - price : float
+  - image_path : string
+}
+
+class Booking {
+  - id : int
+  - start_date : date
+  - end_date : date
+  - total_price : float
+  - payment_status : string <<pending, paid, failed>>
+  - status : string <<pending, confirmed, finished, cancelled>>
+}
+
+class BookingItem <<Pivot>> {
+  - quantity : int
+}
+
+class Review {
+  - id : int
+  - rating : int
+  - comment : text
+}
+
+' Core Booking Relationships
+User "1" -- "0..*" Booking : makes >
+Booking "1" -- "1" Room : reserves >
+Booking "1" -- "1" Package : requires >
+
+' Review Logic (The Airbnb Method)
+User "1" -- "0..*" Review : writes >
+Booking "1" -- "0..1" Review : triggers >
+Package "1" -- "0..*" Review : displays >
+
+' Booking Extras (Events)
+Booking "1" -- "0..*" BookingItem : contains >
+BookingItem "0..*" -- "1" Event : references >
+
+' Package Inclusions 
+Package "1" -- "0..*" PackageActivity : includes >
+PackageActivity "0..*" -- "1" Activity : references >
+
+' The Coach Assignment
+Coach "1" -- "0..*" Activity : leads >
+
+@enduml

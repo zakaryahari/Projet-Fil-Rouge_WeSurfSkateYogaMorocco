@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('coach_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('duration_minutes');
-            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

@@ -65,7 +65,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Initiation au surf avec coach certifié, matériel inclus.',
             'duration_days' => 3,
             'base_price' => 150,
-            'is_active' => true,
             'image_path' => 'images/packages/surf-discovery.jpg',
         ]);
         Package::create([
@@ -73,7 +72,6 @@ class DatabaseSeeder extends Seeder
             'description' => "Retraite yoga au bord de l'océan, sessions matin et soir.",
             'duration_days' => 5,
             'base_price' => 120,
-            'is_active' => true,
             'image_path' => 'images/packages/yoga-retreat.jpg',
         ]);
         Package::create([
@@ -81,7 +79,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Combinaison surf et skate pour les aventuriers, 6 jours intenses.',
             'duration_days' => 6,
             'base_price' => 180,
-            'is_active' => true,
             'image_path' => 'images/packages/ultimate.jpg',
         ]);
 
