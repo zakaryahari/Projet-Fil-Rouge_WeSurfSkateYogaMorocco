@@ -26,7 +26,7 @@ Route::get('/bookings/{package_id}/create', function ($package_id) {
     return view('bookings.create', [
         'package' => $package,
         'rooms' => \App\Models\Room::all(),
-        'activities' => \App\Models\Activity::where('is_extra', true)->get(),
+        'events' => \App\Models\Event::all(),
     ]);
 })->name('bookings.create');
 
