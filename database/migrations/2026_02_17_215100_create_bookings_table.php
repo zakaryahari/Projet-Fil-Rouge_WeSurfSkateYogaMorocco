@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('room_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('payment_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('package_id')->constrained()->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['pending', 'confirmed', 'finished', 'cancelled', 'maintenance'])->default('pending');
-            $table->decimal('totalPrice', 8, 2);
+            $table->decimal('total_price', 8, 2);
+            $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'finished', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

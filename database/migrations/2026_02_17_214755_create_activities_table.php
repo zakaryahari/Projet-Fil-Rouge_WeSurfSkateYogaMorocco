@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('coach_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->decimal('price', 8, 2);
-            $table->boolean('is_extra')->default(false);
+            $table->integer('duration_minutes');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

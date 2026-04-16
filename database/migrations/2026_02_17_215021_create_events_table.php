@@ -6,27 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->text('description');
-            $table->integer('duration_days');
-            $table->decimal('base_price', 8, 2);
+            $table->dateTime('event_date');
+            $table->integer('max_participants');
+            $table->decimal('price', 8, 2);
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('events');
     }
 };
