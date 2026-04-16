@@ -16,7 +16,7 @@
     <!-- Right Side: Auth Block -->
     <div class="flex items-center space-x-4 lg:space-x-6">
         <!-- Book Now Button -->
-        <a href="{{ route('bookings.decide') }}" class="bg-primary text-white text-[11px] font-bold uppercase tracking-widest px-6 py-2 rounded-full hover:bg-white hover:text-primary transition-colors">
+        <a href="{{ route('bookings.packages') }}" class="bg-primary text-white text-[11px] font-bold uppercase tracking-widest px-6 py-2 rounded-full hover:bg-white hover:text-primary transition-colors">
             Book Now
         </a>
 

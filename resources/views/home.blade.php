@@ -149,7 +149,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
                         <h3 class="text-3xl font-extrabold uppercase mb-2">{{ $room->type }} Room</h3>
                         <p class="text-gray-300 text-sm mb-6">Private sanctuary for all travelers.</p>
-                        <button class="bg-primary text-white text-[10px] font-black py-3 px-8 rounded-full uppercase tracking-widest w-fit hover:bg-white hover:text-primary transition-all">Book Now</button>
+                        <a href="{{ route('bookings.packages') }}" class="bg-primary text-white text-[10px] font-black py-3 px-8 rounded-full uppercase tracking-widest w-fit hover:bg-white hover:text-primary transition-all inline-block">Book Now</a>
                     </div>
                 </div>
             @empty
