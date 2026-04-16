@@ -4,9 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Booking>
- */
 class BookingFactory extends Factory
 {
     public function definition(): array
@@ -18,10 +15,11 @@ class BookingFactory extends Factory
         );
 
         return [
-            'start_date'  => $startDate,
-            'end_date'    => $endDate,
-            'status'      => fake()->randomElement(['pending', 'confirmed', 'finished']),
-            'totalPrice'  => 0, 
+            'start_date'      => $startDate,
+            'end_date'        => $endDate,
+            'total_price'     => fake()->randomFloat(2, 150, 500),
+            'payment_status'  => fake()->randomElement(['pending', 'paid', 'failed']),
+            'status'          => fake()->randomElement(['pending', 'confirmed', 'finished', 'cancelled']),
         ];
     }
 }
