@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('duration_days');
             $table->decimal('base_price', 8, 2);
+            $table->boolean('is_active')->default(true);
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
