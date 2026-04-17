@@ -53,7 +53,7 @@
 
     <!-- Back Button -->
     <div class="mt-16 flex justify-center">
-        <a href="{{ route('bookings.decide') }}" class="border-2 border-primary text-primary px-8 py-3 rounded-full font-bold hover:bg-primary hover:text-white transition-all">
+        <a href="{{ route('home') }}" class="border-2 border-primary text-primary px-8 py-3 rounded-full font-bold hover:bg-primary hover:text-white transition-all">
             ← Back to Options
         </a>
     </div>
