@@ -104,7 +104,7 @@
             scrollPrev() {
                 this.$refs.slider.scrollBy({ left: -400, behavior: 'smooth' });
             }
-        }" class="container mx-auto px-6 relative">
+        }" class="container mx-auto px-6 relative overflow-hidden">
 
             <!-- Previous Button -->
             <button @click="scrollPrev()" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-primary text-white p-3 rounded-full hover:bg-darkCharcoal transition-colors shadow-lg hidden md:flex items-center justify-center">
@@ -114,7 +114,7 @@
             </button>
 
             <!-- Scrollable Container -->
-            <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth" style="scroll-behavior: smooth;">
+            <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth" style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);" data-no-scroll>
                 @forelse($packages as $package)
                     <!-- Package Card -->
                     <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 w-96 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">

@@ -68,6 +68,9 @@
             position: sticky;
             top: 100px;
         }
+        [data-no-scroll]::-webkit-scrollbar {
+            display: none;
+        }
     </style>
     @yield('styles')
 </head>
