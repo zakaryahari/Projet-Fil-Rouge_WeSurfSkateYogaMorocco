@@ -162,20 +162,45 @@
             <span class="text-primary font-extrabold tracking-widest uppercase text-xs mb-4 block">Your Home in Morocco</span>
             <h2 class="text-4xl md:text-5xl font-extrabold text-darkCharcoal uppercase tracking-tighter">Accommodation</h2>
         </div>
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            @forelse($rooms as $room)
-                <!-- Room Card -->
-                <div class="relative group cursor-pointer overflow-hidden rounded-[2rem] h-[450px]" data-purpose="accommodation-card">
-                    <img alt="{{ $room->type }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4wD3YtwVSOUsk7b5grexF5Zi_nrBjPLaQ4IB9xRCzz5a_Ro54xD-V-b3auLWry2XcxLuMSH-q7xd0qzi_467y2TsT3MfX8a4glObKEr7_aPlle9cn9VZX6UJeFcgLvqegLUxMtghLvZFUGXYswdb6L7Dpa0IwIL3yI2yNlUVMXfnLWN8qh-l4AOBsVKbEceC3qYCDeoyJMCLFboLu9q86dA54rq7d1k7y1Jw6FPkzvuiBxQARSXSPiXGGcxwTya2szMJkk2_2jQY"/>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
-                        <h3 class="text-3xl font-extrabold uppercase mb-2">{{ $room->type }} Room</h3>
-                        <p class="text-gray-300 text-sm mb-6">Private sanctuary for all travelers.</p>
-                        <a href="{{ route('bookings.packages') }}" class="bg-primary text-white text-[10px] font-black py-3 px-8 rounded-full uppercase tracking-widest w-fit hover:bg-white hover:text-primary transition-all inline-block">Book Now</a>
+        <div x-data="{
+            scrollNext() {
+                this.$refs.slider.scrollBy({ left: 400, behavior: 'smooth' });
+            },
+            scrollPrev() {
+                this.$refs.slider.scrollBy({ left: -400, behavior: 'smooth' });
+            }
+        }" class="container mx-auto px-6 relative overflow-hidden">
+
+            <!-- Previous Button -->
+            <button @click="scrollPrev()" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-primary text-white p-3 rounded-full hover:bg-darkCharcoal transition-colors shadow-lg hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Scrollable Container -->
+            <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth" style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);" data-no-scroll>
+                @forelse($rooms as $room)
+                    <!-- Room Card -->
+                    <div class="flex-shrink-0 w-96 snap-center relative group cursor-pointer overflow-hidden rounded-[2rem] h-[450px]" data-purpose="accommodation-card">
+                        <img alt="{{ $room->type }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4wD3YtwVSOUsk7b5grexF5Zi_nrBjPLaQ4IB9xRCzz5a_Ro54xD-V-b3auLWry2XcxLuMSH-q7xd0qzi_467y2TsT3MfX8a4glObKEr7_aPlle9cn9VZX6UJeFcgLvqegLUxMtghLvZFUGXYswdb6L7Dpa0IwIL3yI2yNlUVMXfnLWN8qh-l4AOBsVKbEceC3qYCDeoyJMCLFboLu9q86dA54rq7d1k7y1Jw6FPkzvuiBxQARSXSPiXGGcxwTya2szMJkk2_2jQY"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
+                            <h3 class="text-3xl font-extrabold uppercase mb-2">{{ $room->type }} Room</h3>
+                            <p class="text-gray-300 text-sm mb-6">Private sanctuary for all travelers.</p>
+                            <a href="{{ route('bookings.packages') }}" class="bg-primary text-white text-[10px] font-black py-3 px-8 rounded-full uppercase tracking-widest w-fit hover:bg-white hover:text-primary transition-all inline-block">Book Now</a>
+                        </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-span-full text-center py-12 text-gray-500">No rooms available</div>
-            @endforelse
+                @empty
+                    <div class="w-full text-center py-12 text-gray-500">No rooms available</div>
+                @endforelse
+            </div>
+
+            <!-- Next Button -->
+            <button @click="scrollNext()" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-primary text-white p-3 rounded-full hover:bg-darkCharcoal transition-colors shadow-lg hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
     </section>
     <!-- END: Accommodation Section -->
