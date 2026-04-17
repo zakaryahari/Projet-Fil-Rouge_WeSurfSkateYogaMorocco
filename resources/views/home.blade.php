@@ -182,7 +182,7 @@
             <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth" style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);" data-no-scroll>
                 @forelse($rooms as $room)
                     <!-- Room Card -->
-                    <div class="flex-shrink-0 w-96 snap-center relative group cursor-pointer overflow-hidden rounded-[2rem] h-[450px]" data-purpose="accommodation-card">
+                    <div class="flex-shrink-0 w-[500px] snap-center relative group cursor-pointer overflow-hidden rounded-[2rem] h-[450px]" data-purpose="accommodation-card">
                         <img alt="{{ $room->type }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4wD3YtwVSOUsk7b5grexF5Zi_nrBjPLaQ4IB9xRCzz5a_Ro54xD-V-b3auLWry2XcxLuMSH-q7xd0qzi_467y2TsT3MfX8a4glObKEr7_aPlle9cn9VZX6UJeFcgLvqegLUxMtghLvZFUGXYswdb6L7Dpa0IwIL3yI2yNlUVMXfnLWN8qh-l4AOBsVKbEceC3qYCDeoyJMCLFboLu9q86dA54rq7d1k7y1Jw6FPkzvuiBxQARSXSPiXGGcxwTya2szMJkk2_2jQY"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
                             <h3 class="text-3xl font-extrabold uppercase mb-2">{{ $room->type }} Room</h3>
