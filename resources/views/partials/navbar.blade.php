@@ -4,10 +4,7 @@
     </div>
     <nav class="hidden lg:flex items-center space-x-6 text-[11px] font-bold uppercase tracking-widest">
         <a class="hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
-        <a class="hover:text-primary transition-colors" href="#">Packages</a>
-        <a class="hover:text-primary transition-colors" href="#">Yoga</a>
-        <a class="hover:text-primary transition-colors" href="#">Surf</a>
-        <a class="hover:text-primary transition-colors" href="#">Skate</a>
+        <a class="hover:text-primary transition-colors" href="{{ route('packages.index') }}">Packages</a>
         <a class="hover:text-primary transition-colors" href="{{ route('accommodation') }}">Accommodation</a>
         <a class="hover:text-primary transition-colors" href="{{ route('events') }}">Événements</a>
         <a class="hover:text-primary transition-colors" href="{{ route('about') }}">À Propos</a>

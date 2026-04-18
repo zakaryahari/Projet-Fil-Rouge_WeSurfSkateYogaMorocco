@@ -12,7 +12,18 @@ Route::get('/', function () {
 })->name('home');
 
 // Public Package Details Route
-Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
+Route::get('/packages', function () {
+    return view('pages.packages', [
+        'packages' => \App\Models\Package::all(),
+    ]);
+})->name('packages.index');
+
+Route::get('/packages/{id}', function ($id) {
+    $package = \App\Models\Package::findOrFail($id);
+    return view('pages.packages-detail', [
+        'package' => $package,
+    ]);
+})->name('packages.detail');
 
 // Public Booking Routes
 Route::get('/bookings/packages', function () {
