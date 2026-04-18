@@ -117,7 +117,7 @@
             <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth" style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);" data-no-scroll>
                 @forelse($packages as $package)
                     <!-- Package Card -->
-                    <a href="{{ route('packages.detail', $package->id) }}" class="flex-shrink-0 w-96 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
+                    <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 w-96 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
                         <div class="relative h-72 overflow-hidden">
                             <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGi8OeFWu9tfG3iiv560d8YpJpNV8cPzTniZ5xEpNtTVCQ4sE9wvPwFm7LWQtzCwLrtqkj5Ii-HysBhZfOc_FIjJiKAhAk_K_QaE1mllarUW3JCXCHt2NOXXQdkxlD82db2C7Ld22QZlJ_v3LRoxmzDoF1qTaFdjBZJi-5lRtK1V4MBP5I_hxhBoNA47wkRcaiucd0Hl6Ba87cDviO7ZfN8zjdOWMdPIZ_IINAUlLuf9U2vVmWjRe9uKBqRGIspARwZ9yUSaADm7o">
                             <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">New</span>

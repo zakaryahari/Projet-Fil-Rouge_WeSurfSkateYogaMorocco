@@ -13,7 +13,7 @@
     <!-- Packages Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         @forelse($packages as $package)
-            <a href="{{ route('packages.detail', $package->id) }}" class="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale block text-decoration-none transition-all hover:shadow-2xl">
+            <a href="{{ route('packages.show', $package->id) }}" class="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover-scale block text-decoration-none transition-all hover:shadow-2xl">
                 <!-- Package Image -->
                 <div class="relative h-72 overflow-hidden">
                     <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGi8OeFWu9tfG3iiv560d8YpJpNV8cPzTniZ5xEpNtTVCQ4sE9wvPwFm7LWQtzCwLrtqkj5Ii-HysBhZfOc_FIjJiKAhAk_K_QaE1mllarUW3JCXCHt2NOXXQdkxlD82db2C7Ld22QZlJ_v3LRoxmzDoF1qTaFdjBZJi-5lRtK1V4MBP5I_hxhBoNA47wkRcaiucd0Hl6Ba87cDviO7ZfN8zjdOWMdPIZ_IINAUlLuf9U2vVmWjRe9uKBqRGIspARwZ9yUSaADm7o">

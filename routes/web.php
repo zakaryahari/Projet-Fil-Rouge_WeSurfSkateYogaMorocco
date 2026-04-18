@@ -18,12 +18,7 @@ Route::get('/packages', function () {
     ]);
 })->name('packages.index');
 
-Route::get('/packages/{id}', function ($id) {
-    $package = \App\Models\Package::findOrFail($id);
-    return view('pages.packages-detail', [
-        'package' => $package,
-    ]);
-})->name('packages.detail');
+Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
 // Public Booking Routes
 Route::get('/bookings/packages', function () {
