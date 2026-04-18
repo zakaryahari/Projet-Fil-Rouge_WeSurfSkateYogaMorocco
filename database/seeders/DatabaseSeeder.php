@@ -15,6 +15,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // ─── Seeders ──────────────────────────────────────────────────────────
+        $this->call([
+            RoomSeeder::class,
+            PackageSeeder::class,
+            EventSeeder::class,
+        ]);
+
         // ─── Admin ────────────────────────────────────────────────────────────
         User::create([
             'name'     => 'Admin WeSurf',
@@ -24,101 +31,47 @@ class DatabaseSeeder extends Seeder
             'role'     => 'admin',
         ]);
 
-        // ─── Coaches ──────────────────────────────────────────────────────────
-        $youssef = Coach::create(['name' => 'Youssef El Amrani', 'specialty' => 'Surf',  'years_experience' => 8]);
-        $amine   = Coach::create(['name' => 'Amine Benali',      'specialty' => 'Surf',  'years_experience' => 5]);
-        $omar    = Coach::create(['name' => 'Omar Tazi',         'specialty' => 'Skate', 'years_experience' => 6]);
-        $fatima  = Coach::create(['name' => 'Fatima Zahra',      'specialty' => 'Yoga',  'years_experience' => 7]);
+        // ─── Customers ────────────────────────────────────────────────────────
+        $customers = [
+            [
+                'name' => 'Mohammed Hassan',
+                'email' => 'hassan@example.com',
+                'phone_number' => '+212600123456',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+            ],
+            [
+                'name' => 'Fatima Bennani',
+                'email' => 'fatima@example.com',
+                'phone_number' => '+212600234567',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+            ],
+            [
+                'name' => 'Ahmed Boualam',
+                'email' => 'ahmed@example.com',
+                'phone_number' => '+212600345678',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+            ],
+            [
+                'name' => 'Leila Karim',
+                'email' => 'leila@example.com',
+                'phone_number' => '+212600456789',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+            ],
+            [
+                'name' => 'Omar Saidi',
+                'email' => 'omar@example.com',
+                'phone_number' => '+212600567890',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+            ],
+        ];
 
-        // ─── Rooms ────────────────────────────────────────────────────────────
-        Room::create([
-            'name' => 'Single Private Room',
-            'type' => 'Chambre Single',
-            'capacity' => 1,
-            'price_per_night' => 50,
-            'total_stock' => 5,
-            'is_active' => true,
-            'image_path' => 'images/rooms/single.jpg',
-        ]);
-        Room::create([
-            'name' => 'Double Comfort Room',
-            'type' => 'Chambre Double',
-            'capacity' => 2,
-            'price_per_night' => 80,
-            'total_stock' => 8,
-            'is_active' => true,
-            'image_path' => 'images/rooms/double.jpg',
-        ]);
-        Room::create([
-            'name' => 'Shared Dorm',
-            'type' => 'Dortoir Partagé',
-            'capacity' => 6,
-            'price_per_night' => 25,
-            'total_stock' => 14,
-            'is_active' => true,
-            'image_path' => 'images/rooms/dorm.jpg',
-        ]);
-
-        // ─── Packages ─────────────────────────────────────────────────────────
-        Package::create([
-            'name' => 'Surf Discovery',
-            'description' => 'Initiation au surf avec coach certifié, matériel inclus.',
-            'duration_days' => 3,
-            'base_price' => 150,
-            'image_path' => 'images/packages/surf-discovery.jpg',
-        ]);
-        Package::create([
-            'name' => 'Yoga Retreat',
-            'description' => "Retraite yoga au bord de l'océan, sessions matin et soir.",
-            'duration_days' => 5,
-            'base_price' => 120,
-            'image_path' => 'images/packages/yoga-retreat.jpg',
-        ]);
-        Package::create([
-            'name' => 'Ultimate Surf & Skate',
-            'description' => 'Combinaison surf et skate pour les aventuriers, 6 jours intenses.',
-            'duration_days' => 6,
-            'base_price' => 180,
-            'image_path' => 'images/packages/ultimate.jpg',
-        ]);
-
-        // ─── Activities (Extras) ──────────────────────────────────────────────
-        Activity::create([
-            'coach_id' => $youssef->id,
-            'name' => 'Location Surfboard',
-            'duration_minutes' => 120,
-        ]);
-        Activity::create([
-            'coach_id' => $fatima->id,
-            'name' => 'Massage Relaxant',
-            'duration_minutes' => 60,
-        ]);
-        Activity::create([
-            'coach_id' => $omar->id,
-            'name' => 'Sunset Skate Session',
-            'duration_minutes' => 90,
-        ]);
-
-        // ─── Customers & Bookings ─────────────────────────────────────────────
-        $roomIds    = Room::pluck('id');
-        $packageIds = Package::pluck('id');
-
-        User::factory(9)->create()->each(function (User $customer) use ($roomIds, $packageIds) {
-            $count = rand(1, 2);
-
-            for ($i = 0; $i < $count; $i++) {
-                $booking = Booking::factory()->make();
-
-                $customer->bookings()->create([
-                    'room_id'    => $roomIds->random(),
-                    'package_id' => $packageIds->random(),
-                    'start_date' => $booking->start_date,
-                    'end_date'   => $booking->end_date,
-                    'total_price' => $booking->total_price,
-                    'payment_status' => $booking->payment_status,
-                    'status'     => $booking->status,
-                ]);
-            }
-        });
+        foreach ($customers as $customer) {
+            User::create($customer);
+        }
     }
 }

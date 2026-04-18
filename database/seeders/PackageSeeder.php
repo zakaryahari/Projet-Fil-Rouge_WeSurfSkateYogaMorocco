@@ -10,11 +10,34 @@ class PackageSeeder extends Seeder
     public function run(): void
     {
         $packages = [
-            ['title' => 'Surf Initiation',    'description' => 'Pack initiation au surf pour débutants.',       'price' => 200.00, 'duration' => 3],
-            ['title' => 'Yoga Retreat',        'description' => 'Retraite yoga complète avec méditation.',       'price' => 350.00, 'duration' => 5],
-            ['title' => 'Skate Experience',    'description' => 'Expérience skate pour tous niveaux.',           'price' => 180.00, 'duration' => 2],
-            ['title' => 'Surf & Yoga Combo',   'description' => 'Combinaison surf et yoga en bord de mer.',     'price' => 500.00, 'duration' => 7],
-            ['title' => 'Full Adventure Pack', 'description' => 'Pack complet surf, skate et yoga au Maroc.',   'price' => 800.00, 'duration' => 10],
+            [
+                'name' => 'Surf Coaching',
+                'description' => 'Master the waves with expert instructors for all levels.',
+                'duration_days' => 7,
+                'base_price' => 599,
+                'image_path' => 'packages/surf-coaching.jpg',
+            ],
+            [
+                'name' => 'Surf And Yoga',
+                'description' => 'Enhance balance and flexibility with sunset yoga sessions after surfing.',
+                'duration_days' => 7,
+                'base_price' => 649,
+                'image_path' => 'packages/surf-yoga.jpg',
+            ],
+            [
+                'name' => 'Surf And Skate',
+                'description' => 'The perfect combo: thrill of world-class waves and the creativity of surf-skating.',
+                'duration_days' => 7,
+                'base_price' => 699,
+                'image_path' => 'packages/surf-skate.jpg',
+            ],
+            [
+                'name' => 'Surf-Skate & Yoga',
+                'description' => 'The ultimate Moroccan retreat combining surf, skate, and tranquility.',
+                'duration_days' => 10,
+                'base_price' => 899,
+                'image_path' => 'packages/surf-skate-yoga.jpg',
+            ],
         ];
 
         foreach ($packages as $package) {

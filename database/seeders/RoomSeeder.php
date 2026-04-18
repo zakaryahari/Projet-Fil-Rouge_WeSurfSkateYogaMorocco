@@ -10,11 +10,33 @@ class RoomSeeder extends Seeder
     public function run(): void
     {
         $rooms = [
-            ['number' => '101', 'type' => 'Single',  'price' => 150.00, 'total_stock' => 3],
-            ['number' => '102', 'type' => 'Double',  'price' => 250.00, 'total_stock' => 4],
-            ['number' => '103', 'type' => 'Suite',   'price' => 450.00, 'total_stock' => 2],
-            ['number' => '104', 'type' => 'Single',  'price' => 150.00, 'total_stock' => 3],
-            ['number' => '105', 'type' => 'Double',  'price' => 250.00, 'total_stock' => 4],
+            [
+                'name' => 'Shared Room',
+                'type' => 'shared',
+                'capacity' => 4,
+                'price_per_night' => 25,
+                'total_stock' => 2,
+                'is_active' => true,
+                'image_path' => 'rooms/shared.jpg',
+            ],
+            [
+                'name' => 'Double Room',
+                'type' => 'private',
+                'capacity' => 2,
+                'price_per_night' => 80,
+                'total_stock' => 4,
+                'is_active' => true,
+                'image_path' => 'rooms/double.jpg',
+            ],
+            [
+                'name' => 'Single Room',
+                'type' => 'private',
+                'capacity' => 1,
+                'price_per_night' => 50,
+                'total_stock' => 2,
+                'is_active' => true,
+                'image_path' => 'rooms/single.jpg',
+            ],
         ];
 
         foreach ($rooms as $room) {
