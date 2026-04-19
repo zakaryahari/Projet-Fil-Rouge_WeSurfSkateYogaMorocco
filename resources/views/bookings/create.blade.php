@@ -31,7 +31,7 @@
                     <span class="material-symbols-outlined text-primary">explore</span>
                     <h2 class="text-2xl font-bold">Step 1: Your Package</h2>
                 </div>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-base-price="{{ $package->base_price }}">
                     <h3 class="text-xl font-bold text-slate-900 mb-2">{{ $package->name }}</h3>
                     <p class="text-slate-600 mb-4">{{ $package->description }}</p>
                     <div class="flex justify-between items-center">
@@ -70,7 +70,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     @forelse($rooms as $room)
                         <label class="border-2 border-slate-200 dark:border-slate-700 p-5 rounded-xl bg-white dark:bg-slate-800 hover:border-primary transition-colors cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
-                            <input type="radio" name="room_id" value="{{ $room->id }}" class="sr-only" required/>
+                            <input type="radio" name="room_id" value="{{ $room->id }}" data-room-price="{{ $room->price_per_night }}" class="sr-only" required/>
                             <span class="material-symbols-outlined text-3xl text-primary mb-2">bed</span>
                             <h3 class="font-bold">{{ $room->type }} Room</h3>
                             <p class="text-sm text-slate-500 mb-4">Stock: {{ $room->total_stock }}</p>
@@ -91,9 +91,10 @@
                 <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
                     @forelse($events as $event)
                         <label class="flex items-center p-4 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
-                            <input type="checkbox" name="events[]" value="{{ $event->id }}" class="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary"/>
+                            <input type="checkbox" name="events[]" value="{{ $event->id }}" data-event-price="{{ $event->price }}" class="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary"/>
                             <div class="ml-4 flex-grow">
                                 <p class="font-semibold text-slate-900">{{ $event->title }}</p>
+                                <p class="text-sm text-slate-500">{{ $event->description }}</p>
                             </div>
                             <p class="font-bold text-primary">+€{{ number_format($event->price, 2) }}</p>
                         </label>
@@ -123,7 +124,7 @@
                         <div class="flex justify-between items-end mb-6">
                             <span class="text-lg font-bold">Total Price</span>
                             <div class="text-right">
-                                <p class="text-3xl font-bold text-primary">€{{ number_format($package->base_price, 2) }}</p>
+                                <p class="text-3xl font-bold text-primary" data-total-price>€{{ number_format($package->base_price, 2) }}</p>
                                 <p class="text-xs text-slate-400">Includes all taxes & fees</p>
                             </div>
                         </div>
