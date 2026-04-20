@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Event;
 use App\Models\Package;
 use App\Models\Room;
 use App\Services\AvailabilityService;
@@ -28,39 +29,72 @@ class BookingController extends Controller
         return view('customer.bookings.index', compact('bookings'));
     }
 
-    public function store(Request $request, AvailabilityService $availability)
+    public function store(Request $request)
     {
         $request->validate([
-            'room_id'    => 'required|exists:rooms,id',
             'package_id' => 'required|exists:packages,id',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date'   => 'required|date|after:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'room_id' => 'required|exists:rooms,id',
+            'events' => 'nullable|array',
+            'events.*' => 'exists:events,id',
         ]);
 
-        if (!$availability->isRoomAvailable($request->room_id, $request->start_date, $request->end_date)) {
-            return back()->withErrors(['availability' => 'Chambre non disponible pour ces dates.']);
-        }
-
-        $room    = Room::findOrFail($request->room_id);
+        $room = Room::findOrFail($request->room_id);
         $package = Package::findOrFail($request->package_id);
 
-        $startDate = Carbon::parse($request->start_date);
-        $endDate   = Carbon::parse($request->end_date);
-        $nights    = $startDate->diffInDays($endDate);
+        if (!$room->is_active) {
+            return redirect()->back()->with('error', 'This room is currently unavailable for maintenance.');
+        }
 
-        $totalPrice = ($room->price * $nights) + $package->price;
+        $overlappingBookings = Booking::where('room_id', $request->room_id)
+            ->where('status', '!=', 'cancelled')
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('start_date', [$request->start_date, $request->end_date])
+                      ->orWhereBetween('end_date', [$request->start_date, $request->end_date])
+                      ->orWhere(function ($q) use ($request) {
+                          $q->where('start_date', '<=', $request->start_date)
+                            ->where('end_date', '>=', $request->end_date);
+                      });
+            })
+            ->count();
+
+        if ($overlappingBookings >= $room->total_stock) {
+            return redirect()->back()->with('error', 'This room is fully booked for the selected dates.');
+        }
+
+        $nights = now()->parse($request->end_date)->diffInDays(now()->parse($request->start_date));
+        if ($nights === 0) {
+            $nights = 1;
+        }
+
+        $totalPrice = $package->base_price + ($room->price_per_night * $nights);
+
+        $eventIds = [];
+        if ($request->has('events')) {
+            $events = Event::whereIn('id', $request->events)->get();
+            foreach ($events as $event) {
+                $totalPrice += $event->price;
+                $eventIds[$event->id] = ['quantity' => 1];
+            }
+        }
 
         $booking = Booking::create([
-            'user_id'    => Auth::id(),
-            'room_id'    => $request->room_id,
+            'user_id' => auth()->id(),
             'package_id' => $request->package_id,
+            'room_id' => $request->room_id,
             'start_date' => $request->start_date,
-            'end_date'   => $request->end_date,
-            'status'     => 'pending',
-            'totalPrice' => $totalPrice,
+            'end_date' => $request->end_date,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+            'payment_status' => 'pending',
         ]);
 
-        return redirect()->route('payment.simulate', $booking->id);
+        if (!empty($eventIds)) {
+            $booking->events()->attach($eventIds);
+        }
+
+        return redirect()->route('payment.show', $booking->id);
     }
 
     public function cancel($id)
