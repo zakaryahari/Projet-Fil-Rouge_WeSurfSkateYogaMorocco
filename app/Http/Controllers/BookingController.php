@@ -64,24 +64,67 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors(['date' => 'Room fully booked for these dates.']);
             }
 
+            // 🔍 DEBUG: Log input data
+            \Log::info('📝 BOOKING STORE - INPUT DATA', [
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'room_id' => $request->room_id,
+                'package_id' => $request->package_id,
+                'events' => $request->events ?? [],
+            ]);
+
             // Calculate nights correctly
             $startDate = Carbon::createFromFormat('Y-m-d', $request->start_date);
             $endDate = Carbon::createFromFormat('Y-m-d', $request->end_date);
             $nights = $endDate->diffInDays($startDate);
             $nights = $nights > 0 ? $nights : 1;
 
+            // 🔍 DEBUG: Log calculation step 1
+            \Log::info('📅 NIGHTS CALCULATION', [
+                'start' => $startDate->format('Y-m-d'),
+                'end' => $endDate->format('Y-m-d'),
+                'calculated_nights' => $nights,
+            ]);
+
             // Calculate total price
-            $totalPrice = $package->base_price + ($room->price_per_night * $nights);
+            $roomCharge = $room->price_per_night * $nights;
+            $totalPrice = $package->base_price + $roomCharge;
+
+            // 🔍 DEBUG: Log calculation step 2
+            \Log::info('💰 ROOM PRICE CALCULATION', [
+                'base_price' => $package->base_price,
+                'room_price_per_night' => $room->price_per_night,
+                'nights' => $nights,
+                'room_charge' => $roomCharge,
+                'total_before_events' => $totalPrice,
+            ]);
 
             // Add event prices
             $eventIds = [];
+            $eventTotal = 0;
             if ($request->has('events') && is_array($request->events)) {
                 $events = Event::whereIn('id', $request->events)->get();
                 foreach ($events as $event) {
                     $totalPrice += $event->price;
+                    $eventTotal += $event->price;
                     $eventIds[$event->id] = ['quantity' => 1];
                 }
+
+                // 🔍 DEBUG: Log events
+                \Log::info('🎉 EVENTS CALCULATION', [
+                    'event_count' => count($eventIds),
+                    'events_total' => $eventTotal,
+                    'total_after_events' => $totalPrice,
+                ]);
             }
+
+            // 🔍 DEBUG: Final total before saving
+            \Log::info('✅ FINAL CALCULATION BEFORE SAVE', [
+                'package_base' => $package->base_price,
+                'room_charge' => $roomCharge,
+                'events_total' => $eventTotal,
+                'final_total_price' => $totalPrice,
+            ]);
 
             // Create booking
             $booking = Booking::create([
@@ -95,6 +138,12 @@ class BookingController extends Controller
                 'payment_status' => 'pending',
             ]);
 
+            // 🔍 DEBUG: Verify saved
+            \Log::info('💾 BOOKING SAVED TO DB', [
+                'booking_id' => $booking->id,
+                'stored_total_price' => $booking->total_price,
+            ]);
+
             // Attach events
             if (!empty($eventIds)) {
                 $booking->events()->attach($eventIds);
@@ -103,7 +152,7 @@ class BookingController extends Controller
             return redirect()->route('payment.show', $booking->id);
 
         } catch (\Exception $e) {
-            \Log::error('Booking creation failed: ' . $e->getMessage());
+            \Log::error('❌ Booking creation failed: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return redirect()->back()->withErrors(['error' => 'Failed to create booking: ' . $e->getMessage()]);
         }
     }
