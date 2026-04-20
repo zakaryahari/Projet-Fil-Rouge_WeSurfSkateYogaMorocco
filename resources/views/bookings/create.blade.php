@@ -35,16 +35,69 @@
         </div>
     </div>
 
-    <!-- Display Validation Errors -->
+    <!-- Custom Error Modal Popup -->
     @if($errors->any())
-        <div class="max-w-7xl mx-auto mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p class="font-bold text-red-700 dark:text-red-300 mb-2">❌ Please fix these errors:</p>
-            <ul class="list-disc list-inside space-y-1 text-red-600 dark:text-red-400">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" id="errorModal">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-3xl text-red-600">error</span>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Booking Error</h2>
+                    </div>
+                    <button id="closeErrorModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <p class="text-slate-600 dark:text-slate-400 mb-4">There was a problem with your booking:</p>
+
+                <ul class="space-y-2 mb-6">
+                    @foreach($errors->all() as $error)
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-sm text-red-600 mt-0.5 flex-shrink-0">check_circle</span>
+                            <span class="text-red-600 dark:text-red-400">{{ $error }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
+                    Please try selecting a different room, dates, or package.
+                </p>
+
+                <button id="closeErrorButton" class="w-full bg-primary text-white py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-primary/30 transition-all">
+                    Try Again
+                </button>
+            </div>
         </div>
+
+        <script>
+            const errorModal = document.getElementById('errorModal');
+            const closeErrorModal = document.getElementById('closeErrorModal');
+            const closeErrorButton = document.getElementById('closeErrorButton');
+
+            // Close when clicking the X button
+            if (closeErrorModal) {
+                closeErrorModal.addEventListener('click', () => {
+                    errorModal.style.display = 'none';
+                });
+            }
+
+            // Close when clicking Try Again button
+            if (closeErrorButton) {
+                closeErrorButton.addEventListener('click', () => {
+                    errorModal.style.display = 'none';
+                });
+            }
+
+            // Close when clicking outside the modal
+            if (errorModal) {
+                errorModal.addEventListener('click', (e) => {
+                    if (e.target === errorModal) {
+                        errorModal.style.display = 'none';
+                    }
+                });
+            }
+        </script>
     @endif
 
     <!-- Form Section -->
