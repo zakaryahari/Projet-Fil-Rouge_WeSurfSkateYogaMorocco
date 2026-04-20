@@ -31,7 +31,10 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        \Log::info('📝 Booking store() called', ['user_id' => auth()->id()]);
+        \Log::info('Form data received:', $request->all());
+
+        $validated = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
@@ -40,10 +43,13 @@ class BookingController extends Controller
             'events.*' => 'exists:events,id',
         ]);
 
+        \Log::info('✅ Validation passed', $validated);
+
         $room = Room::findOrFail($request->room_id);
         $package = Package::findOrFail($request->package_id);
 
         if (!$room->is_active) {
+            \Log::warning('Room not active');
             return redirect()->back()->with('error', 'This room is currently unavailable for maintenance.');
         }
 
@@ -60,15 +66,31 @@ class BookingController extends Controller
             ->count();
 
         if ($overlappingBookings >= $room->total_stock) {
+            \Log::warning('Room fully booked');
             return redirect()->back()->with('error', 'This room is fully booked for the selected dates.');
         }
 
-        $nights = now()->parse($request->end_date)->diffInDays(now()->parse($request->start_date));
+        $startDate = Carbon::createFromFormat('Y-m-d', $request->start_date);
+        $endDate = Carbon::createFromFormat('Y-m-d', $request->end_date);
+        $nights = $endDate->diffInDays($startDate);
         if ($nights === 0) {
             $nights = 1;
         }
 
+        \Log::info('📅 Date calculation:', [
+            'start' => $request->start_date,
+            'end' => $request->end_date,
+            'nights' => $nights,
+            'room_price_per_night' => $room->price_per_night
+        ]);
+
         $totalPrice = $package->base_price + ($room->price_per_night * $nights);
+
+        \Log::info('💰 Price calculation:', [
+            'base_price' => $package->base_price,
+            'room_charge' => $room->price_per_night * $nights,
+            'total_before_events' => $totalPrice
+        ]);
 
         $eventIds = [];
         if ($request->has('events')) {
@@ -77,7 +99,17 @@ class BookingController extends Controller
                 $totalPrice += $event->price;
                 $eventIds[$event->id] = ['quantity' => 1];
             }
+            \Log::info('✅ Events added', ['event_count' => count($eventIds), 'total_price' => $totalPrice]);
         }
+
+        \Log::info('🔍 Creating booking with data:', [
+            'user_id' => auth()->id(),
+            'package_id' => $request->package_id,
+            'room_id' => $request->room_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'total_price' => $totalPrice,
+        ]);
 
         $booking = Booking::create([
             'user_id' => auth()->id(),
@@ -90,11 +122,26 @@ class BookingController extends Controller
             'payment_status' => 'pending',
         ]);
 
+        \Log::info('✅ Booking created', ['booking_id' => $booking->id, 'total_price' => $booking->total_price]);
+
         if (!empty($eventIds)) {
             $booking->events()->attach($eventIds);
+            \Log::info('✅ Events attached');
         }
 
+        \Log::info('🎯 Redirecting to payment page', ['booking_id' => $booking->id]);
         return redirect()->route('payment.show', $booking->id);
+    }
+
+    public function payment(Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('bookings.payment', [
+            'booking' => $booking->load(['package', 'room', 'events']),
+        ]);
     }
 
     public function cancel($id)
@@ -113,5 +160,40 @@ class BookingController extends Controller
         $booking->update(['status' => 'cancelled']);
 
         return back()->with('success', 'Réservation annulée avec succès.');
+    }
+
+    public function processPayment(Request $request, Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $request->validate([
+            'payment_method' => 'required|in:credit_card,paypal',
+            'card_name' => 'nullable|string',
+            'card_number' => 'nullable|string',
+            'expiry_date' => 'nullable|string',
+            'cvc' => 'nullable|string',
+        ]);
+
+        // Update booking status to confirmed and payment to paid
+        $booking->update([
+            'status' => 'confirmed',
+            'payment_status' => 'paid',
+        ]);
+
+        return redirect()->route('bookings.success', $booking->id)
+            ->with('success', 'Booking confirmed successfully! Your payment has been processed.');
+    }
+
+    public function success(Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('bookings.success', [
+            'booking' => $booking->load(['package', 'room', 'events']),
+        ]);
     }
 }
