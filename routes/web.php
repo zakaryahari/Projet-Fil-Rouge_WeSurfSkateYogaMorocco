@@ -36,18 +36,15 @@ Route::get('/bookings/{package_id}/create', function ($package_id) {
     ]);
 })->name('bookings.create');
 
-Route::post('/bookings', function (\Illuminate\Http\Request $request) {
-    // Temporary - just validates the form exists
-    $request->validate([
-        'package_id' => 'required|exists:packages,id',
-        'start_date' => 'required|date|after_or_equal:today',
-        'end_date' => 'required|date|after:start_date',
-        'room_id' => 'required|exists:rooms,id',
-        'events' => 'array|nullable',
-    ]);
+Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])
+    ->middleware('auth')
+    ->name('bookings.store');
 
-    return redirect()->route('bookings.packages')->with('success', 'Booking submitted! (To be implemented)');
-})->name('bookings.store');
+Route::middleware('auth')->get('/booking/{booking}/payment', [\App\Http\Controllers\BookingController::class, 'payment'])->name('payment.show');
+
+Route::middleware('auth')->post('/booking/{booking}/payment/process', [\App\Http\Controllers\BookingController::class, 'processPayment'])->name('bookings.payment.process');
+
+Route::middleware('auth')->get('/booking/{booking}/success', [\App\Http\Controllers\BookingController::class, 'success'])->name('bookings.success');
 
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');

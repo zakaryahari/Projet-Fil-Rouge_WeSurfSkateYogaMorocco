@@ -1,29 +1,3 @@
-Act as a Senior Laravel Architect. We are locking in the final database architecture for my WeSurfSkate platform MVP. I need to update my existing Laravel ecosystem to perfectly match my finalized PlantUML Class Diagram (provided below).
-
-CRITICAL RULES:
-
-Read the UML carefully. Notice the exact attributes (e.g., is_active boolean, duration_days integer, capacity integer) and the relationships.
-
-Assume I am going to run php artisan migrate:fresh --seed. Therefore, give me the complete code to overwrite my existing files, not just small patches.
-
-We will do this sequentially to avoid truncated responses. For each step, provide the exact PHP code and the Git commit command (in French). Wait for me to type "Next" before moving to the following step.
-
-Step 1: The Core Migrations
-Provide the complete up() and down() methods to overwrite the migration files for users, coaches, rooms, packages, activities, and events.
-(Wait for my confirmation)
-
-Step 2: Pivot & Review Migrations
-Provide the complete code for the activity_package pivot migration (must include integer included_sessions), the booking_event pivot migration (acting as BookingItem for extras, with integer quantity), the bookings migration, and the reviews migration. Ensure all foreign keys use constrained()->cascadeOnDelete().
-(Wait for my confirmation)
-
-Step 3: Eloquent Models
-Provide the updated code for all Models (User, Coach, Room, Package, Activity, Event, Booking, Review). I need the complete $fillable arrays and the exact relationship methods (hasMany, belongsTo, belongsToMany).
-(Wait for my confirmation)
-
-Step 4: Model Factories
-Provide the updated code for the RoomFactory, PackageFactory, and EventFactory. Use Faker to generate realistic data for the new attributes (like capacity, duration_days, is_active, and a fake image_path string).
-(Wait for my confirmation)
-
 
 @startuml
 skinparam classAttributeIconSize 0

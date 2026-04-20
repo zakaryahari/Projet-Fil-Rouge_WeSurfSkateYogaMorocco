@@ -27,21 +27,21 @@ function calculateTotal() {
 }
 
 function calculateNights() {
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
     if (!startDateInput.value || !endDateInput.value) {
         return 1;
     }
 
-    const startDate = new Date(startDateInput.value + 'T00:00:00Z');
-    const endDate = new Date(endDateInput.value + 'T00:00:00Z');
-    const diffTime = endDate - startDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays > 0 ? diffDays : 1;
 }
 
-// Add event listeners
-if (startDateInput) startDateInput.addEventListener('change', calculateTotal);
-if (endDateInput) endDateInput.addEventListener('change', calculateTotal);
+startDateInput?.addEventListener('change', calculateTotal);
+endDateInput?.addEventListener('change', calculateTotal);
 
 roomRadios.forEach(radio => {
     radio.addEventListener('change', calculateTotal);

@@ -31,106 +31,81 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        \Log::info('📝 Booking store() called', ['user_id' => auth()->id()]);
-        \Log::info('Form data received:', $request->all());
+        try {
+            $validated = $request->validate([
+                'package_id' => 'required|exists:packages,id',
+                'start_date' => 'required|date_format:Y-m-d',
+                'end_date' => 'required|date_format:Y-m-d|after:start_date',
+                'room_id' => 'required|exists:rooms,id',
+                'events' => 'nullable|array',
+                'events.*' => 'exists:events,id',
+            ]);
 
-        $validated = $request->validate([
-            'package_id' => 'required|exists:packages,id',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'room_id' => 'required|exists:rooms,id',
-            'events' => 'nullable|array',
-            'events.*' => 'exists:events,id',
-        ]);
+            $room = Room::findOrFail($request->room_id);
+            $package = Package::findOrFail($request->package_id);
 
-        \Log::info('✅ Validation passed', $validated);
-
-        $room = Room::findOrFail($request->room_id);
-        $package = Package::findOrFail($request->package_id);
-
-        if (!$room->is_active) {
-            \Log::warning('Room not active');
-            return redirect()->back()->with('error', 'This room is currently unavailable for maintenance.');
-        }
-
-        $overlappingBookings = Booking::where('room_id', $request->room_id)
-            ->where('status', '!=', 'cancelled')
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('start_date', [$request->start_date, $request->end_date])
-                      ->orWhereBetween('end_date', [$request->start_date, $request->end_date])
-                      ->orWhere(function ($q) use ($request) {
-                          $q->where('start_date', '<=', $request->start_date)
-                            ->where('end_date', '>=', $request->end_date);
-                      });
-            })
-            ->count();
-
-        if ($overlappingBookings >= $room->total_stock) {
-            \Log::warning('Room fully booked');
-            return redirect()->back()->with('error', 'This room is fully booked for the selected dates.');
-        }
-
-        $startDate = Carbon::createFromFormat('Y-m-d', $request->start_date);
-        $endDate = Carbon::createFromFormat('Y-m-d', $request->end_date);
-        $nights = $endDate->diffInDays($startDate);
-        if ($nights === 0) {
-            $nights = 1;
-        }
-
-        \Log::info('📅 Date calculation:', [
-            'start' => $request->start_date,
-            'end' => $request->end_date,
-            'nights' => $nights,
-            'room_price_per_night' => $room->price_per_night
-        ]);
-
-        $totalPrice = $package->base_price + ($room->price_per_night * $nights);
-
-        \Log::info('💰 Price calculation:', [
-            'base_price' => $package->base_price,
-            'room_charge' => $room->price_per_night * $nights,
-            'total_before_events' => $totalPrice
-        ]);
-
-        $eventIds = [];
-        if ($request->has('events')) {
-            $events = Event::whereIn('id', $request->events)->get();
-            foreach ($events as $event) {
-                $totalPrice += $event->price;
-                $eventIds[$event->id] = ['quantity' => 1];
+            if (!$room->is_active) {
+                return redirect()->back()->withErrors(['room' => 'This room is unavailable.']);
             }
-            \Log::info('✅ Events added', ['event_count' => count($eventIds), 'total_price' => $totalPrice]);
+
+            $overlappingBookings = Booking::where('room_id', $request->room_id)
+                ->where('status', '!=', 'cancelled')
+                ->where(function ($query) use ($request) {
+                    $query->whereBetween('start_date', [$request->start_date, $request->end_date])
+                          ->orWhereBetween('end_date', [$request->start_date, $request->end_date])
+                          ->orWhere(function ($q) use ($request) {
+                              $q->where('start_date', '<=', $request->start_date)
+                                ->where('end_date', '>=', $request->end_date);
+                          });
+                })
+                ->count();
+
+            if ($overlappingBookings >= $room->total_stock) {
+                return redirect()->back()->withErrors(['date' => 'Room fully booked for these dates.']);
+            }
+
+            // Calculate nights correctly
+            $startDate = Carbon::createFromFormat('Y-m-d', $request->start_date);
+            $endDate = Carbon::createFromFormat('Y-m-d', $request->end_date);
+            $nights = $endDate->diffInDays($startDate);
+            $nights = $nights > 0 ? $nights : 1;
+
+            // Calculate total price
+            $totalPrice = $package->base_price + ($room->price_per_night * $nights);
+
+            // Add event prices
+            $eventIds = [];
+            if ($request->has('events') && is_array($request->events)) {
+                $events = Event::whereIn('id', $request->events)->get();
+                foreach ($events as $event) {
+                    $totalPrice += $event->price;
+                    $eventIds[$event->id] = ['quantity' => 1];
+                }
+            }
+
+            // Create booking
+            $booking = Booking::create([
+                'user_id' => auth()->id(),
+                'package_id' => $request->package_id,
+                'room_id' => $request->room_id,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+                'payment_status' => 'pending',
+            ]);
+
+            // Attach events
+            if (!empty($eventIds)) {
+                $booking->events()->attach($eventIds);
+            }
+
+            return redirect()->route('payment.show', $booking->id);
+
+        } catch (\Exception $e) {
+            \Log::error('Booking creation failed: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Failed to create booking: ' . $e->getMessage()]);
         }
-
-        \Log::info('🔍 Creating booking with data:', [
-            'user_id' => auth()->id(),
-            'package_id' => $request->package_id,
-            'room_id' => $request->room_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'total_price' => $totalPrice,
-        ]);
-
-        $booking = Booking::create([
-            'user_id' => auth()->id(),
-            'package_id' => $request->package_id,
-            'room_id' => $request->room_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'total_price' => $totalPrice,
-            'status' => 'pending',
-            'payment_status' => 'pending',
-        ]);
-
-        \Log::info('✅ Booking created', ['booking_id' => $booking->id, 'total_price' => $booking->total_price]);
-
-        if (!empty($eventIds)) {
-            $booking->events()->attach($eventIds);
-            \Log::info('✅ Events attached');
-        }
-
-        \Log::info('🎯 Redirecting to payment page', ['booking_id' => $booking->id]);
-        return redirect()->route('payment.show', $booking->id);
     }
 
     public function payment(Booking $booking)
