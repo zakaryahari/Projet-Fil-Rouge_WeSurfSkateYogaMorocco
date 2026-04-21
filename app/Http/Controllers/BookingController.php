@@ -10,6 +10,8 @@ use App\Services\AvailabilityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class BookingController extends Controller
 {
@@ -145,22 +147,88 @@ class BookingController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $request->validate([
-            'payment_method' => 'required|in:credit_card,paypal',
-            'card_name' => 'nullable|string',
-            'card_number' => 'nullable|string',
-            'expiry_date' => 'nullable|string',
-            'cvc' => 'nullable|string',
-        ]);
+        try {
+            // Set Stripe API key
+            Stripe::setApiKey(config('services.stripe.secret_key'));
 
-        // Update booking status to confirmed and payment to paid
-        $booking->update([
-            'status' => 'confirmed',
-            'payment_status' => 'paid',
-        ]);
+            // Load relations for product info
+            $booking->load(['package', 'room', 'events']);
 
-        return redirect()->route('bookings.success', $booking->id)
-            ->with('success', 'Booking confirmed successfully! Your payment has been processed.');
+            // Create line item with package name and total price in cents (EUR)
+            $checkoutSession = Session::create([
+                'mode' => 'payment',
+                'payment_method_types' => ['card'],
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => 'eur',
+                            'unit_amount' => (int)($booking->total_price * 100), // Convert to cents
+                            'product_data' => [
+                                'name' => $booking->package->name,
+                                'description' => "{$booking->room->type} Room ({$booking->start_date} to {$booking->end_date})",
+                                'images' => $booking->package->image_path ? [
+                                    url('storage/' . $booking->package->image_path)
+                                ] : [],
+                            ],
+                        ],
+                        'quantity' => 1,
+                    ],
+                ],
+                'customer_email' => auth()->user()->email,
+                'success_url' => route('bookings.stripe.success', $booking->id) . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('bookings.stripe.cancel', $booking->id),
+            ]);
+
+            // Redirect to Stripe Checkout
+            return redirect()->away($checkoutSession->url);
+
+        } catch (\Exception $e) {
+            \Log::error('Stripe checkout creation failed: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Payment failed: ' . $e->getMessage()]);
+        }
+    }
+
+    public function stripeSuccess(Booking $booking, Request $request)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        try {
+            // Verify session exists with Stripe to ensure legitimate payment
+            Stripe::setApiKey(config('services.stripe.secret_key'));
+
+            $sessionId = $request->query('session_id');
+            if ($sessionId) {
+                $session = Session::retrieve($sessionId);
+
+                if ($session->payment_status === 'paid') {
+                    // Update booking to confirmed and payment to paid
+                    $booking->update([
+                        'status' => 'confirmed',
+                        'payment_status' => 'paid',
+                    ]);
+                }
+            }
+
+            return redirect()->route('bookings.success', $booking->id)
+                ->with('success', 'Payment successful! Your booking is confirmed.');
+
+        } catch (\Exception $e) {
+            \Log::error('Stripe success callback failed: ' . $e->getMessage());
+            return redirect()->route('bookings.success', $booking->id)
+                ->with('warning', 'Payment completed. Please contact support if you have issues.');
+        }
+    }
+
+    public function stripeCancel(Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return redirect()->route('payment.show', $booking->id)
+            ->with('error', 'Payment was cancelled. Please try again or contact support.');
     }
 
     public function success(Booking $booking)

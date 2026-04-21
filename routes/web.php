@@ -46,6 +46,10 @@ Route::middleware('auth')->post('/booking/{booking}/payment/process', [\App\Http
 
 Route::middleware('auth')->get('/booking/{booking}/success', [\App\Http\Controllers\BookingController::class, 'success'])->name('bookings.success');
 
+Route::middleware('auth')->get('/booking/{booking}/stripe/success', [\App\Http\Controllers\BookingController::class, 'stripeSuccess'])->name('bookings.stripe.success');
+
+Route::middleware('auth')->get('/booking/{booking}/stripe/cancel', [\App\Http\Controllers\BookingController::class, 'stripeCancel'])->name('bookings.stripe.cancel');
+
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');
 Route::view('/about', 'pages.about')->name('about');
