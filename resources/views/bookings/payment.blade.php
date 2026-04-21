@@ -133,14 +133,23 @@
                         </div>
                     @endif
 
+                    @php
+                    // Calculate nights using DateTime (same method as controller)
+                    $startDate = new DateTime($booking->start_date);
+                    $endDate = new DateTime($booking->end_date);
+                    $interval = $endDate->diff($startDate);
+                    $nights = max((int)$interval->format('%a'), 1);
+                    $roomCharge = $booking->room->price_per_night * $nights;
+                    @endphp
+
                     <div class="border-t border-slate-100 dark:border-slate-700 pt-4 space-y-2">
                         <div class="flex justify-between text-sm">
                             <span class="text-slate-500 dark:text-slate-400">Package Base</span>
                             <span class="font-semibold text-slate-900 dark:text-white">€{{ number_format($booking->package->base_price, 2) }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-slate-500 dark:text-slate-400">{{ $booking->room->type }} Room ({{ \Carbon\Carbon::parse($booking->end_date)->diffInDays(\Carbon\Carbon::parse($booking->start_date)) ?: 1 }} nights)</span>
-                            <span class="font-semibold text-slate-900 dark:text-white">€{{ number_format($booking->room->price_per_night * (\Carbon\Carbon::parse($booking->end_date)->diffInDays(\Carbon\Carbon::parse($booking->start_date)) ?: 1), 2) }}</span>
+                            <span class="text-slate-500 dark:text-slate-400">{{ $booking->room->type }} Room ({{ $nights }} nights)</span>
+                            <span class="font-semibold text-slate-900 dark:text-white">€{{ number_format($roomCharge, 2) }}</span>
                         </div>
                         @if($booking->events->count() > 0)
                             <div class="flex justify-between text-sm">
