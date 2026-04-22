@@ -17,7 +17,6 @@ class Booking extends Model
         'start_date',
         'end_date',
         'total_price',
-        'payment_status',
         'status',
     ];
 
@@ -41,10 +40,14 @@ class Booking extends Model
         return $this->belongsTo(Package::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function events()
     {
         return $this->belongsToMany(Event::class, 'booking_event')
-                    ->withPivot('quantity')
                     ->withTimestamps();
     }
 

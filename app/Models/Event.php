@@ -18,7 +18,6 @@ class Event extends Model
     public function bookings()
     {
         return $this->belongsToMany(Booking::class, 'booking_event')
-                    ->withPivot('quantity')
                     ->withTimestamps();
     }
 }
