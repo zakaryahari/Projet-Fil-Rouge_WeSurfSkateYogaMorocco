@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('booking_id')->constrained()->cascadeOnDelete();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            $table->integer('quantity');
             $table->timestamps();
         });
     }
