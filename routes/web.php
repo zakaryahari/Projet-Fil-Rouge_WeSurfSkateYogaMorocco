@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -64,20 +65,8 @@ Route::middleware('auth')->group(function () {
 
 // Admin Dashboard Routes - Protected by 'auth' and 'admin' middleware
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard', [
-            'totalRevenue' => 124500,
-            'revenueGrowth' => 12,
-            'occupancyRate' => 85,
-            'activeBookings' => 42,
-            'bookingsIncrease' => 5,
-            'pendingAlerts' => 7,
-            'recentBookings' => \App\Models\Booking::with('user')->latest()->limit(4)->get(),
-            'seasonalTitle' => 'Upcoming Winter Peak Season',
-            'seasonalDescription' => 'Bookings for December are up 30% compared to last year. Prepare extra staff for the Surf & Skate clinics.',
-            'quickInsight' => 'Revenue from the Pro-Skate package has reached its monthly goal 10 days early.',
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/users/{user}/toggle-ban', [AdminController::class, 'toggleBan'])->name('users.toggle_ban');
 
     Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
     Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class);
