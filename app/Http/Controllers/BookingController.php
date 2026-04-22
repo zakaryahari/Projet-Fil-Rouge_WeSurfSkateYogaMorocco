@@ -34,7 +34,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         try {
-            $validated = $request->validate([
+            $request->validate([
                 'package_id' => 'required|exists:packages,id',
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d|after:start_date',
@@ -50,44 +50,29 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors(['room' => 'This room is unavailable.']);
             }
 
-            $overlappingBookings = Booking::where('room_id', $request->room_id)
+            $booked = Booking::where('room_id', $request->room_id)
                 ->where('status', '!=', 'cancelled')
-                ->where(function ($query) use ($request) {
-                    $query->whereBetween('start_date', [$request->start_date, $request->end_date])
-                          ->orWhereBetween('end_date', [$request->start_date, $request->end_date])
-                          ->orWhere(function ($q) use ($request) {
-                              $q->where('start_date', '<=', $request->start_date)
-                                ->where('end_date', '>=', $request->end_date);
-                          });
-                })
+                ->where('start_date', '<', $request->end_date)
+                ->where('end_date', '>', $request->start_date)
                 ->count();
 
-            if ($overlappingBookings >= $room->total_stock) {
+            if ($booked >= $room->total_stock) {
                 return redirect()->back()->withErrors(['date' => 'Room fully booked for these dates.']);
             }
 
-            // Calculate nights using simple DateTime diff (foolproof method)
             $startDate = new \DateTime($request->start_date);
             $endDate = new \DateTime($request->end_date);
-            $interval = $endDate->diff($startDate);
-            $nights = (int)$interval->format('%a'); // Get days between dates
-            $nights = $nights > 0 ? $nights : 1; // Minimum 1 night
+            $nights = max((int)$endDate->diff($startDate)->format('%a'), 1);
 
-            // Calculate total price: BASE + (ROOM * NIGHTS) + EVENTS
-            $roomCharge = $room->price_per_night * $nights;
-            $totalPrice = $package->base_price + $roomCharge;
+            $totalPrice = $package->base_price + ($room->price_per_night * $nights);
 
-            // Add event prices
-            $eventIds = [];
-            if ($request->has('events') && is_array($request->events)) {
+            if ($request->has('events')) {
                 $events = Event::whereIn('id', $request->events)->get();
                 foreach ($events as $event) {
                     $totalPrice += $event->price;
-                    $eventIds[$event->id] = ['quantity' => 1];
                 }
             }
 
-            // Create booking
             $booking = Booking::create([
                 'user_id' => auth()->id(),
                 'package_id' => $request->package_id,
@@ -96,19 +81,16 @@ class BookingController extends Controller
                 'end_date' => $request->end_date,
                 'total_price' => $totalPrice,
                 'status' => 'pending',
-                'payment_status' => 'pending',
             ]);
 
-            // Attach events
-            if (!empty($eventIds)) {
-                $booking->events()->attach($eventIds);
+            if ($request->has('events')) {
+                $booking->events()->attach($request->events);
             }
 
             return redirect()->route('payment.show', $booking->id);
 
         } catch (\Exception $e) {
-            \Log::error('Booking creation failed: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Failed to create booking: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -144,91 +126,79 @@ class BookingController extends Controller
     public function processPayment(Request $request, Booking $booking)
     {
         if ($booking->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized');
+            abort(403);
         }
 
         try {
-            // Set Stripe API key
             Stripe::setApiKey(config('services.stripe.secret_key'));
+            $booking->load(['package', 'room']);
 
-            // Load relations for product info
-            $booking->load(['package', 'room', 'events']);
-
-            // Create line item with package name and total price in cents (EUR)
-            $checkoutSession = Session::create([
+            $session = Session::create([
                 'mode' => 'payment',
                 'payment_method_types' => ['card'],
-                'line_items' => [
-                    [
-                        'price_data' => [
-                            'currency' => 'eur',
-                            'unit_amount' => (int)($booking->total_price * 100), // Convert to cents
-                            'product_data' => [
-                                'name' => $booking->package->name,
-                                'description' => "{$booking->room->type} Room ({$booking->start_date} to {$booking->end_date})",
-                                'images' => $booking->package->image_path ? [
-                                    url('storage/' . $booking->package->image_path)
-                                ] : [],
-                            ],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'unit_amount' => (int)($booking->total_price * 100),
+                        'product_data' => [
+                            'name' => $booking->package->name,
+                            'description' => "{$booking->room->type} Room ({$booking->start_date} to {$booking->end_date})",
                         ],
-                        'quantity' => 1,
                     ],
-                ],
+                    'quantity' => 1,
+                ]],
                 'customer_email' => auth()->user()->email,
                 'success_url' => route('bookings.stripe.success', $booking->id) . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('bookings.stripe.cancel', $booking->id),
             ]);
 
-            // Redirect to Stripe Checkout
-            return redirect()->away($checkoutSession->url);
+            return redirect()->away($session->url);
 
         } catch (\Exception $e) {
-            \Log::error('Stripe checkout creation failed: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Payment failed: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
     public function stripeSuccess(Booking $booking, Request $request)
     {
         if ($booking->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized');
+            abort(403);
         }
 
         try {
-            // Verify session exists with Stripe to ensure legitimate payment
             Stripe::setApiKey(config('services.stripe.secret_key'));
-
             $sessionId = $request->query('session_id');
+
             if ($sessionId) {
                 $session = Session::retrieve($sessionId);
-
                 if ($session->payment_status === 'paid') {
-                    // Update booking to confirmed and payment to paid
-                    $booking->update([
-                        'status' => 'confirmed',
-                        'payment_status' => 'paid',
+                    $booking->update(['status' => 'confirmed']);
+                    $booking->payments()->create([
+                        'stripe_session_id' => $sessionId,
+                        'amount' => $booking->total_price,
+                        'currency' => 'EUR',
+                        'status' => 'paid',
                     ]);
                 }
             }
 
             return redirect()->route('bookings.success', $booking->id)
-                ->with('success', 'Payment successful! Your booking is confirmed.');
+                ->with('success', 'Payment successful!');
 
         } catch (\Exception $e) {
-            \Log::error('Stripe success callback failed: ' . $e->getMessage());
             return redirect()->route('bookings.success', $booking->id)
-                ->with('warning', 'Payment completed. Please contact support if you have issues.');
+                ->with('warning', 'Payment completed.');
         }
     }
 
     public function stripeCancel(Booking $booking)
     {
         if ($booking->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized');
+            abort(403);
         }
 
         return redirect()->route('payment.show', $booking->id)
-            ->with('error', 'Payment was cancelled. Please try again or contact support.');
+            ->with('error', 'Payment cancelled. Please try again.');
     }
 
     public function success(Booking $booking)
