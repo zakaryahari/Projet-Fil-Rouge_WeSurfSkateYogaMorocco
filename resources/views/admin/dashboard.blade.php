@@ -89,7 +89,7 @@
 </div>
 <nav class="flex-1 px-4 space-y-1">
 <!-- Active Tab: Dashboard -->
-<a class="flex items-center gap-3 px-4 py-3 text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50 transition-all duration-200" href="#" style="">
+<a class="flex items-center gap-3 px-4 py-3 text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50 transition-all duration-200" href="{{ route('admin.dashboard') }}" style="">
 <span class="material-symbols-outlined" data-icon="dashboard" style="">dashboard</span>
 <span class="text-sm" style="">Dashboard</span>
 </a>
@@ -119,10 +119,6 @@
 </a>
 </nav>
 <div class="p-6">
-<button class="w-full bg-primary-container text-white py-3 px-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all" style="">
-<span class="material-symbols-outlined text-sm" data-icon="add" style="">add</span>
-                New Booking
-            </button>
 </div>
 </aside>
 <!-- Main Workspace -->
@@ -132,7 +128,7 @@
 <div class="flex items-center gap-4 flex-1">
 <div class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-sky-500 rounded-lg">
 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-lg" data-icon="search" style="">search</span>
-<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm focus:ring-0" placeholder="Search bookings, customers..." type="text">
+<input id="searchInput" class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm focus:ring-0" placeholder="Search bookings, customers..." type="text">
 </div>
 </div>
 <div class="flex items-center gap-6">
@@ -144,12 +140,29 @@
 <span class="material-symbols-outlined" data-icon="settings" style="">settings</span>
 </button>
 </div>
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-3 relative">
 <div class="text-right">
-<p class="text-sm font-bold text-slate-900" style="">Admin User</p>
-<p class="text-[0.65rem] text-slate-500 tracking-widest uppercase" style="">Lead Manager</p>
+<p class="text-sm font-bold text-slate-900" style="">{{ auth()->user()->name }}</p>
+<p class="text-[0.65rem] text-slate-500 tracking-widest uppercase" style="">{{ ucfirst(auth()->user()->role) }}</p>
 </div>
-<img alt="Admin User Profile" class="w-10 h-10 rounded-full object-cover" data-alt="Close-up professional portrait of a man with short hair and clean-cut appearance in a well-lit office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxfL2AaawHK3AK_iF71lRjGtF9FSiDjJslvpk9XwEbtHY6G4_YNSKcVZtjAejsf6Mm7ycWt_2tZ4vq85CNbTwGuDVaq5AMuEbtWfR6aagR1DEvvNon2mCMbJmMwcfFu0_ltS51EYLkgTZffFB8rMBacaLfLlJOMOy2SPBM7udcMmOwa4T5gQ0o5oYzubMZ1_2S0YCfiZjh5NvuoHRQh4F96YdMgH3rbOR0wlwlRQvo_OzmadAUfkEEJo2h6SP4WpaA9GuB1Hk6WFQ" style="">
+<div class="relative group">
+<button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors" style="">
+    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+</button>
+<div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+    <a href="{{ route('profile.edit') }}" class="block px-4 py-3 text-sm text-slate-900 hover:bg-slate-100 border-b border-slate-200">
+        <span class="material-symbols-outlined text-sm align-text-bottom mr-2" style="font-size: 18px;">person</span>
+        Profile
+    </a>
+    <form action="{{ route('logout') }}" method="POST" class="block">
+        @csrf
+        <button type="submit" class="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50">
+            <span class="material-symbols-outlined text-sm align-text-bottom mr-2" style="font-size: 18px;">logout</span>
+            Logout
+        </button>
+    </form>
+</div>
+</div>
 </div>
 </div>
 </header>
@@ -226,9 +239,9 @@
 <th class="px-8 py-4 text-right" style="">Action</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-surface-container-low">
+<tbody class="divide-y divide-surface-container-low" id="customerTableBody">
 @forelse ($users as $user)
-<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<tr class="group hover:bg-surface-container-low/30 transition-colors customer-row" data-customer-name="{{ strtolower($user->name) }}" data-customer-email="{{ strtolower($user->email) }}">
 <td class="px-8 py-5 text-slate-900 font-bold" style="">#{{ $user->id }}</td>
 <td class="px-8 py-5" style="">
 <div class="flex items-center gap-3">
@@ -275,4 +288,32 @@
 </div>
 </div>
 </main>
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.customer-row');
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-customer-name');
+        const email = row.getAttribute('data-customer-email');
+
+        if (name.includes(searchTerm) || email.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+// Profile menu redirect
+document.querySelector('a[href="{{ route('profile.edit') }}"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const role = '{{ auth()->user()->role }}';
+    if (role === 'customer') {
+        window.location.href = '{{ route('home') }}';
+    } else if (role === 'admin') {
+        window.location.href = '{{ route('admin.dashboard') }}';
+    }
+});
+</script>
 </body></html>
