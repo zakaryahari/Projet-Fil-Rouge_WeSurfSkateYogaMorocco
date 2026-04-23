@@ -71,6 +71,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
     Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class);
+    Route::resource('coaches', \App\Http\Controllers\Admin\CoachController::class);
     Route::resource('activities', \App\Http\Controllers\Admin\ActivityController::class);
 });
 
