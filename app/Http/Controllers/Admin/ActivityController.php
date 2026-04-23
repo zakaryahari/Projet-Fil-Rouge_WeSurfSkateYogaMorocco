@@ -15,52 +15,28 @@ class ActivityController extends Controller
         return view('admin.activities.index', compact('activities'));
     }
 
-    public function create()
-    {
-        $coaches = Coach::orderBy('name')->get();
-        return view('admin.activities.create', compact('coaches'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'price'    => 'required|numeric|min:0',
-            'is_extra' => 'boolean',
-            'coach_id' => 'nullable|exists:coaches,id',
+            'name'              => 'required|string|max:255',
+            'duration_minutes'  => 'required|integer|min:1',
+            'coach_id'          => 'nullable|exists:coaches,id',
         ]);
 
-        Activity::create([
-            'name'     => $request->name,
-            'price'    => $request->price,
-            'is_extra' => $request->boolean('is_extra'),
-            'coach_id' => $request->coach_id,
-        ]);
+        Activity::create($request->only('name', 'duration_minutes', 'coach_id'));
 
         return redirect()->route('admin.activities.index')->with('success', 'Activité créée avec succès.');
-    }
-
-    public function edit(Activity $activity)
-    {
-        $coaches = Coach::orderBy('name')->get();
-        return view('admin.activities.edit', compact('activity', 'coaches'));
     }
 
     public function update(Request $request, Activity $activity)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'price'    => 'required|numeric|min:0',
-            'is_extra' => 'boolean',
-            'coach_id' => 'nullable|exists:coaches,id',
+            'name'              => 'required|string|max:255',
+            'duration_minutes'  => 'required|integer|min:1',
+            'coach_id'          => 'nullable|exists:coaches,id',
         ]);
 
-        $activity->update([
-            'name'     => $request->name,
-            'price'    => $request->price,
-            'is_extra' => $request->boolean('is_extra'),
-            'coach_id' => $request->coach_id,
-        ]);
+        $activity->update($request->only('name', 'duration_minutes', 'coach_id'));
 
         return redirect()->route('admin.activities.index')->with('success', 'Activité mise à jour avec succès.');
     }
