@@ -3,18 +3,23 @@
 namespace Database\Seeders;
 
 use App\Models\Activity;
+use App\Models\Coach;
 use Illuminate\Database\Seeder;
 
 class ActivitySeeder extends Seeder
 {
     public function run(): void
     {
+        // Create 2 coaches first
+        $coaches = Coach::factory(2)->create();
+
         $activities = [
-            ['name' => 'Surf Session Matin',     'location' => 'Plage Safi',       'date' => '2026-06-01', 'price' => 80.00],
-            ['name' => 'Yoga Coucher de Soleil', 'location' => 'Plage Essaouira',  'date' => '2026-06-02', 'price' => 60.00],
-            ['name' => 'Skate Park Session',     'location' => 'Skate Park Agadir','date' => '2026-06-03', 'price' => 50.00],
-            ['name' => 'Surf Avancé',            'location' => 'Plage Taghazout',  'date' => '2026-06-04', 'price' => 100.00],
-            ['name' => 'Méditation Plage',       'location' => 'Plage Oualidia',   'date' => '2026-06-05', 'price' => 40.00],
+            ['name' => 'Beginner Surf Lesson',      'duration_minutes' => 60,  'coach_id' => $coaches[0]->id],
+            ['name' => 'Advanced Surfing',          'duration_minutes' => 90,  'coach_id' => $coaches[0]->id],
+            ['name' => 'Yoga Flow Session',         'duration_minutes' => 45,  'coach_id' => $coaches[1]->id],
+            ['name' => 'Skateboard Tricks',         'duration_minutes' => 60,  'coach_id' => $coaches[1]->id],
+            ['name' => 'Beach Meditation',         'duration_minutes' => 30,  'coach_id' => $coaches[0]->id],
+            ['name' => 'Intermediate Skateboard',  'duration_minutes' => 75,  'coach_id' => $coaches[1]->id],
         ];
 
         foreach ($activities as $activity) {
