@@ -21,35 +21,36 @@ Route::get('/packages', function () {
 
 Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
-// Public Booking Routes
-Route::get('/bookings/packages', function () {
-    return view('bookings.choose_package', [
-        'packages' => \App\Models\Package::all(),
-    ]);
-})->name('bookings.packages');
+// Public Booking Routes - Customers only
+Route::middleware(['auth', 'prevent_admin_access', 'prevent_banned_access'])->group(function () {
+    Route::get('/bookings/packages', function () {
+        return view('bookings.choose_package', [
+            'packages' => \App\Models\Package::all(),
+        ]);
+    })->name('bookings.packages');
 
-Route::get('/bookings/{package_id}/create', function ($package_id) {
-    $package = \App\Models\Package::findOrFail($package_id);
-    return view('bookings.create', [
-        'package' => $package,
-        'rooms' => \App\Models\Room::all(),
-        'events' => \App\Models\Event::all(),
-    ]);
-})->name('bookings.create');
+    Route::get('/bookings/{package_id}/create', function ($package_id) {
+        $package = \App\Models\Package::findOrFail($package_id);
+        return view('bookings.create', [
+            'package' => $package,
+            'rooms' => \App\Models\Room::all(),
+            'events' => \App\Models\Event::all(),
+        ]);
+    })->name('bookings.create');
 
-Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])
-    ->middleware('auth')
-    ->name('bookings.store');
+    Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])
+        ->name('bookings.store');
 
-Route::middleware('auth')->get('/booking/{booking}/payment', [\App\Http\Controllers\BookingController::class, 'payment'])->name('payment.show');
+    Route::get('/booking/{booking}/payment', [\App\Http\Controllers\BookingController::class, 'payment'])->name('payment.show');
 
-Route::middleware('auth')->post('/booking/{booking}/payment/process', [\App\Http\Controllers\BookingController::class, 'processPayment'])->name('bookings.payment.process');
+    Route::post('/booking/{booking}/payment/process', [\App\Http\Controllers\BookingController::class, 'processPayment'])->name('bookings.payment.process');
 
-Route::middleware('auth')->get('/booking/{booking}/success', [\App\Http\Controllers\BookingController::class, 'success'])->name('bookings.success');
+    Route::get('/booking/{booking}/success', [\App\Http\Controllers\BookingController::class, 'success'])->name('bookings.success');
 
-Route::middleware('auth')->get('/booking/{booking}/stripe/success', [\App\Http\Controllers\BookingController::class, 'stripeSuccess'])->name('bookings.stripe.success');
+    Route::get('/booking/{booking}/stripe/success', [\App\Http\Controllers\BookingController::class, 'stripeSuccess'])->name('bookings.stripe.success');
 
-Route::middleware('auth')->get('/booking/{booking}/stripe/cancel', [\App\Http\Controllers\BookingController::class, 'stripeCancel'])->name('bookings.stripe.cancel');
+    Route::get('/booking/{booking}/stripe/cancel', [\App\Http\Controllers\BookingController::class, 'stripeCancel'])->name('bookings.stripe.cancel');
+});
 
 // Public Static Pages Routes
 Route::view('/events', 'pages.events')->name('events');
@@ -57,7 +58,7 @@ Route::view('/about', 'pages.about')->name('about');
 Route::view('/accommodation', 'pages.accommodation')->name('accommodation');
 Route::view('/contact', 'pages.contact')->name('contact');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'prevent_admin_access'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
