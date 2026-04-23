@@ -49,6 +49,19 @@
     </section>
     <!-- END: Hero Section -->
 
+    <!-- Alert Section -->
+    @if (session('error'))
+        <div class="bg-red-50 border-l-4 border-red-600 p-6 mx-6 my-6 rounded-lg">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-red-600 text-2xl">error</span>
+                <div>
+                    <p class="text-red-800 font-bold text-lg">Access Denied</p>
+                    <p class="text-red-700">{{ session('error') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- BEGIN: Welcome Section -->
     <section class="py-24 bg-white overflow-hidden">
         <div class="container mx-auto px-6">
