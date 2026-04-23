@@ -53,9 +53,17 @@ Route::middleware(['auth', 'prevent_admin_access', 'prevent_banned_access'])->gr
 });
 
 // Public Static Pages Routes
-Route::view('/events', 'pages.events')->name('events');
+Route::get('/events', function () {
+    return view('pages.events', [
+        'events' => \App\Models\Event::orderBy('event_date')->get(),
+    ]);
+})->name('events');
 Route::view('/about', 'pages.about')->name('about');
-Route::view('/accommodation', 'pages.accommodation')->name('accommodation');
+Route::get('/accommodation', function () {
+    return view('pages.accommodation', [
+        'rooms' => \App\Models\Room::where('is_active', true)->get(),
+    ]);
+})->name('accommodation');
 Route::view('/contact', 'pages.contact')->name('contact');
 
 Route::middleware(['auth', 'prevent_admin_access'])->group(function () {

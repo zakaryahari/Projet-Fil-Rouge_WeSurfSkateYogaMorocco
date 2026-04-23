@@ -38,110 +38,47 @@
         </div>
     </section>
 
-    <!-- Alternating Room Sections -->
+    <!-- Dynamic Room Sections -->
     <div class="py-20 space-y-32">
-        <!-- Single Room -->
+        @forelse($rooms as $room)
         <section class="max-w-7xl mx-auto px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="relative group">
+                <div class="{{ $loop->even ? 'order-2 md:order-1' : '' }} relative group">
                     <div class="rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
-                        <img class="w-full h-full object-cover" data-alt="bright modern single bedroom with light wood accents white linens and a large window overlooking the ocean" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_zRp9w0svjCiWmxCkeszpAUTqbUDCnhlRIj0z8cFQC_FsGIi8zt61mVfsog3pXvrmuoh-lsadFhCKwq0095R3_r_B2T8G7YS_lZ1m4wutlZhjpHJeRbiCKi5IXM2iRx-z1W3pTVVrCHpqKe_OIaEMhUV1YtMPUlWGQJm6sRInA6VVjPVLt_txy-1_s8_eLz9J_Gj4wx0d-8_du1lhipoGjZ2dTmUgV8c1YS0jdfDxeIk4-cfVmqsdKFbJhZB0RM7FsqD_Ctbjz1o"/>
-                    </div>
-                    <div class="absolute top-1/2 -left-4 -translate-y-1/2 flex flex-col gap-2">
-                        <button class="bg-white p-2 rounded-full shadow-lg hover:text-primary-container transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
-                    </div>
-                    <div class="absolute top-1/2 -right-4 -translate-y-1/2">
-                        <button class="bg-white p-2 rounded-full shadow-lg hover:text-primary-container transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+                        <img class="w-full h-full object-cover" alt="{{ $room->name ?? $room->type }}"
+                            src="{{ $room->image_path ? asset('storage/' . $room->image_path) : 'https://placehold.co/600x750/e2e8f0/94a3b8?text=No+Image' }}"
+                            onerror="this.src='https://placehold.co/600x750/e2e8f0/94a3b8?text=No+Image'"/>
                     </div>
                 </div>
-                <div class="space-y-8">
+                <div class="{{ $loop->even ? 'order-1 md:order-2' : '' }} space-y-8">
                     <div>
                         <span class="font-script text-primary-container text-2xl block mb-2">Accommodation</span>
-                        <h3 class="text-4xl font-black tracking-tight">Private Single Room</h3>
+                        <h3 class="text-4xl font-black tracking-tight">{{ $room->name ?? $room->type }}</h3>
                     </div>
-                    <p class="text-on-surface-variant text-lg">
-                        For those seeking a personal retreat after a high-energy day. Our single rooms offer peace, privacy, and premium comfort with artisanal Moroccan touches.
-                    </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Premium Orthopedic Mattress</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Private Ocean-View Balcony</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Daily Housekeeping Service</li>
-                    </ul>
-                    <div class="flex gap-8 pt-4 grayscale opacity-60">
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">bed</span><span class="text-[10px] uppercase font-bold tracking-widest">King</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">desk</span><span class="text-[10px] uppercase font-bold tracking-widest">Work</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">shower</span><span class="text-[10px] uppercase font-bold tracking-widest">Private</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">wifi</span><span class="text-[10px] uppercase font-bold tracking-widest">Fast</span></div>
+                    <p class="text-on-surface-variant text-lg">{{ $room->type }} room — capacity {{ $room->capacity ?? 1 }} guest(s).</p>
+                    <div class="flex gap-8 pt-4">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined block text-3xl text-primary-container">bed</span>
+                            <span class="text-[10px] uppercase font-bold tracking-widest">{{ $room->type }}</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="material-symbols-outlined block text-3xl text-primary-container">group</span>
+                            <span class="text-[10px] uppercase font-bold tracking-widest">{{ $room->capacity ?? 1 }} Pax</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="material-symbols-outlined block text-3xl text-primary-container">payments</span>
+                            <span class="text-[10px] uppercase font-bold tracking-widest">€{{ number_format($room->price_per_night, 0) }}/night</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Double Room -->
-        <section class="max-w-7xl mx-auto px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="order-2 md:order-1 space-y-8">
-                    <div>
-                        <span class="font-script text-primary-container text-2xl block mb-2">Accommodation</span>
-                        <h3 class="text-4xl font-black tracking-tight">Standard Double Room</h3>
-                    </div>
-                    <p class="text-on-surface-variant text-lg">
-                        Perfect for couples or friends traveling together. Spacious, airy, and flooded with natural light, designed to keep the coastal vibes flowing indoors.
-                    </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Twin or Double Configuration</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Hand-woven Berber Rugs</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> En-suite Modern Bathroom</li>
-                    </ul>
-                    <div class="flex gap-8 pt-4 grayscale opacity-60">
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">group</span><span class="text-[10px] uppercase font-bold tracking-widest">2 Pax</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">tv</span><span class="text-[10px] uppercase font-bold tracking-widest">Smart TV</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">ac_unit</span><span class="text-[10px] uppercase font-bold tracking-widest">Climate</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">coffee_maker</span><span class="text-[10px] uppercase font-bold tracking-widest">Bar</span></div>
-                    </div>
-                </div>
-                <div class="order-1 md:order-2 relative group">
-                    <div class="rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
-                        <img class="w-full h-full object-cover" data-alt="stylish double room with two twin beds featuring indigo blue throws and large sliding doors opening to a terrace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUoxiqHxZ9AAJnipLcyAEjxDcws0B4OK0OgYq8NRcjxijXIn9Mqgzdr9UxPWb6kd2bMe1XPyOd9Iy6ctsgBcMTWIV1TxUtb2WgAxThei3NOJxh4vGKtReOG3k11vYvOrunBzOLdQ17esJo4o5VRQFhGFg_HwBZ3qeKxq9q-2_pTmSiPOmgGtxhPOsC3PXfkp5tB7sqkyFJ2FQOB2aw1edPvjnIZoJ8ivpPOYlmNHCu7_uSXB4hd_E5zmUXhgm5JkCHjvD3E77eC7Y"/>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Shared Room -->
-        <section class="max-w-7xl mx-auto px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="relative group">
-                    <div class="rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
-                        <img class="w-full h-full object-cover" data-alt="modern luxury hostel dormitory with custom wood bunk beds individual reading lights and locker storage with a community vibe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtnz86y3RHWS_MStur4DUQWSNyM4ZzzmwVuqehe1tyuZPYQ22wHrbzJBm89-ofZy3rsSanUCj3sH37rmunNHDKomJlbpqJh-8ehs3azgwwNegOKcpalwHkh2-BeWgKJtxxrP8rxH0ufa6e2yHEkaOrUcTPkbuyvWe4_ZGbYTLPxkovZZEwY4Seb0kUFKQRV-nUTzrmHEkG4gtYV66H88YqaydW0T6B1yUU1VNhG7zhmJP7URQKmniEoZZzG3Qc_FIov3LQvEhoaf8"/>
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 bg-primary-container text-white px-8 py-4 rounded-xl shadow-2xl">
-                        <p class="font-bold text-xl">Community Vibes</p>
-                        <p class="text-sm opacity-90">Meet your next surf buddy</p>
-                    </div>
-                </div>
-                <div class="space-y-8">
-                    <div>
-                        <span class="font-script text-primary-container text-2xl block mb-2">Accommodation</span>
-                        <h3 class="text-4xl font-black tracking-tight">Surf Dorm / Shared</h3>
-                    </div>
-                    <p class="text-on-surface-variant text-lg">
-                        Our shared rooms are the heartbeat of the camp. High-end bunk designs with maximum privacy and dedicated lockers, perfect for solo travelers looking to connect.
-                    </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Personal Power & Lights</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Secure Under-bed Lockers</li>
-                        <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span> Social Lounge Access</li>
-                    </ul>
-                    <div class="flex gap-8 pt-4 grayscale opacity-60">
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">diversity_3</span><span class="text-[10px] uppercase font-bold tracking-widest">Shared</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">lock</span><span class="text-[10px] uppercase font-bold tracking-widest">Secure</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">charging_station</span><span class="text-[10px] uppercase font-bold tracking-widest">Power</span></div>
-                        <div class="text-center"><span class="material-symbols-outlined block text-3xl">nest_eco_leaf</span><span class="text-[10px] uppercase font-bold tracking-widest">Eco</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @empty
+        <div class="text-center py-16 text-gray-500 max-w-7xl mx-auto px-8">
+            <span class="material-symbols-outlined text-6xl opacity-30 mb-4 block">bed</span>
+            <p class="text-lg">No rooms available yet.</p>
+        </div>
+        @endforelse
     </div>
 
     <!-- Rooftop CTA -->
