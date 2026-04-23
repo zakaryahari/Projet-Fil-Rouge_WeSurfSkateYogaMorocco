@@ -22,12 +22,24 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'name'            => 'required|string|max:255',
             'type'            => 'required|string|max:255',
+            'capacity'        => 'nullable|integer|min:1',
             'price_per_night' => 'required|numeric|min:0',
             'total_stock'     => 'required|integer|min:1',
+            'is_active'       => 'nullable|boolean',
+            'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Room::create($request->only('type', 'price_per_night', 'total_stock'));
+        $data = $request->only('name', 'type', 'capacity', 'price_per_night', 'total_stock');
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('rooms', 'public');
+            $data['image_path'] = $path;
+        }
+
+        Room::create($data);
 
         return redirect()->route('admin.rooms.index')->with('success', 'Chambre créée avec succès.');
     }
@@ -40,12 +52,24 @@ class RoomController extends Controller
     public function update(Request $request, Room $room)
     {
         $request->validate([
+            'name'            => 'required|string|max:255',
             'type'            => 'required|string|max:255',
+            'capacity'        => 'nullable|integer|min:1',
             'price_per_night' => 'required|numeric|min:0',
             'total_stock'     => 'required|integer|min:1',
+            'is_active'       => 'nullable|boolean',
+            'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $room->update($request->only('type', 'price_per_night', 'total_stock'));
+        $data = $request->only('name', 'type', 'capacity', 'price_per_night', 'total_stock');
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('rooms', 'public');
+            $data['image_path'] = $path;
+        }
+
+        $room->update($data);
 
         return redirect()->route('admin.rooms.index')->with('success', 'Chambre mise à jour avec succès.');
     }
