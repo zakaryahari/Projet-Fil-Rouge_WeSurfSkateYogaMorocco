@@ -11,7 +11,8 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::latest()->paginate(10);
-        return view('admin.rooms.index', compact('rooms'));
+        $existingTypes = Room::pluck('type')->toArray();
+        return view('admin.rooms.index', compact('rooms', 'existingTypes'));
     }
 
     public function create()
@@ -22,8 +23,7 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'            => 'required|string|max:255',
-            'type'            => 'required|string|max:255',
+            'type'            => 'required|string|max:255|unique:rooms,type',
             'capacity'        => 'nullable|integer|min:1',
             'price_per_night' => 'required|numeric|min:0',
             'total_stock'     => 'required|integer|min:1',
@@ -31,7 +31,7 @@ class RoomController extends Controller
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->only('name', 'type', 'capacity', 'price_per_night', 'total_stock');
+        $data = $request->only('type', 'capacity', 'price_per_night', 'total_stock');
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
         if ($request->hasFile('image')) {
@@ -52,8 +52,7 @@ class RoomController extends Controller
     public function update(Request $request, Room $room)
     {
         $request->validate([
-            'name'            => 'required|string|max:255',
-            'type'            => 'required|string|max:255',
+            'type'            => 'required|string|max:255|unique:rooms,type,' . $room->id,
             'capacity'        => 'nullable|integer|min:1',
             'price_per_night' => 'required|numeric|min:0',
             'total_stock'     => 'required|integer|min:1',
@@ -61,7 +60,7 @@ class RoomController extends Controller
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->only('name', 'type', 'capacity', 'price_per_night', 'total_stock');
+        $data = $request->only('type', 'capacity', 'price_per_night', 'total_stock');
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
         if ($request->hasFile('image')) {
