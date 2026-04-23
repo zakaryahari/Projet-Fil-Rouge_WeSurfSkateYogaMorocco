@@ -10,7 +10,7 @@
             <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
             <span class="text-sm">Dashboard</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white transition-all duration-200 hover:bg-slate-800" href="#">
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.bookings.*') ? 'text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800' }} transition-all duration-200" href="{{ route('admin.bookings.index') }}">
             <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
             <span class="text-sm">Bookings</span>
         </a>
@@ -30,9 +30,9 @@
             <span class="material-symbols-outlined" data-icon="sports_handball">sports_handball</span>
             <span class="text-sm">Coaches</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white transition-all duration-200 hover:bg-slate-800" href="#">
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.reviews.*') ? 'text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800' }} transition-all duration-200" href="{{ route('admin.reviews.index') }}">
             <span class="material-symbols-outlined" data-icon="group">group</span>
-            <span class="text-sm">Users</span>
+            <span class="text-sm">Reviews</span>
         </a>
     </nav>
     <div class="p-6">
