@@ -41,18 +41,11 @@
                     @forelse ($rooms as $room)
                         <tr class="group hover:bg-surface-container-low/30 transition-colors">
                             <td class="px-8 py-5">
-                                @if ($room->image_path)
-                                    <img src="{{ asset('storage/' . $room->image_path) }}" alt="{{ $room->name }}" class="w-12 h-12 rounded-lg object-cover">
-                                @else
-                                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-slate-400">image</span>
-                                    </div>
-                                @endif
+                                <img src="{{ asset($room->image_path ? 'storage/' . $room->image_path : 'images/default-room.png') }}" alt="{{ $room->type }}" class="w-12 h-12 rounded-lg object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2230%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23a0aec0%22%3E🛏️%3C/text%3E%3C/svg%3E'">
                             </td>
                             <td class="px-8 py-5">
                                 <div>
-                                    <p class="font-semibold text-slate-900">{{ $room->name }}</p>
-                                    <p class="text-xs text-slate-500">{{ $room->type }}</p>
+                                    <p class="font-semibold text-slate-900">{{ $room->type }}</p>
                                 </div>
                             </td>
                             <td class="px-8 py-5 font-medium text-slate-900">€{{ number_format($room->price_per_night, 2) }}</td>
@@ -113,20 +106,9 @@
             <input type="hidden" id="form-method" name="_method" value="POST">
 
             <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Room Title</label>
-                <input id="room-title" type="text" name="name" class="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary-container" required>
-            </div>
-
-            <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Room Type</label>
-                <select id="room-type" name="type" class="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary-container" required>
-                    <option value="">Select a room type</option>
-                    <option value="Standard">Standard</option>
-                    <option value="Deluxe">Deluxe</option>
-                    <option value="Suite">Suite</option>
-                    <option value="Villa">Villa</option>
-                    <option value="Beach House">Beach House</option>
-                </select>
+                <input id="room-type" type="text" name="type" placeholder="e.g., Standard, Deluxe, Suite..." class="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary-container" required>
+                <p class="text-xs text-slate-400 mt-1">Enter a unique room type name</p>
             </div>
 
             <!-- Image Upload Section -->
@@ -217,7 +199,6 @@
 
         function openEditRoom(roomData) {
             document.getElementById('panel-title').textContent = 'Edit Room';
-            document.getElementById('room-title').value = roomData.name;
             document.getElementById('room-type').value = roomData.type;
             document.getElementById('room-price').value = roomData.price_per_night;
             document.getElementById('room-stock').value = roomData.total_stock;
