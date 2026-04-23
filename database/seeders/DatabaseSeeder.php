@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         // ─── Seeders ──────────────────────────────────────────────────────────
         $this->call([
+            CoachSeeder::class,
+            ActivitySeeder::class,
             RoomSeeder::class,
             PackageSeeder::class,
             EventSeeder::class,
