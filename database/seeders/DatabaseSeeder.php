@@ -75,5 +75,11 @@ class DatabaseSeeder extends Seeder
         foreach ($customers as $customer) {
             User::create($customer);
         }
+
+        // ─── Bookings & Reviews ───────────────────────────────────────────────
+        $this->call([
+            BookingSeeder::class,
+            ReviewSeeder::class,
+        ]);
     }
 }
