@@ -12,7 +12,8 @@ class ActivityController extends Controller
     public function index()
     {
         $activities = Activity::with('coach')->latest()->paginate(10);
-        return view('admin.activities.index', compact('activities'));
+        $coaches = Coach::all();
+        return view('admin.activities.index', compact('activities', 'coaches'));
     }
 
     public function store(Request $request)
