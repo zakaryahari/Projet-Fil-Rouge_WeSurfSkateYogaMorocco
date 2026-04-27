@@ -124,35 +124,5 @@
 @endsection
 
 @section('scripts')
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('.customer-row');
-
-            rows.forEach(row => {
-                const name = row.getAttribute('data-customer-name');
-                const email = row.getAttribute('data-customer-email');
-
-                if (name.includes(searchTerm) || email.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-
-        // Profile menu redirect
-        const profileLink = document.querySelector('a[href="{{ route('profile.edit') }}"]');
-        if (profileLink) {
-            profileLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                const role = '{{ auth()->user()->role }}';
-                if (role === 'customer') {
-                    window.location.href = '{{ route('home') }}';
-                } else if (role === 'admin') {
-                    window.location.href = '{{ route('admin.dashboard') }}';
-                }
-            });
-        }
-    </script>
+    <script src="{{ asset('js/admin/dashboard.js') }}"></script>
 @endsection
