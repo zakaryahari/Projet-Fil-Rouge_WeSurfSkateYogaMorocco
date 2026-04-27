@@ -30,6 +30,7 @@
                 <thead>
                     <tr class="bg-surface-container-low text-slate-500 uppercase text-[0.65rem] font-bold tracking-widest">
                         <th class="px-8 py-4">Name</th>
+                        <th class="px-8 py-4">Coach</th>
                         <th class="px-8 py-4">Duration (Minutes)</th>
                         <th class="px-8 py-4 text-right">Action</th>
                     </tr>
@@ -39,6 +40,18 @@
                         <tr class="group hover:bg-surface-container-low/30 transition-colors">
                             <td class="px-8 py-5">
                                 <p class="font-semibold text-slate-900">{{ $activity->name }}</p>
+                            </td>
+                            <td class="px-8 py-5">
+                                @if ($activity->coach)
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-primary text-sm">person</span>
+                                        </div>
+                                        <span class="font-medium text-slate-900">{{ $activity->coach->name }}</span>
+                                    </div>
+                                @else
+                                    <span class="text-slate-400 italic">Unassigned</span>
+                                @endif
                             </td>
                             <td class="px-8 py-5">
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-50 text-sky-600 border border-sky-100">
@@ -62,7 +75,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-8 py-5 text-center text-slate-400">No activities found</td>
+                            <td colspan="4" class="px-8 py-5 text-center text-slate-400">No activities found</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -99,6 +112,19 @@
                 <p class="text-xs text-slate-400 mt-1">Duration in minutes</p>
             </div>
 
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Assign Coach</label>
+                <select id="activity-coach" name="coach_id" class="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary-container">
+                    <option value="">-- Select a Coach --</option>
+                    @forelse ($coaches as $coach)
+                        <option value="{{ $coach->id }}">{{ $coach->name }} ({{ $coach->specialty }})</option>
+                    @empty
+                        <option value="" disabled>No coaches available</option>
+                    @endforelse
+                </select>
+                <p class="text-xs text-slate-400 mt-1">Select the coach who will lead this activity</p>
+            </div>
+
             <!-- Form Actions -->
             <div class="pt-4 space-y-3 mt-auto">
                 <button type="submit" class="w-full py-3 bg-primary-container text-white rounded-full font-bold shadow-lg shadow-sky-200 hover:bg-primary transition-all">
@@ -115,6 +141,7 @@
         function openAddActivity() {
             document.getElementById('panel-title').textContent = 'Add Activity';
             document.getElementById('activity-form').reset();
+            document.getElementById('activity-coach').value = '';
             document.getElementById('form-method').value = 'POST';
             document.getElementById('activity-form').action = '{{ route("admin.activities.store") }}';
             document.getElementById('activity-panel').classList.remove('hidden');
@@ -124,6 +151,7 @@
             document.getElementById('panel-title').textContent = 'Edit Activity';
             document.getElementById('activity-name').value = activityData.name;
             document.getElementById('activity-duration').value = activityData.duration_minutes;
+            document.getElementById('activity-coach').value = activityData.coach_id || '';
 
             document.getElementById('form-method').value = 'PUT';
             document.getElementById('activity-form').action = '{{ route("admin.activities.update", ":id") }}'.replace(':id', activityData.id);
@@ -133,5 +161,12 @@
         function closePanel() {
             document.getElementById('activity-panel').classList.add('hidden');
         }
+
+        // Close panel when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('activity-panel').classList.contains('hidden')) {
+                closePanel();
+            }
+        });
     </script>
 @endsection
