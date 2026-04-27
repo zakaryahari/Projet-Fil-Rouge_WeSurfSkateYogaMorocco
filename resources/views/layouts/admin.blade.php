@@ -127,10 +127,10 @@
                         <!-- Dropdown Links -->
                         <div class="py-2">
                             <!-- Profile Link -->
-                            <a href="{{ route('profile.edit') }}" @click="open = false" class="block px-4 py-2 text-slate-700 text-sm hover:bg-sky-50 hover:text-sky-600 transition-colors flex items-center gap-2">
+                            <!-- <a href="{{ route('profile.edit') }}" @click="open = false" class="block px-4 py-2 text-slate-700 text-sm hover:bg-sky-50 hover:text-sky-600 transition-colors flex items-center gap-2">
                                 <span class="material-symbols-outlined text-base" data-icon="account_circle">account_circle</span>
                                 <span>Profil</span>
-                            </a>
+                            </a> -->
 
                             <!-- Logout Form -->
                             <form method="POST" action="{{ route('logout') }}" class="block" @click="open = false">
