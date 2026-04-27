@@ -132,7 +132,7 @@
                     <!-- Package Card -->
                     <a href="{{ route('packages.show', $package->id) }}" class="flex-shrink-0 w-96 snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group block text-decoration-none">
                         <div class="relative h-72 overflow-hidden">
-                            <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGi8OeFWu9tfG3iiv560d8YpJpNV8cPzTniZ5xEpNtTVCQ4sE9wvPwFm7LWQtzCwLrtqkj5Ii-HysBhZfOc_FIjJiKAhAk_K_QaE1mllarUW3JCXCHt2NOXXQdkxlD82db2C7Ld22QZlJ_v3LRoxmzDoF1qTaFdjBZJi-5lRtK1V4MBP5I_hxhBoNA47wkRcaiucd0Hl6Ba87cDviO7ZfN8zjdOWMdPIZ_IINAUlLuf9U2vVmWjRe9uKBqRGIspARwZ9yUSaADm7o">
+                            <img alt="{{ $package->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset($package->image_path ? 'storage/' . $package->image_path : 'images/default-package.png') }}">
                             <span class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">New</span>
                         </div>
                         <div class="p-10">
@@ -196,7 +196,7 @@
                 @forelse($rooms as $room)
                     <!-- Room Card -->
                     <div class="flex-shrink-0 w-[500px] snap-center relative group cursor-pointer overflow-hidden rounded-[2rem] h-[450px]" data-purpose="accommodation-card">
-                        <img alt="{{ $room->type }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4wD3YtwVSOUsk7b5grexF5Zi_nrBjPLaQ4IB9xRCzz5a_Ro54xD-V-b3auLWry2XcxLuMSH-q7xd0qzi_467y2TsT3MfX8a4glObKEr7_aPlle9cn9VZX6UJeFcgLvqegLUxMtghLvZFUGXYswdb6L7Dpa0IwIL3yI2yNlUVMXfnLWN8qh-l4AOBsVKbEceC3qYCDeoyJMCLFboLu9q86dA54rq7d1k7y1Jw6FPkzvuiBxQARSXSPiXGGcxwTya2szMJkk2_2jQY"/>
+                        <img alt="{{ $room->type }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{{ asset($room->image_path ? 'storage/' . $room->image_path : 'images/default-room.png') }}">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
                             <h3 class="text-3xl font-extrabold uppercase mb-2">{{ $room->type }} Room</h3>
                             <p class="text-gray-300 text-sm mb-6">Private sanctuary for all travelers.</p>
