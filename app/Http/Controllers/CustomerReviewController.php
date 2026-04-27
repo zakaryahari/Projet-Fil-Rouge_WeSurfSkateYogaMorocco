@@ -7,6 +7,20 @@ use Illuminate\Http\Request;
 
 class CustomerReviewController extends Controller
 {
+    public function getUnreviewedBooking()
+    {
+        if (!auth()->check()) {
+            return null;
+        }
+
+        return auth()->user()
+            ->bookings()
+            ->where('status', 'finished')
+            ->doesntHave('review')
+            ->with('package')
+            ->first();
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
