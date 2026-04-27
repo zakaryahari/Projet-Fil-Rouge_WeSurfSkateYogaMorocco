@@ -38,7 +38,7 @@ class PackageController extends Controller
 
         $package = Package::create($data);
 
-        // Sync activities with pivot data (included_sessions)
+        
         if ($request->activity_ids) {
             $syncData = collect($request->activity_ids)->mapWithKeys(function ($activityId) use ($request) {
                 return [
@@ -76,7 +76,7 @@ class PackageController extends Controller
 
         $package->update($data);
 
-        // Sync activities with pivot data (included_sessions)
+        
         if ($request->activity_ids) {
             $syncData = collect($request->activity_ids)->mapWithKeys(function ($activityId) use ($request) {
                 return [
@@ -88,7 +88,7 @@ class PackageController extends Controller
 
             $package->activities()->sync($syncData);
         } else {
-            // If no activities selected, detach all
+            
             $package->activities()->detach();
         }
 
