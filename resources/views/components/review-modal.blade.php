@@ -1,7 +1,3 @@
-@php
-    $unreviewedBooking = auth()->check() ? auth()->user()->bookings()->where('status', 'finished')->doesntHave('review')->with('package')->first() : null;
-@endphp
-
 @if($unreviewedBooking)
     <!-- Review Modal Overlay -->
     <div id="review-modal-overlay" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex items-center justify-center opacity-100 transition-opacity duration-300" style="display: none;">

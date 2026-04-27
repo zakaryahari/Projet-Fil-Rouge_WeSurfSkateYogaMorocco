@@ -85,7 +85,7 @@
         </div>
 
         <!-- Panel Form -->
-        <form id="coach-form" method="POST" class="flex-1 p-6 space-y-5 flex flex-col">
+        <form id="coach-form" method="POST" data-store-route="{{ route('admin.coaches.store') }}" data-update-route="{{ route('admin.coaches.update', ':id') }}" class="flex-1 p-6 space-y-5 flex flex-col">
             @csrf
             <input type="hidden" id="form-method" name="_method" value="POST">
 
@@ -119,28 +119,5 @@
         </form>
     </div>
 
-    <script>
-        function openAddCoach() {
-            document.getElementById('panel-title').textContent = 'Add Coach';
-            document.getElementById('coach-form').reset();
-            document.getElementById('form-method').value = 'POST';
-            document.getElementById('coach-form').action = '{{ route("admin.coaches.store") }}';
-            document.getElementById('coach-panel').classList.remove('hidden');
-        }
-
-        function openEditCoach(coachData) {
-            document.getElementById('panel-title').textContent = 'Edit Coach';
-            document.getElementById('coach-name').value = coachData.name;
-            document.getElementById('coach-specialty').value = coachData.specialty;
-            document.getElementById('coach-years').value = coachData.years_experience;
-
-            document.getElementById('form-method').value = 'PUT';
-            document.getElementById('coach-form').action = '{{ route("admin.coaches.update", ":id") }}'.replace(':id', coachData.id);
-            document.getElementById('coach-panel').classList.remove('hidden');
-        }
-
-        function closePanel() {
-            document.getElementById('coach-panel').classList.add('hidden');
-        }
-    </script>
+    <script src="{{ asset('js/admin/coach.js') }}"></script>
 @endsection
