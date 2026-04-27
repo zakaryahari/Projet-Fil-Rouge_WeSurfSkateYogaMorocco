@@ -96,7 +96,7 @@
         </div>
 
         <!-- Panel Form -->
-        <form id="activity-form" method="POST" class="flex-1 p-6 space-y-5 flex flex-col">
+        <form id="activity-form" method="POST" data-store-route="{{ route('admin.activities.store') }}" data-update-route="{{ route('admin.activities.update', ':id') }}" class="flex-1 p-6 space-y-5 flex flex-col">
             @csrf
             <input type="hidden" id="form-method" name="_method" value="POST">
 
@@ -137,36 +137,5 @@
         </form>
     </div>
 
-    <script>
-        function openAddActivity() {
-            document.getElementById('panel-title').textContent = 'Add Activity';
-            document.getElementById('activity-form').reset();
-            document.getElementById('activity-coach').value = '';
-            document.getElementById('form-method').value = 'POST';
-            document.getElementById('activity-form').action = '{{ route("admin.activities.store") }}';
-            document.getElementById('activity-panel').classList.remove('hidden');
-        }
-
-        function openEditActivity(activityData) {
-            document.getElementById('panel-title').textContent = 'Edit Activity';
-            document.getElementById('activity-name').value = activityData.name;
-            document.getElementById('activity-duration').value = activityData.duration_minutes;
-            document.getElementById('activity-coach').value = activityData.coach_id || '';
-
-            document.getElementById('form-method').value = 'PUT';
-            document.getElementById('activity-form').action = '{{ route("admin.activities.update", ":id") }}'.replace(':id', activityData.id);
-            document.getElementById('activity-panel').classList.remove('hidden');
-        }
-
-        function closePanel() {
-            document.getElementById('activity-panel').classList.add('hidden');
-        }
-
-        // Close panel when pressing Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !document.getElementById('activity-panel').classList.contains('hidden')) {
-                closePanel();
-            }
-        });
-    </script>
+    <script src="{{ asset('js/admin/activity.js') }}"></script>
 @endsection
