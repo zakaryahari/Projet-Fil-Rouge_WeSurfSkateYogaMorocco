@@ -364,6 +364,11 @@
     </section>
     <!-- END: Extra Activities Section -->
 
+    <!-- Review Modal Component -->
+    @auth
+        <x-review-modal />
+    @endauth
+
     <!-- BEGIN: News & Articles Section -->
     <section class="py-24 bg-gray-50">
         <div class="container mx-auto px-6 flex flex-col md:flex-row md:items-end justify-between mb-16">
