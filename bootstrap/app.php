@@ -15,7 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'prevent_admin_access' => \App\Http\Middleware\PreventAdminAccess::class,
             'prevent_banned_access' => \App\Http\Middleware\PreventBannedAccess::class,
+            'check_banned' => \App\Http\Middleware\CheckBanned::class,
         ]);
+
+        // Apply CheckBanned middleware to all authenticated routes
+        $middleware->appendToGroup('web', \App\Http\Middleware\CheckBanned::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
