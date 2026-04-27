@@ -35,10 +35,10 @@
             <span class="text-sm">Reviews</span>
         </a>
     </nav>
-    <div class="p-6">
+    <!-- <div class="p-6">
         <button class="w-full bg-primary-container text-white py-3 px-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all">
             <span class="material-symbols-outlined text-sm" data-icon="add">add</span>
             New Booking
         </button>
-    </div>
+    </div> -->
 </aside>
