@@ -4,88 +4,162 @@
 
 @section('content')
     <!-- Page Header -->
-    <div class="flex flex-col gap-1 mb-8">
-        <p class="text-sky-600 font-medium text-sm tracking-wide">Inventory</p>
-        <h2 class="text-3xl font-black text-on-surface tracking-tight">Room Inventory</h2>
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+            <span class="text-tertiary font-bold text-sm tracking-widest uppercase mb-2 block">Accommodation</span>
+            <h1 class="text-4xl font-black text-on-surface tracking-tight">Room Inventory</h1>
+            <p class="text-on-surface-variant mt-2 max-w-lg">Manage your premium room collection with real-time stock tracking and availability monitoring.</p>
+        </div>
+        <button onclick="openAddRoom()" class="flex items-center gap-2 py-3 px-6 bg-tertiary-container text-on-tertiary rounded-full font-bold text-sm shadow-lg shadow-blue-200 hover:brightness-110 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span>
+            Add New Room
+        </button>
     </div>
 
     <!-- Success Message -->
     @if (session('success'))
-        <div class="bg-emerald-50 border border-emerald-300 rounded-lg p-4 text-emerald-700 text-sm font-medium mb-6">
+        <div class="bg-emerald-50 border border-emerald-300 rounded-lg p-4 text-emerald-700 text-sm font-medium mb-6 flex items-center gap-3">
+            <span class="material-symbols-outlined text-green-600">check_circle</span>
             {{ session('success') }}
         </div>
     @endif
 
-    <!-- Room Inventory Table -->
-    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
-        <div class="p-6 flex justify-between items-center bg-surface-container-low/50 border-b border-surface-container-high">
-            <h3 class="font-bold text-lg">Rooms</h3>
-            <button onclick="openAddRoom()" class="flex items-center gap-2 py-2 px-5 bg-primary-container text-white rounded-full font-bold text-sm hover:bg-primary transition-all">
-                <span class="material-symbols-outlined text-lg">add</span>
-                Add New Room
-            </button>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="bg-surface-container-low text-slate-500 uppercase text-[0.65rem] font-bold tracking-widest">
-                        <th class="px-8 py-4">Image</th>
-                        <th class="px-8 py-4">Title</th>
-                        <th class="px-8 py-4">Price/Night</th>
-                        <th class="px-8 py-4">Total Stock</th>
-                        <th class="px-8 py-4 text-center">Status</th>
-                        <th class="px-8 py-4 text-right">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-container-low">
-                    @forelse ($rooms as $room)
-                        <tr class="group hover:bg-surface-container-low/30 transition-colors">
-                            <td class="px-8 py-5">
-                                <img src="{{ asset($room->image_path ? 'storage/' . $room->image_path : 'images/default-room.png') }}" alt="{{ $room->type }}" class="w-12 h-12 rounded-lg object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2230%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23a0aec0%22%3E🛏️%3C/text%3E%3C/svg%3E'">
-                            </td>
-                            <td class="px-8 py-5">
-                                <div>
-                                    <p class="font-semibold text-slate-900">{{ $room->type }}</p>
+    <!-- Rooms Grid Cards -->
+    <div>
+        @if ($rooms->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($rooms as $room)
+                    <div class="group relative bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-surface-container-high/50 hover:border-tertiary/40 flex flex-col h-full">
+
+                        <!-- Status Indicator Badge (Top Right) -->
+                        <div class="absolute top-4 right-4 z-10">
+                            @if ($room->is_active)
+                                <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/95 rounded-full shadow-lg">
+                                    <span class="material-symbols-outlined text-white text-lg">check_circle</span>
+                                    <span class="text-white text-[10px] font-black uppercase tracking-widest">Active</span>
                                 </div>
-                            </td>
-                            <td class="px-8 py-5 font-medium text-slate-900">€{{ number_format($room->price_per_night, 2) }}</td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-50 text-sky-600 border border-sky-100">
-                                    {{ $room->total_stock }} Units
+                            @else
+                                <div class="flex items-center gap-2 px-3 py-1.5 bg-slate-500/95 rounded-full shadow-lg">
+                                    <span class="material-symbols-outlined text-white text-lg">pause_circle</span>
+                                    <span class="text-white text-[10px] font-black uppercase tracking-widest">Inactive</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- Image Section with Gradient -->
+                        <div class="relative h-52 overflow-hidden bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+                            <img src="{{ asset($room->image_path ? 'storage/' . $room->image_path : 'images/default-room.png') }}" alt="{{ $room->type }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23f0f9ff%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2250%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3E🛏️%3C/text%3E%3C/svg%3E'">
+                            <!-- Room Type Badge (Top Left) -->
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-white/95 text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-lg shadow-md flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-lg">bed</span>
+                                    {{ $room->type }}
                                 </span>
-                            </td>
-                            <td class="px-8 py-5">
-                                <div class="flex justify-center">
-                                    @if ($room->is_active)
-                                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600 border border-emerald-100">Active</span>
-                                    @else
-                                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-50 text-slate-600 border border-slate-100">Inactive</span>
-                                    @endif
+                            </div>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-6 flex-1 flex flex-col">
+                            <!-- Main Details Section -->
+                            <div class="mb-4">
+                                <p class="text-xs text-tertiary font-black uppercase tracking-wider mb-1">Premium Accommodation</p>
+                                <h3 class="text-xl font-black text-on-surface">{{ $room->type }}</h3>
+                            </div>
+
+                            <!-- Price and Capacity Row -->
+                            <div class="grid grid-cols-2 gap-3 mb-4 pb-4 border-b border-surface-container-low/50">
+                                <div class="bg-tertiary-fixed/30 rounded-xl p-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-tertiary">euro</span>
+                                    <div>
+                                        <p class="text-[9px] text-on-surface-variant uppercase font-bold">Per Night</p>
+                                        <p class="text-lg font-black text-on-surface">€{{ number_format($room->price_per_night, 0) }}</p>
+                                    </div>
                                 </div>
-                            </td>
-                            <td class="px-8 py-5 text-right">
-                                <div class="flex justify-end gap-2">
-                                    <button onclick='openEditRoom(@json($room))' class="p-2 text-slate-400 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-colors">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this room?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </button>
-                                    </form>
+                                <div class="bg-blue-100/50 rounded-xl p-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-blue-600">group</span>
+                                    <div>
+                                        <p class="text-[9px] text-on-surface-variant uppercase font-bold">Capacity</p>
+                                        <p class="text-lg font-black text-on-surface">{{ $room->capacity ?? '—' }}</p>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="px-8 py-5 text-center text-slate-400">No rooms found</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                            </div>
+
+                            <!-- Stock Status -->
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <p class="text-[10px] text-on-surface-variant uppercase font-bold flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">inventory_2</span>
+                                        Available Stock
+                                    </p>
+                                    <span class="text-sm font-black text-on-surface">{{ $room->total_stock }}</span>
+                                </div>
+                                <!-- Stock Progress Bar -->
+                                <div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full" style="width: {{ min($room->total_stock * 10, 100) }}%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Features Badges -->
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1.5 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[9px] font-black rounded-lg flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">hotel</span>
+                                    Standard
+                                </span>
+                                @if ($room->capacity >= 2)
+                                    <span class="px-2.5 py-1.5 bg-blue-100 text-blue-700 text-[9px] font-black rounded-lg flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">people</span>
+                                        Multi-Guest
+                                    </span>
+                                @endif
+                                @if ($room->is_active)
+                                    <span class="px-2.5 py-1.5 bg-emerald-100 text-emerald-700 text-[9px] font-black rounded-lg flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">check</span>
+                                        Available
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons Footer -->
+                        <div class="p-6 bg-gradient-to-r from-slate-50/50 to-slate-50/30 border-t border-surface-container-low/50 flex items-center justify-between gap-3">
+                            <button onclick='openEditRoom(@json($room))' class="flex-1 py-2.5 px-4 bg-tertiary-container text-white rounded-lg font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-2 group/edit">
+                                <span class="material-symbols-outlined text-lg group-hover/edit:rotate-12 transition-transform">edit</span>
+                                <span class="hidden sm:inline">Edit</span>
+                            </button>
+                            <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this room?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-2.5 text-error hover:bg-error/10 rounded-lg transition-all hover:scale-110">
+                                    <span class="material-symbols-outlined text-lg">delete</span>
+                                </button>
+                            </form>
+                            <!-- Stock Indicator Dot -->
+                            <div class="flex items-center gap-2 pl-3 border-l border-surface-container-low/30">
+                                <span class="w-3 h-3 rounded-full {{ $room->total_stock > 0 ? 'bg-green-500 animate-pulse' : 'bg-red-500' }}"></span>
+                                <span class="text-[10px] text-on-surface-variant font-bold uppercase">{{ $room->total_stock > 0 ? 'In Stock' : 'Empty' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Pagination -->
+            @if ($rooms->hasPages())
+                <div class="mt-10 flex justify-center">
+                    {{ $rooms->links() }}
+                </div>
+            @endif
+        @else
+            <div class="bg-surface-container-lowest rounded-2xl p-16 text-center shadow-sm border border-surface-container-high/50">
+                <span class="material-symbols-outlined text-6xl text-tertiary mb-4 block opacity-40">bed</span>
+                <h3 class="text-xl font-bold text-on-surface mb-2">No Rooms Yet</h3>
+                <p class="text-on-surface-variant font-medium mb-6">Create your first room to start managing your accommodation inventory.</p>
+                <button onclick="openAddRoom()" class="inline-flex items-center gap-2 py-3 px-6 bg-tertiary-container text-on-tertiary rounded-full font-bold text-sm shadow-lg shadow-blue-200 hover:brightness-110 transition-all">
+                    <span class="material-symbols-outlined">add</span>
+                    Create First Room
+                </button>
+            </div>
+        @endif
     </div>
 
     <!-- Right-Side Panel (Slide-out Form) -->
@@ -105,10 +179,20 @@
             @csrf
             <input type="hidden" id="form-method" name="_method" value="POST">
 
+            <!-- Error Messages Display -->
+            <div id="error-container" class="hidden bg-red-50 border border-red-300 rounded-lg p-4">
+                <div class="flex gap-2 mb-2">
+                    <span class="material-symbols-outlined text-red-600 text-lg">error</span>
+                    <p class="text-red-700 font-bold text-sm">Please fix the errors below:</p>
+                </div>
+                <ul id="error-list" class="text-red-600 text-xs space-y-1 ml-4"></ul>
+            </div>
+
             <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Room Type</label>
                 <input id="room-type" type="text" name="type" placeholder="e.g., Standard, Deluxe, Suite..." class="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary-container" required>
                 <p class="text-xs text-slate-400 mt-1">Enter a unique room type name</p>
+                <p id="type-error" class="text-red-600 text-xs mt-1 hidden"></p>
             </div>
 
             <!-- Image Upload Section -->
@@ -147,7 +231,8 @@
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Active Status</label>
                 <div class="flex items-center gap-4 mt-2">
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input id="room-active" type="checkbox" name="is_active" class="sr-only peer" checked>
+                        <input type="hidden" name="is_active" value="0">
+                        <input id="room-active" type="checkbox" name="is_active" value="1" class="sr-only peer" checked>
                         <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                         <span class="ml-3 text-sm font-medium text-slate-600">Active on Website</span>
                     </label>
@@ -187,10 +272,43 @@
             document.getElementById('preview-content').classList.remove('hidden');
         }
 
+        function displayErrors(errors) {
+            const errorContainer = document.getElementById('error-container');
+            const errorList = document.getElementById('error-list');
+
+            errorList.innerHTML = '';
+
+            Object.keys(errors).forEach(field => {
+                const errorMessages = errors[field];
+                errorMessages.forEach(message => {
+                    const li = document.createElement('li');
+                    li.textContent = message;
+                    errorList.appendChild(li);
+
+                    // Highlight field
+                    const fieldElement = document.getElementById('room-' + field.replace('.', '-'));
+                    if (fieldElement) {
+                        fieldElement.classList.add('border', 'border-red-500', 'bg-red-50');
+                    }
+                });
+            });
+
+            errorContainer.classList.remove('hidden');
+        }
+
+        function clearErrors() {
+            document.getElementById('error-container').classList.add('hidden');
+            document.getElementById('error-list').innerHTML = '';
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.classList.remove('border', 'border-red-500', 'bg-red-50');
+            });
+        }
+
         function openAddRoom() {
             document.getElementById('panel-title').textContent = 'Add Room';
             document.getElementById('room-form').reset();
             clearImagePreview();
+            clearErrors();
             document.getElementById('form-method').value = 'POST';
             document.getElementById('room-form').action = '{{ route("admin.rooms.store") }}';
             document.getElementById('room-active').checked = true;
@@ -204,6 +322,7 @@
             document.getElementById('room-stock').value = roomData.total_stock;
             document.getElementById('room-capacity').value = roomData.capacity || '';
             document.getElementById('room-active').checked = roomData.is_active === 1 || roomData.is_active === true;
+            clearErrors();
 
             // Set image preview if exists
             if (roomData.image_path) {
@@ -223,14 +342,50 @@
             document.getElementById('room-panel').classList.add('hidden');
         }
 
-        // Close panel when clicking outside
-        document.addEventListener('click', function(event) {
-            const panel = document.getElementById('room-panel');
-            if (!panel.contains(event.target) && event.target.id !== 'add-room-btn' && !event.target.closest('button[onclick*="openAddRoom"]') && !event.target.closest('button[onclick*="openEditRoom"]')) {
-                if (!panel.classList.contains('hidden') && !event.target.closest('form')) {
-                    // Allow clicks on the form
-                }
+        // Handle form submission with validation feedback
+        document.getElementById('room-form').addEventListener('submit', function(e) {
+            clearErrors();
+
+            // Basic client-side validation
+            const roomType = document.getElementById('room-type').value.trim();
+            const roomPrice = document.getElementById('room-price').value;
+            const roomStock = document.getElementById('room-stock').value;
+
+            const errors = {};
+
+            if (!roomType) {
+                errors['type'] = ['Room type is required'];
+            }
+
+            if (!roomPrice || parseFloat(roomPrice) < 0) {
+                errors['price_per_night'] = ['Price must be a positive number'];
+            }
+
+            if (!roomStock || parseInt(roomStock) < 1) {
+                errors['total_stock'] = ['Stock must be at least 1'];
+            }
+
+            if (Object.keys(errors).length > 0) {
+                e.preventDefault();
+                displayErrors(errors);
+                return false;
             }
         });
+
+        // Close panel when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('room-panel').classList.contains('hidden')) {
+                closePanel();
+            }
+        });
+
+        // Check if there are Laravel validation errors in session and show them
+        @if ($errors->any())
+            document.addEventListener('DOMContentLoaded', function() {
+                const errors = {!! json_encode($errors->getMessages()) !!};
+                displayErrors(errors);
+                document.getElementById('room-panel').classList.remove('hidden');
+            });
+        @endif
     </script>
 @endsection
