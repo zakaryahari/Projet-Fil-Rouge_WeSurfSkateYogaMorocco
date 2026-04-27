@@ -89,9 +89,6 @@
     @include('partials.footer')
     <!-- END: Footer -->
 
-    <!-- Review Modal Component -->
-    <x-review-modal />
-
     @yield('scripts')
 </body>
 </html>
