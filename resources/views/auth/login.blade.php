@@ -3,7 +3,16 @@
         <!-- Status Message -->
         <x-auth-session-status class="mb-6" :status="session('status')" />
 
-        <!-- Header -->
+        <!-- Ban Error Alert -->
+        @if ($errors->has('error'))
+            <div class="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-start gap-3">
+                <span class="material-symbols-outlined text-red-600 text-lg flex-shrink-0 mt-0.5">block</span>
+                <div>
+                    <p class="font-bold text-red-700 text-sm">Account Banned</p>
+                    <p class="text-red-600 text-sm mt-1">{{ $errors->first('error') }}</p>
+                </div>
+            </div>
+        @endif
         <div class="mb-8 text-center">
             <h1 class="text-3xl font-black text-darkCharcoal mb-2">Sign In</h1>
             <p class="text-slate-600 text-sm">Welcome back to WeSurfSkateYoga</p>
