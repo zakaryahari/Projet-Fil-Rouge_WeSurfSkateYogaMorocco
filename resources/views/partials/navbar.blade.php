@@ -42,11 +42,26 @@
 
                     <!-- Dropdown Links -->
                     <div class="py-2">
+                        @if (Auth::user()->is_admin)
+                            <a href="{{ route('admin.dashboard') }}" @click.stop="open = false" class="block px-4 py-2 text-white text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-base">admin_panel_settings</span>
+                                <span>Admin Dashboard</span>
+                            </a>
+                        @endif
+
+                        @if (!Auth::user()->is_admin)
                         <!-- Profile Link -->
                         <a href="{{ route('profile.edit') }}" @click.stop="open = false" class="block px-4 py-2 text-white text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center space-x-2">
                             <span class="material-symbols-outlined text-base">account_circle</span>
                             <span>Profil</span>
                         </a>
+
+                        <!-- My Bookings Link -->
+                        <a href="{{ route('customer.bookings.index') }}" @click.stop="open = false" class="block px-4 py-2 text-white text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center space-x-2">
+                            <span class="material-symbols-outlined text-base">calendar_today</span>
+                            <span>My Bookings</span>
+                        </a>
+                        @endif
 
                         <!-- Logout Form -->
                         <form method="POST" action="{{ route('logout') }}" class="block" @click="open = false">
