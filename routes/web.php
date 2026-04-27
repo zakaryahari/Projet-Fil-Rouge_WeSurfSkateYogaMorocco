@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    $reviewController = new CustomerReviewController();
     return view('home', [
         'packages' => \App\Models\Package::all(),
         'rooms' => \App\Models\Room::all(),
         'activities' => \App\Models\Activity::all(),
+        'unreviewedBooking' => $reviewController->getUnreviewedBooking(),
     ]);
 })->name('home');
 
@@ -23,6 +26,13 @@ Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::cla
 
 // Public Booking Routes - Customers only
 Route::middleware(['auth', 'prevent_admin_access', 'prevent_banned_access'])->group(function () {
+    // My Bookings Portal
+    Route::get('/my-bookings', [\App\Http\Controllers\CustomerBookingController::class, 'index'])->name('customer.bookings.index');
+
+    // Review Routes
+    Route::post('/reviews', [\App\Http\Controllers\CustomerReviewController::class, 'store'])
+        ->name('customer.reviews.store');
+
     Route::get('/bookings/packages', function () {
         return view('bookings.choose_package', [
             'packages' => \App\Models\Package::all(),
