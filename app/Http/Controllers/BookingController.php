@@ -7,9 +7,11 @@ use App\Models\Event;
 use App\Models\Package;
 use App\Models\Room;
 use App\Services\AvailabilityService;
+use App\Mail\BookingConfirmed;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -179,6 +181,9 @@ class BookingController extends Controller
                         'currency' => 'EUR',
                         'status' => 'paid',
                     ]);
+
+                    
+                    Mail::to($booking->user->email)->send(new BookingConfirmed($booking));
                 }
             }
 
