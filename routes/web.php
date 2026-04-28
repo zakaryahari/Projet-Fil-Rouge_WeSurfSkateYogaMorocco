@@ -15,7 +15,7 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-// Public Package Details Route
+
 Route::get('/packages', function () {
     return view('pages.packages', [
         'packages' => \App\Models\Package::all(),
@@ -24,12 +24,11 @@ Route::get('/packages', function () {
 
 Route::get('/packages/{id}', [\App\Http\Controllers\PublicPackageController::class, 'show'])->name('packages.show');
 
-// Public Booking Routes - Customers only
 Route::middleware(['auth', 'prevent_admin_access', 'prevent_banned_access'])->group(function () {
-    // My Bookings Portal
+    
     Route::get('/my-bookings', [\App\Http\Controllers\CustomerBookingController::class, 'index'])->name('customer.bookings.index');
 
-    // Review Routes
+    
     Route::post('/reviews', [\App\Http\Controllers\CustomerReviewController::class, 'store'])
         ->name('customer.reviews.store');
 
@@ -62,7 +61,7 @@ Route::middleware(['auth', 'prevent_admin_access', 'prevent_banned_access'])->gr
     Route::get('/booking/{booking}/stripe/cancel', [\App\Http\Controllers\BookingController::class, 'stripeCancel'])->name('bookings.stripe.cancel');
 });
 
-// Public Static Pages Routes
+
 Route::get('/events', function () {
     return view('pages.events', [
         'events' => \App\Models\Event::orderBy('event_date')->get(),
@@ -82,7 +81,7 @@ Route::middleware(['auth', 'prevent_admin_access'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin Dashboard Routes - Protected by 'auth' and 'admin' middleware
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/users/{user}/toggle-ban', [AdminController::class, 'toggleBan'])->name('users.toggle_ban');
