@@ -72,15 +72,7 @@
         <svg class="w-6 h-6 fill-current" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.522-2.961-2.638-.086-.115-.718-.954-.718-1.815 0-.861.451-1.283.612-1.456.16-.173.354-.216.471-.216s.235.004.339.009c.11.005.259-.042.405.314.144.354.494 1.205.537 1.291.043.086.072.187.015.302-.057.116-.086.187-.173.288-.086.101-.181.226-.259.303-.086.086-.174.18-.075.35.099.17.441.728.946 1.178.65.58 1.196.76 1.369.846.173.086.273.072.373-.043.101-.116.432-.504.547-.677.116-.173.231-.144.389-.086s1.008.475 1.181.561c.173.086.288.13.332.202.045.072.045.419-.1.824z"></path></svg>
         <span class="font-bold text-sm">Chat with us</span>
     </a>
-    <!-- Slider Navigation Overlay -->
-    <div class="absolute inset-x-8 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
-        <button class="bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full pointer-events-auto transition-colors">
-            <span class="material-symbols-outlined text-white text-3xl">chevron_left</span>
-        </button>
-        <button class="bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full pointer-events-auto transition-colors">
-            <span class="material-symbols-outlined text-white text-3xl">chevron_right</span>
-        </button>
-    </div>
+
 </section>
 
 <!-- Main Content Grid -->
@@ -123,92 +115,6 @@
             </div>
         </section>
 
-        <!-- Included / Excluded -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-emerald-50 p-8 rounded-3xl">
-                <h3 class="text-lg font-black text-emerald-800 mb-6 flex items-center gap-2">
-                    <span class="material-symbols-outlined">check_circle</span> What's Included
-                </h3>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-emerald-500 text-sm mt-0.5">check</span>
-                        7 Nights Premium Accommodation
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-emerald-500 text-sm mt-0.5">check</span>
-                        Daily Breakfast, Lunch & 5 Dinners
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-emerald-500 text-sm mt-0.5">check</span>
-                        6 Days Professional Coaching
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-emerald-500 text-sm mt-0.5">check</span>
-                        Full Equipment Hire (Board & Wetsuit)
-                    </li>
-                </ul>
-            </div>
-            <div class="bg-rose-50 p-8 rounded-3xl">
-                <h3 class="text-lg font-black text-rose-800 mb-6 flex items-center gap-2">
-                    <span class="material-symbols-outlined">cancel</span> What's Excluded
-                </h3>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-rose-500 text-sm mt-0.5">close</span>
-                        Flights to/from Agadir/Marrakech
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-rose-500 text-sm mt-0.5">close</span>
-                        Travel Insurance (Mandatory)
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-rose-500 text-sm mt-0.5">close</span>
-                        Optional Alcohol Drinks
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <span class="material-symbols-outlined text-rose-500 text-sm mt-0.5">close</span>
-                        Personal Spending Money
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Tour Plan Accordion -->
-        <section>
-            <h3 class="text-xl font-black mb-6">8-Day Tour Plan</h3>
-            <div class="space-y-3">
-                <div class="border border-slate-200 rounded-xl overflow-hidden">
-                    <button class="w-full flex items-center justify-between p-4 bg-white text-left">
-                        <span class="font-bold flex items-center gap-4">
-                            <span class="bg-primary text-white size-8 rounded-lg flex items-center justify-center text-xs">01</span>
-                            Arrival & Sunset Session
-                        </span>
-                        <span class="material-symbols-outlined">expand_more</span>
-                    </button>
-                </div>
-                <div class="border border-slate-200 rounded-xl overflow-hidden">
-                    <button class="w-full flex items-center justify-between p-4 bg-white text-left">
-                        <span class="font-bold flex items-center gap-4">
-                            <span class="bg-primary/20 text-primary size-8 rounded-lg flex items-center justify-center text-xs">02</span>
-                            Mastering the Fundamentals
-                        </span>
-                        <span class="material-symbols-outlined">expand_more</span>
-                    </button>
-                </div>
-                <div class="border border-slate-200 rounded-xl overflow-hidden">
-                    <button class="w-full flex items-center justify-between p-4 bg-white text-left">
-                        <span class="font-bold flex items-center gap-4">
-                            <span class="bg-primary/20 text-primary size-8 rounded-lg flex items-center justify-center text-xs">03</span>
-                            Wave Selection & Paddling Power
-                        </span>
-                        <span class="material-symbols-outlined text-slate-400">expand_more</span>
-                    </button>
-                </div>
-                <div class="flex justify-center pt-2">
-                    <button class="text-primary text-sm font-bold flex items-center gap-1">View full 8-day itinerary <span class="material-symbols-outlined">keyboard_double_arrow_down</span></button>
-                </div>
-            </div>
-        </section>
 
         <!-- Included Experiences -->
         <section>
@@ -245,36 +151,6 @@
     <!-- Right Column (30%) - Sidebar -->
     <aside class="lg:col-span-3 space-y-8">
         <!-- Booking Form Card -->
-        <div class="bg-white rounded-3xl shadow-xl shadow-primary/5 p-8 border border-slate-100 sticky top-32">
-            <h3 class="text-xl font-black mb-6">Book Your Adventure</h3>
-            <form class="space-y-4">
-                <div class="flex gap-4 mb-4">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input checked="" class="text-primary focus:ring-primary" name="guest_type" type="radio"/>
-                        <span class="text-sm font-semibold">Adult</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input class="text-primary focus:ring-primary" name="guest_type" type="radio"/>
-                        <span class="text-sm font-semibold">Child</span>
-                    </label>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <input class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary" placeholder="First Name" type="text"/>
-                    <input class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary" placeholder="Last Name" type="text"/>
-                </div>
-                <input class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary" placeholder="Email Address" type="email"/>
-                <input class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary" placeholder="Phone Number" type="tel"/>
-                <select class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary">
-                    <option>Room Type: Shared Room</option>
-                    <option>Room Type: Private Room</option>
-                    <option>Room Type: Deluxe Suite</option>
-                </select>
-                <input class="w-full rounded-xl border-slate-200 text-sm py-3 px-4 focus:ring-primary focus:border-primary" type="date"/>
-                <button class="w-full bg-primary text-white py-4 rounded-xl font-black text-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity mt-2">
-                    Book Now
-                </button>
-            </form>
-        </div>
 
         <!-- Tour Information Box -->
         <div class="bg-slate-900 text-white p-8 rounded-3xl">
@@ -328,51 +204,5 @@
 </main>
 
 <!-- Related Tours -->
-<section class="max-w-7xl mx-auto px-4 pb-24">
-    <h2 class="text-2xl font-black mb-8">You might also like</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Card 1 -->
-        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all">
-            <div class="relative h-56">
-                <img class="w-full h-full object-cover transition-transform group-hover:scale-105" alt="Surfer on a longboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg7Qk_34yUYn5UQi-FLwRg3-D7Yle2EB5oADqe-qjAdrb5YdxbpkbP9KNuqYWd9yhCv5ilzgNBsIMdGI_OM8YvmNO6Pm3C3YnF41rA7Wcn9xsEbfgpZcTpGc7Z2rLgi3EzaGQ5KRdTs1W-MkAFH2iBFNjn-zL2AsIeXUYiufG_EV6uVouq2hP3BgB8dJiiRxgIM1bKAmV-ZxiGhOx0_7OiO6uFC2v89YwLwtpj5SKtX-PdECJL70NQkKG8s8TRDvt27gFXfxkXXm8"/>
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-black">€ 249.00</div>
-            </div>
-            <div class="p-6">
-                <div class="flex text-yellow-400 mb-2">
-                    <span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span>
-                </div>
-                <h4 class="font-bold mb-4">Surf & Skate Combo</h4>
-                <button class="w-full py-2 border border-primary text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-colors">Details</button>
-            </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all">
-            <div class="relative h-56">
-                <img class="w-full h-full object-cover transition-transform group-hover:scale-105" alt="Yoga group by the ocean" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTioRXR4oVgaeNwpRKfWum0nnadGZQkVNh8kUBLa-bhmFbn1_zg-yd5HHSmK-ZVQB0bMmxMhjhs_xMTGdyw06EF5f9Z_Dmi6RWTOCNw_Gpb05Mnni7FvWrvsVoGgu-MtIA72VJdCWl6TtZ_uM0P6GaAYNn5hSVMk-rwCZgv4nOPj6SFZRg7I6v69X4xZNZ15R3gt7iKPOzHP_3rbm9Hj-ILgEs_vYoJqtkYNssRfIqjkhZU4m7YJEHmy8f39OY8WewSli4N6j8bnU"/>
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-black">€ 189.00</div>
-            </div>
-            <div class="p-6">
-                <div class="flex text-yellow-400 mb-2">
-                    <span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span>
-                </div>
-                <h4 class="font-bold mb-4">Surf & Yoga Retreat</h4>
-                <button class="w-full py-2 border border-primary text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-colors">Details</button>
-            </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all">
-            <div class="relative h-56">
-                <img class="w-full h-full object-cover transition-transform group-hover:scale-105" alt="Aerial view of surfers in water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALGmovLzJFEWEFMyzqLYzTAufBrXK0un7infRgw52IW_I6bjrDc_K9lFzNDiSkTu-A9DS2Kx36fa_72QmKexdf9EKhEfoyDSDAg9N8JB3IM4UDnmVGAZLVevpgIvEGUS3RHofUEib1KVT2KCc1cEG-kbwG4UjLR4ZhxdJlGXHX5PacOF9Pqhu8orgDhfZhdxW6HXLpZJSGE0nQzjxOxQDdDv_E-JtV6kzmmi97AXdTuDBjceF3nGy5YD-YHE_QhksNS5NgIRbhAxE"/>
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-black">€ 320.00</div>
-            </div>
-            <div class="p-6">
-                <div class="flex text-yellow-400 mb-2">
-                    <span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span><span class="material-symbols-outlined text-xs">star</span>
-                </div>
-                <h4 class="font-bold mb-4">Masterclass Surf Week</h4>
-                <button class="w-full py-2 border border-primary text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-colors">Details</button>
-            </div>
-        </div>
-    </div>
-</section>
+
 @endsection

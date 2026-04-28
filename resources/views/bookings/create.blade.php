@@ -117,7 +117,7 @@
                         <span class="material-symbols-outlined text-primary">explore</span>
                         <h2 class="text-2xl font-bold">Step 1: Your Package</h2>
                     </div>
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-base-price="{{ $package->base_price }}">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-base-price="{{ $package->base_price }}" data-package-duration="{{ $package->duration_days }}">
                         <h3 class="text-xl font-bold text-slate-900 mb-2">{{ $package->name }}</h3>
                         <p class="text-slate-600 mb-4">{{ $package->description }}</p>
                         <div class="flex justify-between items-center">
@@ -136,12 +136,12 @@
                     <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Arrival Date</label>
-                                <input class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary" type="date" name="start_date" min="{{ date('Y-m-d') }}" required/>
+                                <label for="start_date" class="text-sm font-semibold text-slate-600 dark:text-slate-300">Starting Date</label>
+                                <input id="start_date" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary" type="date" name="start_date" min="{{ date('Y-m-d') }}" required/>
                             </div>
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Departure Date</label>
-                                <input class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary" type="date" name="end_date" min="{{ date('Y-m-d') }}" required/>
+                                <label for="end_date" class="text-sm font-semibold text-slate-600 dark:text-slate-300">End Date</label>
+                                <input id="end_date" class="bg-gray-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg p-3 cursor-not-allowed opacity-70 text-slate-600 dark:text-slate-400" type="date" name="end_date" readonly required/>
                             </div>
                         </div>
                     </div>

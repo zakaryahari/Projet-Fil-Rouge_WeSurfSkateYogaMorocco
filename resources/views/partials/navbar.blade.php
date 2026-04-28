@@ -8,7 +8,6 @@
         <a class="hover:text-primary transition-colors" href="{{ route('accommodation') }}">Accommodation</a>
         <a class="hover:text-primary transition-colors" href="{{ route('events') }}">Événements</a>
         <a class="hover:text-primary transition-colors" href="{{ route('about') }}">À Propos</a>
-        <a class="hover:text-primary transition-colors" href="{{ route('contact') }}">Contact</a>
     </nav>
     <!-- Right Side: Auth Block -->
     <div class="flex items-center space-x-4 lg:space-x-6">

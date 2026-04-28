@@ -93,53 +93,7 @@
     </section>
 
     <!-- 6. Meet The Team Section -->
-    <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span class="text-primary font-medium tracking-widest uppercase text-sm block mb-4 italic font-serif">The People Behind the Passion</span>
-            <h2 class="text-4xl font-bold text-slate-900">Meet Our Coaches</h2>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Team Member 1 -->
-            <div class="relative group aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center" data-alt="Portrait of Khalid, Surf Coach" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA1SPaZKYWO1p3KwdQRK1JUXojnrlLIu7ynyiv1O0C2l14FoYJvKciiveYBSITs4Kew6zi_rnuUWx6WygdRJTt051aQZ0VFlsLf28mzU4CfBs6SgXgMxtwTA7bSt4G8OJGj5_sYNNzAoEjwRQu5sfmxLdOaIrhK13fn3PDYAKRjsKrFSJdkoc3j8azgVKEMBM1UZtwRwbwzInwz_TH9O3PEPwZv117H74iYMQOx9hvhPe8DVI7ddVRtX2bnF1hO98ruqcViryNP6o4');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div class="absolute bottom-4 left-4 right-4 bg-white/95 p-5 rounded-xl backdrop-blur-sm">
-                    <h4 class="text-slate-900 font-bold text-lg">Khalid</h4>
-                    <p class="text-primary font-semibold text-sm">Lead Surf Coach</p>
-                </div>
-            </div>
 
-            <!-- Team Member 2 -->
-            <div class="relative group aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center" data-alt="Portrait of Aziz Adel, Skate Instructor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjp0tbym-KhiAGTPtzkZCZpNudt_8vsE0_DElDek2jo_kgTp-I0vaDwPU71J65c8fhqFExLWqNKbhPMCV87CYr4BIa-p5L_NWH479VHsM-0uRcwPzLb00hJTEDXVXYeHWL2JDWCWlDP-tb5DZ6TbXMiSPazGh-xnUYwuftKZYvGRTF7ScJA9ZBI5FQeayUzmjYEWY16r2RtWFEcBuj8Nx0NCI0FRKH2S4uhW71kdTjXAlnxiTrb5BryAfV1IWxOL3dMb_xkFiDi08');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div class="absolute bottom-4 left-4 right-4 bg-white/95 p-5 rounded-xl backdrop-blur-sm">
-                    <h4 class="text-slate-900 font-bold text-lg">Aziz Adel</h4>
-                    <p class="text-primary font-semibold text-sm">Skateboarding Director</p>
-                </div>
-            </div>
-
-            <!-- Team Member 3 -->
-            <div class="relative group aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center" data-alt="Portrait of Zakarya Hari, Logistics Manager" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2PdZTToSF6e419RkmhovCfCEP8kYUAhNlN6ARvXmrdIUotjf-Zbd4RcVnTjfSOvlT6fbKckiEdLEWkziQNA_9QU9Xp_cLZXL2oCvdD71upDqV4D-0X1Fdvq5BbpY9YrLBxjyQUd3s72riEtHv8G1gQYGucoUuTTqnuFvHXetRugNYJX4m_WBye8RABfcRvFLhHa6gIe8JXE4pxWLRYIWfjj5YycFWfdo3Z-dwbojl3m9TtntIrGlHWf8790e3M0fkbYMWFe8EsNU');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div class="absolute bottom-4 left-4 right-4 bg-white/95 p-5 rounded-xl backdrop-blur-sm">
-                    <h4 class="text-slate-900 font-bold text-lg">Zakarya Hari</h4>
-                    <p class="text-primary font-semibold text-sm">Camp Manager</p>
-                </div>
-            </div>
-
-            <!-- Team Member 4 -->
-            <div class="relative group aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center" data-alt="Portrait of Coach Abdullah, Technical Coach" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwqzkCS5Z2G91Fix5kvutrQOp0aBt6TZZn4-KcXL_GNy2SQKI1ZB0a1xVTdEpYHNnkkLUUSo6i48RKaIG9CNfilW13bcNCQml4ZtIhk4kA_IEspisynjXVbNbnqLPsSywnZ0ngK4H-lh0L167IQuH2f42mpD2mxDe-sQoTawdDPOzTOA1E1fd7YriwBBIn7YOp2jA6NBDYSdcd7ainZ2_bqE-BgK2sn-FNXzjGQXfa10NAtt1iYuP2m7fB7d5wr_V4BzA7NU1X0B4');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div class="absolute bottom-4 left-4 right-4 bg-white/95 p-5 rounded-xl backdrop-blur-sm">
-                    <h4 class="text-slate-900 font-bold text-lg">Coach Abdullah</h4>
-                    <p class="text-primary font-semibold text-sm">Technical Coach</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- 7. Partner Logo Slider -->
     <section class="py-12 border-y border-slate-200 bg-slate-50">
