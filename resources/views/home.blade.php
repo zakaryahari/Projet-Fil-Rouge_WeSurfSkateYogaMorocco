@@ -370,52 +370,6 @@
     @endauth
 
     <!-- BEGIN: News & Articles Section -->
-    <section class="py-24 bg-gray-50">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row md:items-end justify-between mb-16">
-            <div class="mb-8 md:mb-0">
-                <span class="text-primary font-extrabold tracking-widest uppercase text-xs mb-4 block">Our Journal</span>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-darkCharcoal uppercase tracking-tighter">News & Articles</h2>
-            </div>
-            <a class="bg-primary hover:bg-darkCharcoal text-white font-black px-10 py-4 rounded-full uppercase text-[10px] tracking-widest transition-all shadow-lg" href="#">Read All Posts</a>
-        </div>
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- Article 1 -->
-            <article class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all group">
-                <div class="relative h-64 overflow-hidden">
-                    <img alt="Blog 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYpwFbwrUHfLgU_NjGNypsSm8Y8emiDK_ZPW76Qq_honcO2fUYQE63UkXUB-7fhUW-dMic92PuGgmvHO4JRkcnLjLjmFINfaHavdwpQQCmLpo9U86WhW0tvfxu6S5OKdtrnqyzn7LHnvBLtzmY1uGbC3XMSOxiUv9K843hK020UpS0CcjMmBhg77xZd5-GkOiSVC5BBdrEMuSArScBMGUbM0_63DlH0rchC0xs4CgF-d5D3hXb_ojiTSDZttSVHc5Jr9o6DE-R2y8"/>
-                    <div class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase">Lifestyle</div>
-                </div>
-                <div class="p-10">
-                    <div class="text-[10px] text-gray-400 font-black uppercase mb-4 tracking-widest">October 08, 2024</div>
-                    <h3 class="text-xl font-black mb-6 uppercase leading-tight group-hover:text-primary transition-colors">🇲🇦 Moroccan Culture & Surf Lifestyle – What to Expect</h3>
-                    <a class="text-primary font-black text-[10px] uppercase tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all" href="#">Explore More</a>
-                </div>
-            </article>
-            <!-- Article 2 -->
-            <article class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all group">
-                <div class="relative h-64 overflow-hidden">
-                    <img alt="Blog 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAKelqdHr0g3YFEUMBsYGgyncQ7N0r_cunNdgHTfMd4OamgoZu19B9bBbcG8z4pFRwRK-At1nb4-A7_oJVcovxGPQj42OQWfzQNGqUFAnm6x1WUXHEKxORuwgXaJTQtvSde4OzhAragjNuKBDKhObjNEMJHxfLlGEjEPP7oDHQ1XGjxOoJB2-hCHvyMjr_F_KGWzT-YMvDlaLULE3VJYzyJZJFkwYIYxE1RfGifGPazglWILxRRu6NMSwkmsAFU4TquzVfMiKbSR4"/>
-                    <div class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase">Training</div>
-                </div>
-                <div class="p-10">
-                    <div class="text-[10px] text-gray-400 font-black uppercase mb-4 tracking-widest">October 06, 2024</div>
-                    <h3 class="text-xl font-black mb-6 uppercase leading-tight group-hover:text-primary transition-colors">🏄‍♂️ Top 12 Surf Spots Near Surf Skate Camp</h3>
-                    <a class="text-primary font-black text-[10px] uppercase tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all" href="#">Explore More</a>
-                </div>
-            </article>
-            <!-- Article 3 -->
-            <article class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all group">
-                <div class="relative h-64 overflow-hidden">
-                    <img alt="Blog 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHCzXypI3j3WTll2-zwCcaepQ8PpCDV1AYvCLrkW7BLHkgmTISAL3L8hlxNhqNWbfqOm-ABqhhfO3RlIPOU_zJRluAu7qptMZrKk1gDG6NLHAzrvB6F6S-9UuvO5emm4zUUEDOsqzQcOGK-zKfuPJPzzsxVAgbBOeMEtavH0jvdD-MEMM-vjp-w57TBLBGFdmFEiUQo-CYmnqRZN_O2gCeABYzsdV29qj0nsa7H0cHUgi_pJfS0HaoTwB5eFNneZEoHQPtbHo7qJA"/>
-                    <div class="absolute top-6 left-6 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase">Skate</div>
-                </div>
-                <div class="p-10">
-                    <div class="text-[10px] text-gray-400 font-black uppercase mb-4 tracking-widest">October 04, 2024</div>
-                    <h3 class="text-xl font-black mb-6 uppercase leading-tight group-hover:text-primary transition-colors">🛹 Why Surf Skate is the Best Training for Surfers</h3>
-                    <a class="text-primary font-black text-[10px] uppercase tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all" href="#">Explore More</a>
-                </div>
-            </article>
-        </div>
-    </section>
+
     <!-- END: News & Articles Section -->
 @endsection
