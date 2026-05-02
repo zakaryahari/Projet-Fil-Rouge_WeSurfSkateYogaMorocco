@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // CHECK IF USER IS BANNED
+        
         if ($user->is_banned) {
             Auth::logout();
             $request->session()->invalidate();

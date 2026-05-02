@@ -15,6 +15,8 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Route::get('/',[\App\Http\Controllers\testquery::class, 'index']);
+
 
 Route::get('/packages', function () {
     return view('pages.packages', [
