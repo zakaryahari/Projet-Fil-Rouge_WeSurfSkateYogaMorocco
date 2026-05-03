@@ -26,6 +26,10 @@
             <span class="material-symbols-outlined" data-icon="surfing">surfing</span>
             <span class="text-sm">Activities</span>
         </a>
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.events.*') ? 'text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800' }} transition-all duration-200" href="{{ route('admin.events.index') }}">
+            <span class="material-symbols-outlined" data-icon="event">event</span>
+            <span class="text-sm">Events</span>
+        </a>
         <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.coaches.*') ? 'text-sky-400 font-bold border-r-4 border-sky-400 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800' }} transition-all duration-200" href="{{ route('admin.coaches.index') }}">
             <span class="material-symbols-outlined" data-icon="sports_handball">sports_handball</span>
             <span class="text-sm">Coaches</span>

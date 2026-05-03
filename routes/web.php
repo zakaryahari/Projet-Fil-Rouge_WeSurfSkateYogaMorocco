@@ -92,6 +92,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class);
     Route::resource('coaches', \App\Http\Controllers\Admin\CoachController::class);
     Route::resource('activities', \App\Http\Controllers\Admin\ActivityController::class);
+    Route::resource('events', \App\Http\Controllers\Admin\AdminEventController::class);
     Route::resource('bookings', \App\Http\Controllers\Admin\AdminBookingController::class);
     Route::resource('reviews', \App\Http\Controllers\Admin\AdminReviewController::class);
     Route::patch('/bookings/{booking}/status', [\App\Http\Controllers\Admin\AdminBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
